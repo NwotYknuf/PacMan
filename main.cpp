@@ -21,6 +21,7 @@ int main()
 		
 		sf::Sprite pacmanSprite;
 		pacmanSprite.setTexture(texturePackman);
+
 		Animation walkLeft(&pacmanSprite, 0.166666667);
 		walkLeft.addFrame(sf::IntRect(0, 0, 32, 32));
 		walkLeft.addFrame(sf::IntRect(32, 0, 32, 32));
@@ -43,23 +44,29 @@ int main()
 		pacManAnimator.addAnnimation("walkUp", &walkUp);
 		pacManAnimator.addAnnimation("walkDown", &walkDown);
 
-		sf::Texture textureTileset;
-		if (!textureTileset.loadFromFile("sprites\\tiles.png")) {
-			throw Error("Can't load tileset.png");
+		sf::Texture fantomTexture;
+
+		if (!fantomTexture.loadFromFile("sprites\\fantom.png")) {
+			throw Error("Can't load fantom.png");
 		}
 
-		sf::Sprite tilesetSprite1;
-		sf::Sprite tilesetSprite2;
+		sf::Sprite fantomSprite;
+		fantomSprite.setTexture(fantomTexture);
 
-		tilesetSprite1.setTexture(textureTileset);
-		tilesetSprite2.setTexture(textureTileset);
-		
-		sf::IntRect deadEnd(0, 0, 32, 32);
-		tilesetSprite1.setTextureRect(deadEnd);
-		
-		sf::IntRect diagForDeadEnd(32, 32, 32, 32);
-		tilesetSprite2.setTextureRect(diagForDeadEnd);
+		Animation lesDents(&fantomSprite, 0.166666667);
+		lesDents.addFrame(sf::IntRect(0, 0, 32, 32));
+		lesDents.addFrame(sf::IntRect(32, 0, 32, 32));
+
+		Animator fantomAnimator;
+		fantomAnimator.addAnnimation("lesDents", &lesDents);
+
+		fantomAnimator.setCurentAnimation("lesDents");
+
 		//main loop
+		sf::Clock clock;
+		float angle = 0;
+		fantomSprite.setOrigin(32.0f, 32.0f);
+
 		while (window.isOpen()) {
 			while (window.pollEvent(event)){
 				switch (event.type){
@@ -91,11 +98,16 @@ int main()
 				}
 			}
 
+
 			window.clear();
-			pacManAnimator.playAnnimation();
-			window.draw(pacmanSprite);
+			fantomAnimator.playAnnimation();
+			window.draw(fantomSprite);
+			fantomSprite.setPosition(fantomSprite.getPosition().x + clock.getElapsedTime().asSeconds() * 40.0f, 64.0f);
+			fantomSprite.setRotation(angle);
+			angle += clock.getElapsedTime().asSeconds() * 500.0f;
 			window.display();
 
+			cout << 1/clock.restart().asSeconds() << " fps"<< endl;
 		}
 	}
 	catch (Error e) {

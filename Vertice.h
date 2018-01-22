@@ -1,39 +1,39 @@
-#ifndef VERTICE_H
-#define VERTICE_H
+#pragma once
+
 #include <iostream>
 #include <sstream>
 #include <string>
+
 #include "GElement.h"
 
 using namespace std;
 
+/**
+ * Graph edge, has a degree and constains an information T
+*/
 template <class T>
 class Vertice : public GElement<T>{
 public:
+int degree;	
 
-	int degree;
+Vertice(const int key, const T & v):GElement<T>(key,v),degree(0){}
 
-	Vertice(const int key, const T & value) :GElement<T>(key, value), degree(0) { }
-
-	operator string () const;
+operator string () const;
 
 };
 
 template <class T>
 Vertice<T>::operator string () const{
+ostringstream oss;
 
-	ostringstream oss;
-
-	oss << "Vertice(" << endl;
-	oss << GElement<T>::operator string() << endl;
-	oss << "degree = " << degre << endl;
-	oss << ")";
-	return oss.str();
+oss <<"Vertice("<<endl;
+oss << GElement<T>::operator string()<<endl;
+oss<<"degree = " << degree << endl;
+oss<<")";
+return oss.str();
 }
 
 template <class T>
-ostream & operator << (ostream & os, const Vertice<T> & sommet){
-	return os << (string)sommet;
+ostream & operator << (ostream & os, const Vertice<T> & edge){
+return os << (string)edge;
 }
-
-#endif
