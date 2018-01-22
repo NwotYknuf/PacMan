@@ -1,4 +1,5 @@
-#pragma once
+#ifndef VERTICE_H
+#define VERTICE_H
 
 #include <iostream>
 #include <sstream>
@@ -37,3 +38,5 @@ template <class T>
 ostream & operator << (ostream & os, const Vertice<T> & edge){
 return os << (string)edge;
 }
+
+#endif

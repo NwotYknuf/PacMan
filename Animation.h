@@ -1,4 +1,6 @@
-#pragma once
+#ifndef ANIMATION_H
+#define ANIMATION_H
+
 #include <vector>
 #include <SFML/Graphics.hpp>
 
@@ -18,3 +20,5 @@ public:
 	void playAnnimation();
 
 };
+
+#endif

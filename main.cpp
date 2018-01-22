@@ -68,46 +68,48 @@ int main()
 		fantomSprite.setOrigin(32.0f, 32.0f);
 
 		while (window.isOpen()) {
-			while (window.pollEvent(event)){
-				switch (event.type){
-				case sf::Event::Closed:
-					window.close();
-					break;
 
-				case sf::Event::KeyPressed:
-					switch (event.key.code) {
-						
-					case sf::Keyboard::Q :
+			if (clock.getElapsedTime().asSeconds() >= 1 / 60.0) {
+				while (window.pollEvent(event)) {
+					switch (event.type) {
+					case sf::Event::Closed:
+						window.close();
+						break;
+
+					case sf::Event::KeyPressed:
+						switch (event.key.code) {
+
+						case sf::Keyboard::Q:
 							pacManAnimator.setCurentAnimation("walkLeft");
 							break;
-					case sf::Keyboard::D :
+						case sf::Keyboard::D:
 							pacManAnimator.setCurentAnimation("walkRight");
 							break;
-					case sf::Keyboard::Z :
-						pacManAnimator.setCurentAnimation("walkUp");
+						case sf::Keyboard::Z:
+							pacManAnimator.setCurentAnimation("walkUp");
+							break;
+						case sf::Keyboard::S:
+							pacManAnimator.setCurentAnimation("walkDown");
+							break;
+
+						}
 						break;
-					case sf::Keyboard::S:
-						pacManAnimator.setCurentAnimation("walkDown");
+
+					default:
 						break;
-						
 					}
-					break;
-					
-				default:
-					break;
 				}
+				
+				window.clear();
+				fantomAnimator.playAnnimation();
+				window.draw(fantomSprite);
+				fantomSprite.setPosition(fantomSprite.getPosition().x + clock.getElapsedTime().asSeconds() * 50.0f, 64.0f);
+				fantomSprite.setRotation(angle);
+				angle += clock.getElapsedTime().asSeconds() * 50.0f;
+				window.display();
+
+				cout << 1 / clock.restart().asSeconds() << " fps" << endl;
 			}
-
-
-			window.clear();
-			fantomAnimator.playAnnimation();
-			window.draw(fantomSprite);
-			fantomSprite.setPosition(fantomSprite.getPosition().x + clock.getElapsedTime().asSeconds() * 40.0f, 64.0f);
-			fantomSprite.setRotation(angle);
-			angle += clock.getElapsedTime().asSeconds() * 500.0f;
-			window.display();
-
-			cout << 1/clock.restart().asSeconds() << " fps"<< endl;
 		}
 	}
 	catch (Error e) {

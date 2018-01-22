@@ -1,45 +1,21 @@
 #pragma once
 
-/**
-Motivations qui ont conduit à cette solution pour représenter un graphe :
-
-hypothèses : Un graphe est non orienté. Dans le cas général, une information est associée à chaque sommet, à chaque arête : un nom, un n°, une couleur, etc.
-
-J'ignore totalement la nature de cette information, d'où template <S,T>.
-S : info associée à une arête
-T : info associée à un sommet
-
-chaque élément du graphe est identifié par une clef unique. Celle-ci est générée automatiquement par l'attribut prochaineClef du graphe.
-Celle-ci définit à tout instant la clef qui sera attribuée au prochain élément créé dans le graphe.
-
-*/
-
 #include <utility>
 #include "PElement.h"
 #include "Edge.h"
 #include "Edge.h"
 
-/*
-classe sachant dessiner un graphe
-
-	template <class S, class T> class Dessinateur;
-*/
-
 template <class S, class T>
 class Graphe {
 protected:
-
-	/** la  clef qui sera attribuée au prochain élément (sommet ou arête) créé dans le graphe par les méthodes creeSommet(info)
-	ou creeArete(info,debut,fin) fonctionne comme auto-increment d'une base de données */
 
 	int nextKey;
 
 public:
 
-	PElement< Vertice<T> > * lVertices; // liste de sommets
-	PElement< Edge<S, T> > * lEdges; // liste d'arêtes
+	PElement< Vertice<T> > * lVertices;
+	PElement< Edge<S, T> > * lEdges;
 
-	//------------------- opérations de création ----------------------------------------------
 
 private:
 
@@ -65,14 +41,6 @@ private:
 	}
 
 public:
-	/**
-	 * crée une arête joignant les 2 sommets debut et fin
-	 *
-	 * met à jour les champs degre de debut et de fin
-	 *
-	 * met à jour prochaineClef
-	 *
-	 * */
 
 	Edge<S, T> * createVertice(const S & info, Vertice<T> * begin, Vertice<T> * end) { return createEdgeNoIncrement(nextKey++, info, begin, end); }
 
@@ -96,11 +64,7 @@ public:
 
 	int nbrEdges() const { return PElement< Edge<S, T> >::size(lEdges); }
 
-
-	/**
-	 * returns the list of (vertice/edges) adjacent to the Vertice
-	*/
-	PElement< pair< Vertice<T> *, Edge<S, T>* > >  *  adjacences(const Vertice<T> * vertice) const;
+	PElement< pair< Vertice<T> *, Edge<S, T>* > >  *  adjacencent(const Vertice<T> * vertice) const;
 
 	PElement< Edge<S, T> > *  adjacentVertices(const Vertice<T> * vertice) const;
 
@@ -135,9 +99,8 @@ Vertice<T> * Graphe<S, T>::createVerticeNoIncrement(const int key, const T & inf
 template <class S, class T>
 Edge<S, T> * Graphe<S, T>::createEdgeNoIncrement(const int key, const S & info, Vertice<T> * begin, Vertice<T> * end) {
 
-	// ici tester que les 2 sommets sont bien existants dans le graphe
-	if (!PElement< Vertice<T> >::inList(begin, lVertices)) throw "début d'arête non défini";
-	if (!PElement< Vertice<T> >::inList(end, lVertices)) throw "fin d'arête non définie";
+	if (!PElement< Vertice<T> >::inList(begin, lVertices)) throw new Error("begin vertice undifined");
+	if (!PElement< Vertice<T> >::inList(end, lVertices)) throw new Error( "begin vertice undifined");
 
 	Edge<S, T> *  newVertice = new Edge<S, T>(key, info, begin, end);
 
@@ -192,7 +155,7 @@ void Graphe<S, T>::eraseAll() {
 }
 
 template <class S, class T>
-PElement< pair< Vertice<T> *, Edge<S, T>* > >  *  Graphe<S, T>::adjacences(const Vertice<T> * vertice) const {
+PElement< pair< Vertice<T> *, Edge<S, T>* > >  *  Graphe<S, T>::adjacencent(const Vertice<T> * vertice) const {
 	const PElement< Edge<S, T> > * l;
 
 	PElement< pair< Vertice<T> *, Edge<S, T>* > > * r;
@@ -211,7 +174,7 @@ PElement< pair< Vertice<T> *, Edge<S, T>* > >  *  Graphe<S, T>::adjacences(const
 
 template <class S, class T>
 PElement< Edge<S, T> > *  Graphe<S, T>::adjacentVertices(const Vertice<T> * vertice) const {
-	PElement< pair< Vertice<T> *, Edge<S, T>* > > * ladj = this->adjacences(vertice);
+	PElement< pair< Vertice<T> *, Edge<S, T>* > > * ladj = this->adjacencent(vertice);
 	PElement< pair< Vertice<T> *, Edge<S, T>* > > * l;
 
 	PElement< Edge<S, T> > * r;
@@ -227,7 +190,7 @@ PElement< Edge<S, T> > *  Graphe<S, T>::adjacentVertices(const Vertice<T> * vert
 template <class S, class T>
 PElement< Vertice<T> > *  Graphe<S, T>::neighbors(const Vertice<T> * vertice) const
 {
-	PElement< pair< Vertice<T> *, Edge<S, T>* > > * ladj = this->adjacences(vertice);
+	PElement< pair< Vertice<T> *, Edge<S, T>* > > * ladj = this->adjacencent(vertice);
 	PElement< pair< Vertice<T> *, Edge<S, T>* > > * l;
 
 	PElement< Vertice<T> > * r;
@@ -306,14 +269,12 @@ bool dessine(const PElement<Vertice<T>> * path, WINDOW & window, const unsigned 
 {
 	if (!(path && path->next))
 		return true;
-
-	else		// le chemin contient au moins une arête
+	else
 	{
-		// on dessine d'abord la 1ère arête
 
 		window.dessine(path->value, path->next->value, color);
 
-		return dessine(path->next, window, color);		// puis on dessine les arêtes suivantes
+		return dessine(path->next, window, color);
 	}
 }
 

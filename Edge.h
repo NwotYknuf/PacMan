@@ -1,4 +1,5 @@
-#pragma once
+#ifndef EDGE_H
+#define EDGE_H
 
 #include <iostream>
 #include <sstream>
@@ -58,3 +59,5 @@ template <class S, class T>
 bool Edge<S,T>::equals( const Vertice<T> * s1, const Vertice<T> * s2) const{
 return (s1 == begin && s2 == end) || (s1 == end && s2 == begin);
 }
+
+#endif // !EDGE_H

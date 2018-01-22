@@ -1,4 +1,6 @@
-#pragma once
+#ifndef GELEMENT_H
+#define GELEMENT_H
+
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -20,3 +22,5 @@ operator string() const { ostringstream o; o << this->AElement::operator string(
 
 friend ostream & operator << (ostream & os, const GElement<T>& gElement) {return os << (string) gElement;}
 };
+
+#endif

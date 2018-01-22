@@ -1,4 +1,6 @@
-#pragma once
+#ifndef ERROR_H
+#define ERROR_H
+
 #include <string>
 
 using namespace std;
@@ -13,3 +15,5 @@ public:
 
 	friend ostream& operator<<(ostream& os, const Error &erreur);
 };
+
+#endif // !ERROR_H

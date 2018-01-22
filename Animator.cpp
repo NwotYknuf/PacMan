@@ -1,12 +1,8 @@
 #include "Animator.h"
 
-Animator::Animator()
-{
-}
+Animator::Animator(){ }
 
-Animator::~Animator()
-{
-}
+Animator::~Animator(){ }
 
 void Animator::addAnnimation(string name, Animation * animation) {
 	_animations.insert(pair<string, Animation*>(name, animation));

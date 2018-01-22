@@ -1,4 +1,6 @@
-#pragma once
+#ifndef ANIMATOR_H
+#define ANIMATOR_H
+
 #include<map>
 #include "Animation.h"
 
@@ -20,3 +22,5 @@ public:
 	void playAnnimation();
 
 };
+
+#endif // !ANIMATOR_H
