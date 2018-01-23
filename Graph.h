@@ -6,7 +6,7 @@
 #include "Edge.h"
 
 template <class S, class T>
-class Graphe {
+class Graph {
 protected:
 
 	int nextKey;
@@ -34,7 +34,7 @@ private:
 	//doesn't update nextKey
 	Edge<S, T> * createEdgeNoIncrement(const int key, const S & info, Vertice<T> * begin, Vertice<T> * end);
 
-	Edge<S, T> * createVertice(const int clef, const S & info, Vertice<T> * begin, Vertice<T> * end)
+	Edge<S, T> * createEdge(const int clef, const S & info, Vertice<T> * begin, Vertice<T> * end)
 	{
 		updateNextKey(clef);
 		return createEdgeNoIncrement(clef, info, begin, end);
@@ -42,23 +42,23 @@ private:
 
 public:
 
-	Edge<S, T> * createVertice(const S & info, Vertice<T> * begin, Vertice<T> * end) { return createEdgeNoIncrement(nextKey++, info, begin, end); }
+	Edge<S, T> * createEdge(const S & info, Vertice<T> * begin, Vertice<T> * end) { return createEdgeNoIncrement(nextKey++, info, begin, end); }
 
 private:
 
-	void copy(const Graphe<S, T> & graph);
+	void copy(const Graph<S, T> & graph);
 
 	void eraseAll();
 
 public:
 
-	Graphe() : nextKey(0), lVertices(NULL), lEdges(NULL) {}
+	Graph() : nextKey(0), lVertices(NULL), lEdges(NULL) {}
 
-	Graphe(const Graphe<S, T> & graph) : Graphe() { this->copy(graph); }
+	Graph(const Graph<S, T> & graph) : Graph() { this->copy(graph); }
 
-	const Graphe<S, T> & operator = (const Graphe<S, T> & graph) { this->eraseAll(); this->copy(graph); return *this; }
+	const Graph<S, T> & operator = (const Graph<S, T> & graph) { this->eraseAll(); this->copy(graph); return *this; }
 
-	~Graphe() { this->eraseAll(); }
+	~Graph() { this->eraseAll(); }
 
 	int nbrVertices() const { return PElement< Vertice<T> >::size(lVertices); }
 
@@ -86,10 +86,10 @@ public:
 };
 
 template <class S, class T>
-ostream & operator << (ostream & os, const Graphe<S, T> & gr) { return os << (string)gr; }
+ostream & operator << (ostream & os, const Graph<S, T> & gr) { return os << (string)gr; }
 
 template <class S, class T>
-Vertice<T> * Graphe<S, T>::createVerticeNoIncrement(const int key, const T & info) {
+Vertice<T> * Graph<S, T>::createVerticeNoIncrement(const int key, const T & info) {
 	Vertice<T> * createdVertice = new Vertice<T>(key, info);
 	lVertices = new PElement< Vertice<T> >(createdVertice, lVertices);
 
@@ -97,7 +97,7 @@ Vertice<T> * Graphe<S, T>::createVerticeNoIncrement(const int key, const T & inf
 }
 
 template <class S, class T>
-Edge<S, T> * Graphe<S, T>::createEdgeNoIncrement(const int key, const S & info, Vertice<T> * begin, Vertice<T> * end) {
+Edge<S, T> * Graph<S, T>::createEdgeNoIncrement(const int key, const S & info, Vertice<T> * begin, Vertice<T> * end) {
 
 	if (!PElement< Vertice<T> >::inList(begin, lVertices)) throw new Error("begin vertice undifined");
 	if (!PElement< Vertice<T> >::inList(end, lVertices)) throw new Error( "begin vertice undifined");
@@ -118,7 +118,7 @@ public:
 };
 
 template <class S, class T>
-void Graphe<S, T>::copy(const Graphe<S, T> & graph)
+void Graph<S, T>::copy(const Graph<S, T> & graph)
 {
 	const PElement<Vertice<T>> * pS;
 
@@ -148,14 +148,14 @@ void Graphe<S, T>::copy(const Graphe<S, T> & graph)
 }
 
 template <class S, class T>
-void Graphe<S, T>::eraseAll() {
+void Graph<S, T>::eraseAll() {
 	PElement< Edge<S, T>>::erase(this->lEdges);
 	PElement<Vertice<T> >::erase(this->lVertices);
 	this->nextKey = 0;
 }
 
 template <class S, class T>
-PElement< pair< Vertice<T> *, Edge<S, T>* > >  *  Graphe<S, T>::adjacencent(const Vertice<T> * vertice) const {
+PElement< pair< Vertice<T> *, Edge<S, T>* > >  *  Graph<S, T>::adjacencent(const Vertice<T> * vertice) const {
 	const PElement< Edge<S, T> > * l;
 
 	PElement< pair< Vertice<T> *, Edge<S, T>* > > * r;
@@ -173,7 +173,7 @@ PElement< pair< Vertice<T> *, Edge<S, T>* > >  *  Graphe<S, T>::adjacencent(cons
 
 
 template <class S, class T>
-PElement< Edge<S, T> > *  Graphe<S, T>::adjacentVertices(const Vertice<T> * vertice) const {
+PElement< Edge<S, T> > *  Graph<S, T>::adjacentVertices(const Vertice<T> * vertice) const {
 	PElement< pair< Vertice<T> *, Edge<S, T>* > > * ladj = this->adjacencent(vertice);
 	PElement< pair< Vertice<T> *, Edge<S, T>* > > * l;
 
@@ -188,7 +188,7 @@ PElement< Edge<S, T> > *  Graphe<S, T>::adjacentVertices(const Vertice<T> * vert
 }
 
 template <class S, class T>
-PElement< Vertice<T> > *  Graphe<S, T>::neighbors(const Vertice<T> * vertice) const
+PElement< Vertice<T> > *  Graph<S, T>::neighbors(const Vertice<T> * vertice) const
 {
 	PElement< pair< Vertice<T> *, Edge<S, T>* > > * ladj = this->adjacencent(vertice);
 	PElement< pair< Vertice<T> *, Edge<S, T>* > > * l;
@@ -204,7 +204,7 @@ PElement< Vertice<T> > *  Graphe<S, T>::neighbors(const Vertice<T> * vertice) co
 }
 
 template <class S, class T>
-Edge<S, T> * Graphe<S, T>::getEdgesByVertices(const Vertice<T> * s1, const Vertice<T> * s2) const
+Edge<S, T> * Graph<S, T>::getEdgesByVertices(const Vertice<T> * s1, const Vertice<T> * s2) const
 {
 	PElement<Edge<S, T> > * l;
 
@@ -217,7 +217,7 @@ Edge<S, T> * Graphe<S, T>::getEdgesByVertices(const Vertice<T> * s1, const Verti
 
 
 template <class S, class T>
-Graphe<S, T>::operator string() const
+Graph<S, T>::operator string() const
 {
 	ostringstream oss;
 	oss << "Graphe( \n";
@@ -235,29 +235,28 @@ Graphe<S, T>::operator string() const
 
 template <class S, class T>
 template< class WINDOW>
-bool Graphe<S, T>::drawAllEdges(WINDOW & window) const
+bool Graph<S, T>::drawAllEdges(WINDOW & window) const
 {
 
 	PElement< Edge<S, T>> * pA;
 	for (pA = this->lEdges; pA; pA = pA->next)
-		if (!window.dessine(pA->value)) return false;
+		if (!window.draw(pA->value)) return false;
 
 	return true;
 }
 
 template <class S, class T>
 template< class WINDOW>
-bool Graphe<S, T>::drawAllVertices(WINDOW & window) const{
+bool Graph<S, T>::drawAllVertices(WINDOW & window) const{
 	PElement< Vertice<T>> * pS;
 	for (pS = this->lVertices; pS; pS = pS->next)
-		if (!window.dessine(pS->value)) return false;
+		if (!window.draw(pS->value)) return false;
 	return true;
 }
 
 template <class S, class T>
 template< class WINDOW>
-bool Graphe<S, T>::draw(WINDOW & window) const
-{
+bool Graph<S, T>::draw(WINDOW & window) const{
 
 	if (!this->drawAllEdges(window)) return false;
 
@@ -265,16 +264,14 @@ bool Graphe<S, T>::draw(WINDOW & window) const
 }
 
 template <class T, class WINDOW>
-bool dessine(const PElement<Vertice<T>> * path, WINDOW & window, const unsigned int color)
-{
+bool draw(const PElement<Vertice<T>> * path, WINDOW & window, const unsigned int color){
 	if (!(path && path->next))
 		return true;
-	else
-	{
+	else	{
 
-		window.dessine(path->value, path->next->value, color);
+		window.draw(path->value, path->next->value, color);
 
-		return dessine(path->next, window, color);
+		return draw(path->next, window, color);
 	}
 }
 
