@@ -9,7 +9,8 @@ private:
 	std::vector<sf::IntRect> _frames;
 	sf::Sprite *_sprite;
 	int _currentFrame;
-	double _timeBetweenFrames;
+	float _timeBetweenFrames;
+	float _timeElapsed;
 
 public:
 	Animation(sf::Sprite *sprite, double timeBetweenFrames);

@@ -171,6 +171,7 @@ int main()
 				}
 			}
 
+
 			if (clock->getElapsedTime() >= 1.0f/60.0f) {
 				window.clear();
 				g.draw(drawGraph);

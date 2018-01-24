@@ -16,7 +16,7 @@ void Animation::addFrame(const sf::IntRect &rect){
 
 void Animation::playAnnimation() {
 
-	float _timeElapsed = GameClock::getInstance()->getElapsedTime();
+	_timeElapsed += GameClock::getInstance()->getElapsedTime();
 
 	if (_timeElapsed > _timeBetweenFrames) {
 
