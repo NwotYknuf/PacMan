@@ -10,8 +10,6 @@ private:
 	sf::Sprite *_sprite;
 	int _currentFrame;
 	double _timeBetweenFrames;
-	double _timeElapsed;
-	sf::Clock clock;
 
 public:
 	Animation(sf::Sprite *sprite, double timeBetweenFrames);

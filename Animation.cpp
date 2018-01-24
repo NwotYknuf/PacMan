@@ -1,10 +1,10 @@
 #include "Animation.h"
+#include "GameClock.h"
 
 Animation::Animation(sf::Sprite *sprite, double timeBetweenFrames){
 	_sprite = sprite;
 	_currentFrame = 0;
 	_timeBetweenFrames = timeBetweenFrames;
-	_timeElapsed = 0;
 }
 
 Animation::~Animation(){
@@ -16,8 +16,7 @@ void Animation::addFrame(const sf::IntRect &rect){
 
 void Animation::playAnnimation() {
 
-	_timeElapsed += clock.getElapsedTime().asSeconds();
-	clock.restart();
+	float _timeElapsed = GameClock::getInstance()->getElapsedTime();
 
 	if (_timeElapsed > _timeBetweenFrames) {
 

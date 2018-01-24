@@ -3,7 +3,6 @@
 
 #include<SFML\Graphics.hpp>
 #include<SFML\Window.hpp>
-#include<vector>
 
 template<class S, class T>
 class DrawGraph{

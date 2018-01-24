@@ -8,6 +8,7 @@
 #include "Vertice.h"
 #include "Edge.h"
 #include "DrawGraph.h"
+#include "GameClock.h"
 
 using namespace std;
 
@@ -16,10 +17,12 @@ int main()
 	try {
 	
 		//initialisation
-		sf::RenderWindow  window(sf::VideoMode(1280, 720), "PacMan");
+		sf::RenderWindow  window(sf::VideoMode(512, 512), "PacMan");
 		sf::Event event;
+		sf::View view1(sf::FloatRect(0, 0, 252, 252));//For now
+		window.setView(view1);
 
-#pragma region pacmanInit
+#pragma region pacman
 		sf::Texture texturePackman;
 		if (!texturePackman.loadFromFile("sprites\\Packman.png")) {
 			throw Error("Can't load Packman.png");
@@ -53,27 +56,42 @@ int main()
 
 #pragma endregion
 
-#pragma region phantomInit
-		sf::Texture phantomTexture;
+#pragma region fantom
+		sf::Texture fantomTexture;
 
-		if (!phantomTexture.loadFromFile("sprites\\fantom.png")) {
+		if (!fantomTexture.loadFromFile("sprites\\fantom.png")) {
 			throw Error("Can't load fantom.png");
 		}
 
-		sf::Sprite phantomSprite;
-		phantomSprite.setTexture(phantomTexture);
+		sf::Sprite fantomSprite;
+		fantomSprite.setTexture(fantomTexture);
 
-		Animation lesDents(&phantomSprite, 0.166666667);
-		lesDents.addFrame(sf::IntRect(0, 0, 32, 32));
-		lesDents.addFrame(sf::IntRect(32, 0, 32, 32));
+		Animation fantomWalkLeft(&fantomSprite, 0.166666667);
+		fantomWalkLeft.addFrame(sf::IntRect(0, 0, 32, 32));
+		fantomWalkLeft.addFrame(sf::IntRect(32, 0, 32, 32));
 
-		Animator phantomAnimator;
-		phantomAnimator.addAnnimation("lesDents", &lesDents);
+		Animation fantomWalkRight(&fantomSprite, 0.166666667);
+		fantomWalkRight.addFrame(sf::IntRect(64, 0, 32, 32));
+		fantomWalkRight.addFrame(sf::IntRect(96, 0, 32, 32));
 
-		phantomAnimator.setCurentAnimation("lesDents");
+		Animation fantomWalkUp(&fantomSprite, 0.166666667);
+		fantomWalkUp.addFrame(sf::IntRect(128, 0, 32, 32));
+		fantomWalkUp.addFrame(sf::IntRect(160, 0, 32, 32));
+
+		Animation fantomWalkDown(&fantomSprite, 0.166666667);
+		fantomWalkDown.addFrame(sf::IntRect(192, 0, 32, 32));
+		fantomWalkDown.addFrame(sf::IntRect(224, 0, 32, 32));
+
+		Animator fantomAnimator;
+		fantomAnimator.addAnnimation("walkLeft", &fantomWalkLeft);
+		fantomAnimator.addAnnimation("walkRight", &fantomWalkRight);
+		fantomAnimator.addAnnimation("walkUp", &fantomWalkUp);
+		fantomAnimator.addAnnimation("walkDown", &fantomWalkDown);
+
+		fantomAnimator.setCurentAnimation("walkLeft");
 #pragma endregion
 
-#pragma region GraphInit
+#pragma region Graph
 
 		Graph<float, sf::Vector2<int>> g;
 
@@ -123,10 +141,8 @@ int main()
 #pragma endregion
 		
 		//main loop
-		sf::Clock clock;
-		float angle = 0;
-		phantomSprite.setOrigin(32.0f, 32.0f);
-
+		GameClock*clock = GameClock::getInstance();		
+		
 		while (window.isOpen()) {
 			while (window.pollEvent(event)) {
 				switch (event.type) {
@@ -155,12 +171,13 @@ int main()
 				}
 			}
 
-			if (clock.getElapsedTime().asSeconds() >= 1.0f/60.0f) {				
+			if (clock->getElapsedTime() >= 1.0f/60.0f) {
 				window.clear();
 				g.draw(drawGraph);
-				pacManAnimator.playAnnimation();
-				window.draw(pacmanSprite);
+				fantomAnimator.playAnnimation();
+				window.draw(fantomSprite);
 				window.display();
+				clock->restart();
 			}
 		}
 	}
