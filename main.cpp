@@ -142,7 +142,10 @@ int main()
 		
 		//main loop
 		GameClock*clock = GameClock::getInstance();		
-		
+		sf::Vector2<float> _dir(0, 0);
+		float _speed = 50.0f;
+
+
 		while (window.isOpen()) {
 			while (window.pollEvent(event)) {
 				switch (event.type) {
@@ -154,15 +157,19 @@ int main()
 
 					case sf::Keyboard::Q:
 						pacManAnimator.setCurentAnimation("walkLeft");
+						_dir = sf::Vector2<float>(-1, 0);
 						break;
 					case sf::Keyboard::D:
 						pacManAnimator.setCurentAnimation("walkRight");
+						_dir = sf::Vector2<float>(1, 0);
 						break;
 					case sf::Keyboard::Z:
 						pacManAnimator.setCurentAnimation("walkUp");
+						_dir = sf::Vector2<float>(0, -1);
 						break;
 					case sf::Keyboard::S:
 						pacManAnimator.setCurentAnimation("walkDown");
+						_dir = sf::Vector2<float>(0, 1);
 						break;
 					}
 					break;
@@ -171,12 +178,12 @@ int main()
 				}
 			}
 
-
 			if (clock->getElapsedTime() >= 1.0f/60.0f) {
 				window.clear();
 				g.draw(drawGraph);
-				fantomAnimator.playAnnimation();
-				window.draw(fantomSprite);
+				pacmanSprite.setPosition(pacmanSprite.getPosition() + _speed*clock->getElapsedTime() * _dir);
+				pacManAnimator.playAnnimation();
+				window.draw(pacmanSprite);
 				window.display();
 				clock->restart();
 			}

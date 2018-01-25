@@ -20,12 +20,12 @@ void Animation::playAnnimation() {
 
 	if (_timeElapsed > _timeBetweenFrames) {
 
-		_sprite->setTextureRect(_frames[_currentFrame]);
 		_currentFrame++;
 
 		if (_currentFrame >= _frames.size()) {
 			_currentFrame = 0;
 		}
+		_sprite->setTextureRect(_frames[_currentFrame]);
 
 		_timeElapsed = 0;
 	}
