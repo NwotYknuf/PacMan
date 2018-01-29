@@ -14,8 +14,7 @@ const float sqrt2 = 1.41421356237f;
 
 using namespace std;
 
-int main()
-{
+int main(){
 	try {
 	
 		//initialisation

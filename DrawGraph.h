@@ -4,43 +4,43 @@
 #include<SFML\Graphics.hpp>
 #include<SFML\Window.hpp>
 
-template<class S, class T>
+template<class P, class I>
 class DrawGraph{
 private :
-	sf::Sprite * _vertice, *_edge;
+	sf::Sprite * _verticeSprite, *_edgeSprite;
 	sf::RenderWindow * _window;
 public:
 
 	DrawGraph(sf::RenderWindow * window, sf::Sprite * vertice, sf::Sprite * edge) :
-		_vertice(vertice), _edge(edge), _window(window){ }
+		_verticeSprite(vertice), _edgeSprite(edge), _window(window){ }
 
-	bool draw(const Vertice<T> *_vertice);
+	bool draw(const Vertice<I> *_vertice);
 
-	bool draw(const Edge<S, T> * s);
+	bool draw(const Edge<P, I> * s);
 };
 
-template<class S, class T>
-bool DrawGraph<S,T>::draw(const Vertice<T> *vertice) {
-	int h = _vertice->getLocalBounds().height;
-	int l = _vertice->getLocalBounds().width;
+template<class P, class I>
+bool DrawGraph<P,I>::draw(const Vertice<I> *vertice) {
+	int h = _verticeSprite->getLocalBounds().height;
+	int l = _verticeSprite->getLocalBounds().width;
 
 	sf::Sprite sprite;
-	sprite.setTexture(*_vertice->getTexture());
-	sprite.setTextureRect(_vertice->getTextureRect());
+	sprite.setTexture(*_verticeSprite->getTexture());
+	sprite.setTextureRect(_verticeSprite->getTextureRect());
 
 	sprite.setPosition(l * vertice->value.x, h * vertice->value.y);
 	_window->draw(sprite);
 	return true;
 }
 
-template<class S, class T>
-bool DrawGraph<S, T>::draw(const Edge<S,T> * s){
-	int height = _edge->getLocalBounds().height;
-	int width = _edge->getLocalBounds().width;
+template<class P, class I>
+bool DrawGraph<P, I>::draw(const Edge<P,I> * s){
+	int height = _edgeSprite->getLocalBounds().height;
+	int width = _edgeSprite->getLocalBounds().width;
 
 	sf::Sprite sprite;
-	sprite.setTexture(*_edge->getTexture());
-	sprite.setTextureRect(_edge->getTextureRect());
+	sprite.setTexture(*_edgeSprite->getTexture());
+	sprite.setTextureRect(_edgeSprite->getTextureRect());
 	sprite.setOrigin(height / 2, width / 2);
 
 	//position
