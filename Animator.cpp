@@ -4,7 +4,7 @@ Animator::Animator(){ }
 
 Animator::~Animator(){ }
 
-void Animator::addAnnimation(string name, Animation * animation) {
+void Animator::addAnimation(string name, Animation * animation) {
 	_animations.insert(pair<string, Animation*>(name, animation));
 }
 

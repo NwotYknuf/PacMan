@@ -10,6 +10,8 @@
 #include "DrawGraph.h"
 #include "GameClock.h"
 
+const float sqrt2 = 1.41421356237f;
+
 using namespace std;
 
 int main()
@@ -49,10 +51,10 @@ int main()
 		walkDown.addFrame(sf::IntRect(96, 0, 32, 32));
 
 		Animator pacManAnimator;
-		pacManAnimator.addAnnimation("walkLeft", &walkLeft);
-		pacManAnimator.addAnnimation("walkRight", &walkRight);
-		pacManAnimator.addAnnimation("walkUp", &walkUp);
-		pacManAnimator.addAnnimation("walkDown", &walkDown);
+		pacManAnimator.addAnimation("walkLeft", &walkLeft);
+		pacManAnimator.addAnimation("walkRight", &walkRight);
+		pacManAnimator.addAnimation("walkUp", &walkUp);
+		pacManAnimator.addAnimation("walkDown", &walkDown);
 
 #pragma endregion
 
@@ -82,11 +84,37 @@ int main()
 		fantomWalkDown.addFrame(sf::IntRect(192, 0, 32, 32));
 		fantomWalkDown.addFrame(sf::IntRect(224, 0, 32, 32));
 
+		Animation fantomWalkUpLeft(&fantomSprite, 0.166666667);
+		fantomWalkUpLeft.addFrame(sf::IntRect(0, 32, 32, 32));
+		fantomWalkUpLeft.addFrame(sf::IntRect(32, 32, 32, 32));
+
+		Animation fantomWalkUpRight(&fantomSprite, 0.166666667);
+		fantomWalkUpRight.addFrame(sf::IntRect(64, 32, 32, 32));
+		fantomWalkUpRight.addFrame(sf::IntRect(96, 32, 32, 32));
+
+		Animation fantomWalkDownRight(&fantomSprite, 0.166666667);
+		fantomWalkDownRight.addFrame(sf::IntRect(128, 32, 32, 32));
+		fantomWalkDownRight.addFrame(sf::IntRect(160, 32, 32, 32));
+
+		Animation fantomWalkDownLeft(&fantomSprite, 0.166666667);
+		fantomWalkDownLeft.addFrame(sf::IntRect(192, 32, 32, 32));
+		fantomWalkDownLeft.addFrame(sf::IntRect(224, 32, 32, 32));
+
+		Animation fantomStandStill(&fantomSprite, 0.333333333333);
+		fantomStandStill.addFrame(sf::IntRect(0, 0, 32, 32));
+		fantomStandStill.addFrame(sf::IntRect(64, 0, 32, 32));
+		
+
 		Animator fantomAnimator;
-		fantomAnimator.addAnnimation("walkLeft", &fantomWalkLeft);
-		fantomAnimator.addAnnimation("walkRight", &fantomWalkRight);
-		fantomAnimator.addAnnimation("walkUp", &fantomWalkUp);
-		fantomAnimator.addAnnimation("walkDown", &fantomWalkDown);
+		fantomAnimator.addAnimation("walkLeft", &fantomWalkLeft);
+		fantomAnimator.addAnimation("walkRight", &fantomWalkRight);
+		fantomAnimator.addAnimation("walkUp", &fantomWalkUp);
+		fantomAnimator.addAnimation("walkDown", &fantomWalkDown);
+		fantomAnimator.addAnimation("walkDownLeft", &fantomWalkDownLeft);
+		fantomAnimator.addAnimation("walkDownRight", &fantomWalkDownRight);
+		fantomAnimator.addAnimation("walkUpLeft", &fantomWalkUpLeft);
+		fantomAnimator.addAnimation("walkUpRight", &fantomWalkUpRight);
+		fantomAnimator.addAnimation("standStill", &fantomStandStill);
 
 		fantomAnimator.setCurentAnimation("walkLeft");
 #pragma endregion
@@ -155,22 +183,49 @@ int main()
 				case sf::Event::KeyPressed:
 					switch (event.key.code) {
 
-					case sf::Keyboard::Q:
-						pacManAnimator.setCurentAnimation("walkLeft");
+					case sf::Keyboard::Numpad4:
+						fantomAnimator.setCurentAnimation("walkLeft");
 						_dir = sf::Vector2<float>(-1, 0);
 						break;
-					case sf::Keyboard::D:
-						pacManAnimator.setCurentAnimation("walkRight");
+					case sf::Keyboard::Numpad6:
+						fantomAnimator.setCurentAnimation("walkRight");
 						_dir = sf::Vector2<float>(1, 0);
 						break;
-					case sf::Keyboard::Z:
-						pacManAnimator.setCurentAnimation("walkUp");
+					case sf::Keyboard::Numpad8:
+						fantomAnimator.setCurentAnimation("walkUp");
 						_dir = sf::Vector2<float>(0, -1);
 						break;
-					case sf::Keyboard::S:
-						pacManAnimator.setCurentAnimation("walkDown");
+					case sf::Keyboard::Numpad2:
+						fantomAnimator.setCurentAnimation("walkDown");
 						_dir = sf::Vector2<float>(0, 1);
 						break;
+					case sf::Keyboard::Numpad1:
+						fantomAnimator.setCurentAnimation("walkDownLeft");
+						_dir = sf::Vector2<float>(-sqrt2 / 2, sqrt2 / 2);
+						break;
+					case sf::Keyboard::Numpad3:
+						fantomAnimator.setCurentAnimation("walkDownRight");
+						_dir = sf::Vector2<float>(sqrt2 / 2, sqrt2 / 2);
+						break;
+					case sf::Keyboard::Numpad7:
+						fantomAnimator.setCurentAnimation("walkUpLeft");
+						_dir = sf::Vector2<float>(-sqrt2 / 2, -sqrt2 / 2);
+						break;
+					case sf::Keyboard::Numpad9:
+						fantomAnimator.setCurentAnimation("walkUpRight");
+						_dir = sf::Vector2<float>(sqrt2/2, -sqrt2 / 2);
+						break;
+					case sf::Keyboard::Numpad5:
+						fantomAnimator.setCurentAnimation("standStill");
+						_dir = sf::Vector2<float>(0, 0);
+						break;
+					case sf::Keyboard::Numpad0:
+						if (_speed < 100)
+							_speed = 150;
+						else
+							_speed = 50;
+						break;
+						
 					}
 					break;
 				default:
@@ -181,9 +236,9 @@ int main()
 			if (clock->getElapsedTime() >= 1.0f/60.0f) {
 				window.clear();
 				g.draw(drawGraph);
-				pacmanSprite.setPosition(pacmanSprite.getPosition() + _speed*clock->getElapsedTime() * _dir);
-				pacManAnimator.playAnnimation();
-				window.draw(pacmanSprite);
+				fantomSprite.setPosition(fantomSprite.getPosition() + _speed*clock->getElapsedTime() * _dir);
+				fantomAnimator.playAnnimation();
+				window.draw(fantomSprite);
 				window.display();
 				clock->restart();
 			}

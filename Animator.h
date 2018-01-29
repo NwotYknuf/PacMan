@@ -15,7 +15,7 @@ public:
 	Animator();
 	~Animator();
 
-	void addAnnimation(string name, Animation* animation);
+	void addAnimation(string name, Animation* animation);
 
 	void setCurentAnimation(string name);
 
