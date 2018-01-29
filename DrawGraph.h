@@ -14,13 +14,13 @@ public:
 	DrawGraph(sf::RenderWindow * window, sf::Sprite * vertice, sf::Sprite * edge) :
 		_verticeSprite(vertice), _edgeSprite(edge), _window(window){ }
 
-	bool draw(const Vertice<I> *_vertice);
+	bool draw(const Vertice<sf::Vector2<int>> *_vertice);
 
-	bool draw(const Edge<P, I> * s);
+	bool draw(const Edge<float, sf::Vector2<int>> * s);
 };
 
 template<class P, class I>
-bool DrawGraph<P,I>::draw(const Vertice<I> *vertice) {
+bool DrawGraph<P,I>::draw(const Vertice<sf::Vector2<int>> *vertice) {
 	int h = _verticeSprite->getLocalBounds().height;
 	int l = _verticeSprite->getLocalBounds().width;
 
@@ -34,7 +34,7 @@ bool DrawGraph<P,I>::draw(const Vertice<I> *vertice) {
 }
 
 template<class P, class I>
-bool DrawGraph<P, I>::draw(const Edge<P,I> * s){
+bool DrawGraph<P, I>::draw(const Edge<float, sf::Vector2<int>> * s){
 	int height = _edgeSprite->getLocalBounds().height;
 	int width = _edgeSprite->getLocalBounds().width;
 

@@ -9,6 +9,8 @@
 #include "Edge.h"
 #include "DrawGraph.h"
 #include "GameClock.h"
+#include "Character.h"
+#include "DrawCharacter.h"
 
 const float sqrt2 = 1.41421356237f;
 
@@ -116,39 +118,44 @@ int main(){
 		fantomAnimator.addAnimation("standStill", &fantomStandStill);
 
 		fantomAnimator.setCurentAnimation("walkLeft");
+
+		Character<unsigned, sf::Vector2<int>> fantom(0, sf::Vector2<int>(0, 0));
+
+		DrawCharacter<unsigned, sf::Vector2<int>>  drawChar(&window, &fantomSprite);
+
 #pragma endregion
 
 #pragma region Graph
 
-		Graph<float, sf::Vector2<int>> g;
+		Graph<float, sf::Vector2<int>> graph;
 
 		Vertice<sf::Vector2<int>> * s0, *s1, *s2, *s3, *s4, *s5, *s6, *s7, *s8, *s9, *s10, *s11;
-		s0 = g.createVertice(sf::Vector2<int>(0, 0));
-		s1 = g.createVertice(sf::Vector2<int>(0, 1));
-		s2 = g.createVertice(sf::Vector2<int>(0, 2));
-		s3 = g.createVertice(sf::Vector2<int>(1, 0));
-		s4 = g.createVertice(sf::Vector2<int>(1, 1));
-		s5 = g.createVertice(sf::Vector2<int>(1, 2));
-		s6 = g.createVertice(sf::Vector2<int>(2, 0));
-		s7 = g.createVertice(sf::Vector2<int>(2, 1));
-		s8 = g.createVertice(sf::Vector2<int>(2, 2));
-		s9 = g.createVertice(sf::Vector2<int>(3, 3));
-		s10 = g.createVertice(sf::Vector2<int>(3, 4));
-		s11 = g.createVertice(sf::Vector2<int>(4,4));
+		s0 = graph.createVertice(sf::Vector2<int>(0, 0));
+		s1 = graph.createVertice(sf::Vector2<int>(0, 1));
+		s2 = graph.createVertice(sf::Vector2<int>(0, 2));
+		s3 = graph.createVertice(sf::Vector2<int>(1, 0));
+		s4 = graph.createVertice(sf::Vector2<int>(1, 1));
+		s5 = graph.createVertice(sf::Vector2<int>(1, 2));
+		s6 = graph.createVertice(sf::Vector2<int>(2, 0));
+		s7 = graph.createVertice(sf::Vector2<int>(2, 1));
+		s8 = graph.createVertice(sf::Vector2<int>(2, 2));
+		s9 = graph.createVertice(sf::Vector2<int>(3, 3));
+		s10 = graph.createVertice(sf::Vector2<int>(3, 4));
+		s11 = graph.createVertice(sf::Vector2<int>(4,4));
 
 		Edge<float, sf::Vector2<int>> *e0, *e1, *e2, *e3, *e4, *e5, *e6, *e7, *e8, *e9, *e10, *e11;
-		e0 = g.createEdge(0.0f, s4, s0);
-		e1 = g.createEdge(0.0f, s4, s1);
-		e2 = g.createEdge(0.0f, s4, s2);
-		e3 = g.createEdge(0.0f, s4, s3);
-		e4 = g.createEdge(0.0f, s4, s5);
-		e5 = g.createEdge(0.0f, s4, s6);
-		e6 = g.createEdge(0.0f, s4, s7);
-		e7 = g.createEdge(0.0f, s4, s8);
-		e8 = g.createEdge(0.0f, s8, s9);
-		e9 = g.createEdge(0.0f, s9, s10);
-		e10 = g.createEdge(0.0f, s9, s11);
-		e11 = g.createEdge(0.0f, s10, s11);
+		e0 = graph.createEdge(0.0f, s4, s0);
+		e1 = graph.createEdge(0.0f, s4, s1);
+		e2 = graph.createEdge(0.0f, s4, s2);
+		e3 = graph.createEdge(0.0f, s4, s3);
+		e4 = graph.createEdge(0.0f, s4, s5);
+		e5 = graph.createEdge(0.0f, s4, s6);
+		e6 = graph.createEdge(0.0f, s4, s7);
+		e7 = graph.createEdge(0.0f, s4, s8);
+		e8 = graph.createEdge(0.0f, s8, s9);
+		e9 = graph.createEdge(0.0f, s9, s10);
+		e10 = graph.createEdge(0.0f, s9, s11);
+		e11 = graph.createEdge(0.0f, s10, s11);
 
 		sf::Texture graphTexture;
 		if (!graphTexture.loadFromFile("sprites\\tileset.png")) {
@@ -168,10 +175,7 @@ int main(){
 #pragma endregion
 		
 		//main loop
-		GameClock*clock = GameClock::getInstance();		
-		sf::Vector2<float> _dir(0, 0);
-		float _speed = 50.0f;
-
+		GameClock*clock = GameClock::getInstance();
 
 		while (window.isOpen()) {
 			while (window.pollEvent(event)) {
@@ -184,47 +188,43 @@ int main(){
 
 					case sf::Keyboard::Numpad4:
 						fantomAnimator.setCurentAnimation("walkLeft");
-						_dir = sf::Vector2<float>(-1, 0);
+						fantom.position.x--;
 						break;
 					case sf::Keyboard::Numpad6:
 						fantomAnimator.setCurentAnimation("walkRight");
-						_dir = sf::Vector2<float>(1, 0);
+						fantom.position.x++;
 						break;
 					case sf::Keyboard::Numpad8:
 						fantomAnimator.setCurentAnimation("walkUp");
-						_dir = sf::Vector2<float>(0, -1);
+						fantom.position.y--;
 						break;
 					case sf::Keyboard::Numpad2:
 						fantomAnimator.setCurentAnimation("walkDown");
-						_dir = sf::Vector2<float>(0, 1);
+						fantom.position.y++;
 						break;
 					case sf::Keyboard::Numpad1:
 						fantomAnimator.setCurentAnimation("walkDownLeft");
-						_dir = sf::Vector2<float>(-sqrt2 / 2, sqrt2 / 2);
+						fantom.position.x--;
+						fantom.position.y++;
 						break;
 					case sf::Keyboard::Numpad3:
 						fantomAnimator.setCurentAnimation("walkDownRight");
-						_dir = sf::Vector2<float>(sqrt2 / 2, sqrt2 / 2);
+						fantom.position.x++;
+						fantom.position.y++;
 						break;
 					case sf::Keyboard::Numpad7:
 						fantomAnimator.setCurentAnimation("walkUpLeft");
-						_dir = sf::Vector2<float>(-sqrt2 / 2, -sqrt2 / 2);
+						fantom.position.x--;
+						fantom.position.y--;
 						break;
 					case sf::Keyboard::Numpad9:
 						fantomAnimator.setCurentAnimation("walkUpRight");
-						_dir = sf::Vector2<float>(sqrt2/2, -sqrt2 / 2);
+						fantom.position.x--;
+						fantom.position.y--;
 						break;
 					case sf::Keyboard::Numpad5:
 						fantomAnimator.setCurentAnimation("standStill");
-						_dir = sf::Vector2<float>(0, 0);
-						break;
-					case sf::Keyboard::Numpad0:
-						if (_speed < 100)
-							_speed = 150;
-						else
-							_speed = 50;
-						break;
-						
+						break;						
 					}
 					break;
 				default:
@@ -234,10 +234,10 @@ int main(){
 
 			if (clock->getElapsedTime() >= 1.0f/60.0f) {
 				window.clear();
-				g.draw(drawGraph);
-				fantomSprite.setPosition(fantomSprite.getPosition() + _speed*clock->getElapsedTime() * _dir);
-				fantomAnimator.playAnnimation();
+				graph.draw(drawGraph);
 				window.draw(fantomSprite);
+				fantomAnimator.playAnnimation();
+				fantom.drawCharacter(drawChar);
 				window.display();
 				clock->restart();
 			}

@@ -9,16 +9,21 @@ public:
 	I info;
 	P position;
 
+	Character(I _info, P _pos) {
+		info = _info;
+		position = _pos;
+	}
+
 	template< class WINDOW>
-	bool Character<I>::drawCharacter(WINDOW & window) const;
+	bool drawCharacter(WINDOW & window) const;
 
 };
 
-template <class I>
+template <class I, class P>
 template< class WINDOW>
-bool Character<I>::drawCharacter(WINDOW & window) const{
+bool Character<I,P>::drawCharacter(WINDOW & window) const{
 
-	if(!window.draw(pA->value)
+	if(!window.draw(this))
 		return false;
 
 	return true;

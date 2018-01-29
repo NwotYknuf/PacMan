@@ -35,8 +35,8 @@ bool DrawCharacter < I, P > ::draw(const Character<I, P>* character) {
 	int h = _charSprite->getLocalBounds().height;
 	int w = _charSprite->getLocalBounds().width;
 
-	_charSprite.setPosition(character.position.x * w, character.position.y * h);
-	_window.draw(_charSprite);
+	_charSprite->setPosition(character->position.x * w, character->position.y * h);
+	_window->draw(*_charSprite);
 	
 	return true;
 }
