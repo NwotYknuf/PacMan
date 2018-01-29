@@ -9,19 +9,19 @@ using namespace std;
  * template class for lists
 **/
 
-template<class T>
+template<class I>
 class PElement{
 public:
-	T* value;
-	PElement<T>* next;
+	I* value;
+	PElement<I>* next;
 
-	PElement(T* _value, PElement<T>* _next) : value(_value), next(_next){ }
+	PElement(I* _value, PElement<I>* _next) : value(_value), next(_next){ }
 
-	static int size(const PElement<T> * l){
-		return l->next == NULL ? 1: 1 + PElement<T>::size(l->next);
+	static int size(const PElement<I> * l){
+		return l->next == NULL ? 1: 1 + PElement<I>::size(l->next);
 	}
 
-	static const string toString(const PElement<T> * p,
+	static const string toString(const PElement<I> * p,
 		const char * begin = "( ",
 		const char * separateur = ", ",
 		const char * end = " )"){
@@ -32,7 +32,7 @@ public:
 			stream << begin << end;
 		}
 		else{
-			const PElement<T> *copy = p;
+			const PElement<I> *copy = p;
 			stream << begin;
 
 			while (copy->next){
@@ -45,10 +45,10 @@ public:
 		return stream.str();
 	}
 
-	static void insertOrdered(T * a, PElement<T> * & l,	bool(*lessOrEqual)(const T * a1, const T * a2)){
+	static void insertOrdered(I * a, PElement<I> * & l,	bool(*lessOrEqual)(const I * a1, const I * a2)){
 
 		if (!l){
-			t = PElement<T>(a, NULL);
+			t = PElement<I>(a, NULL);
 		}
 
 		if(lessOrEqual(l->value, a)){
@@ -59,27 +59,27 @@ public:
 		}
 	}
 
-	static T * unstack(PElement<T> * &l){
+	static I * unstack(PElement<I> * &l){
 		if (!l){
 			throw "bonjour";
 		}
 
-		T *val = l->value;
-		PElement<T> *mem = l;
+		I *val = l->value;
+		PElement<I> *mem = l;
 		l = l->next;
 		delete(mem);
 
 		return val;
 	}
 
-	static bool remove(const T * a, PElement<T> * & l){
+	static bool remove(const I * a, PElement<I> * & l){
 		if (!l){
 			return;
 		}
 				
 		if (l->value == a){
-			T *val = l->value;
-			PElement<T> *mem = l;
+			I *val = l->value;
+			PElement<I> *mem = l;
 			l = l->next;
 			delete(mem);
 			delete(val);
@@ -89,17 +89,17 @@ public:
 		}
 	}
 
-	static PElement<T> * copy(PElement<T> * l) {
+	static PElement<I> * copy(PElement<I> * l) {
 		
 		if (l->next != NULL) {
-			return new PElement(new T(*l->value), copy(l->next));
+			return new PElement(new I(*l->value), copy(l->next));
 		}
 		else {
-			return new PElement(new T(*l->value), NULL);
+			return new PElement(new I(*l->value), NULL);
 		}
 	}
 
-	static void erase(PElement<T>* & l) {
+	static void erase(PElement<I>* & l) {
 		if (l != NULL) {
 			erase(l->next);
 			delete(l->value);
@@ -108,7 +108,7 @@ public:
 		l = NULL;
 	}
 
-	static bool inList(const T * value, PElement<T> * l) {
+	static bool inList(const I * value, PElement<I> * l) {
 		if (l == NULL) {
 			return false;
 		}
@@ -118,7 +118,7 @@ public:
 	}
 
 	template < class FONCTEUR>
-	static PElement< T > * inList(PElement<T> * l, const FONCTEUR & condition) {
+	static PElement< I > * inList(PElement<I> * l, const FONCTEUR & condition) {
 		if (l == NULL)
 			return NULL;
 		

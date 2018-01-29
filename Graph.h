@@ -5,7 +5,7 @@
 #include "Edge.h"
 #include "Edge.h"
 
-template <class S, class T>
+template <class P, class I>
 class Graph {
 protected:
 
@@ -13,28 +13,28 @@ protected:
 
 public:
 
-	PElement< Vertice<T> > * lVertices;
-	PElement< Edge<S, T> > * lEdges;
+	PElement< Vertice<I> > * lVertices;
+	PElement< Edge<P, I> > * lEdges;
 
 
 private:
 
 	//doesn't update nextKey
-	Vertice<T> * createVerticeNoIncrement(const int key, const T & info);
+	Vertice<I> * createVerticeNoIncrement(const int key, const I & info);
 
 	void updateNextKey(const int key) { nextKey = max(1 + key, nextKey); }
 
-	Vertice<T> * createVertice(const int key, const T & info) { updateNextKey(key); return createVerticeNoIncrement(key, info); }
+	Vertice<I> * createVertice(const int key, const I & info) { updateNextKey(key); return createVerticeNoIncrement(key, info); }
 
 public:
 
-	Vertice<T> * createVertice(const T & info) { return createVerticeNoIncrement(nextKey++, info); }
+	Vertice<I> * createVertice(const I & info) { return createVerticeNoIncrement(nextKey++, info); }
 
 private:
 	//doesn't update nextKey
-	Edge<S, T> * createEdgeNoIncrement(const int key, const S & info, Vertice<T> * begin, Vertice<T> * end);
+	Edge<P, I> * createEdgeNoIncrement(const int key, const P & info, Vertice<I> * begin, Vertice<I> * end);
 
-	Edge<S, T> * createEdge(const int clef, const S & info, Vertice<T> * begin, Vertice<T> * end)
+	Edge<P, I> * createEdge(const int clef, const P & info, Vertice<I> * begin, Vertice<I> * end)
 	{
 		updateNextKey(clef);
 		return createEdgeNoIncrement(clef, info, begin, end);
@@ -42,11 +42,11 @@ private:
 
 public:
 
-	Edge<S, T> * createEdge(const S & info, Vertice<T> * begin, Vertice<T> * end) { return createEdgeNoIncrement(nextKey++, info, begin, end); }
+	Edge<P, I> * createEdge(const P & info, Vertice<I> * begin, Vertice<I> * end) { return createEdgeNoIncrement(nextKey++, info, begin, end); }
 
 private:
 
-	void copy(const Graph<S, T> & graph);
+	void copy(const Graph<P, I> & graph);
 
 	void eraseAll();
 
@@ -54,23 +54,23 @@ public:
 
 	Graph() : nextKey(0), lVertices(NULL), lEdges(NULL) {}
 
-	Graph(const Graph<S, T> & graph) : Graph() { this->copy(graph); }
+	Graph(const Graph<P, I> & graph) : Graph() { this->copy(graph); }
 
-	const Graph<S, T> & operator = (const Graph<S, T> & graph) { this->eraseAll(); this->copy(graph); return *this; }
+	const Graph<P, I> & operator = (const Graph<P, I> & graph) { this->eraseAll(); this->copy(graph); return *this; }
 
 	~Graph() { this->eraseAll(); }
 
-	int nbrVertices() const { return PElement< Vertice<T> >::size(lVertices); }
+	int nbrVertices() const { return PElement< Vertice<I> >::size(lVertices); }
 
-	int nbrEdges() const { return PElement< Edge<S, T> >::size(lEdges); }
+	int nbrEdges() const { return PElement< Edge<P, I> >::size(lEdges); }
 
-	PElement< pair< Vertice<T> *, Edge<S, T>* > >  *  adjacencent(const Vertice<T> * vertice) const;
+	PElement< pair< Vertice<I> *, Edge<P, I>* > >  *  adjacencent(const Vertice<I> * vertice) const;
 
-	PElement< Edge<S, T> > *  adjacentVertices(const Vertice<T> * vertice) const;
+	PElement< Edge<P, I> > *  adjacentVertices(const Vertice<I> * vertice) const;
 
-	PElement< Vertice<T> > *  neighbors(const Vertice<T> * vertice) const;
+	PElement< Vertice<I> > *  neighbors(const Vertice<I> * vertice) const;
 
-	Edge<S, T> * getEdgesByVertices(const Vertice<T> * s1, const Vertice<T> * s2) const;
+	Edge<P, I> * getEdgesByVertices(const Vertice<I> * s1, const Vertice<I> * s2) const;
 
 	operator string() const;
 
@@ -85,128 +85,128 @@ public:
 
 };
 
-template <class S, class T>
-ostream & operator << (ostream & os, const Graph<S, T> & gr) { return os << (string)gr; }
+template <class P, class I>
+ostream & operator << (ostream & os, const Graph<P, I> & gr) { return os << (string)gr; }
 
-template <class S, class T>
-Vertice<T> * Graph<S, T>::createVerticeNoIncrement(const int key, const T & info) {
-	Vertice<T> * createdVertice = new Vertice<T>(key, info);
-	lVertices = new PElement< Vertice<T> >(createdVertice, lVertices);
+template <class P, class I>
+Vertice<I> * Graph<P, I>::createVerticeNoIncrement(const int key, const I & info) {
+	Vertice<I> * createdVertice = new Vertice<I>(key, info);
+	lVertices = new PElement< Vertice<I> >(createdVertice, lVertices);
 
 	return createdVertice;
 }
 
-template <class S, class T>
-Edge<S, T> * Graph<S, T>::createEdgeNoIncrement(const int key, const S & info, Vertice<T> * begin, Vertice<T> * end) {
+template <class P, class I>
+Edge<P, I> * Graph<P, I>::createEdgeNoIncrement(const int key, const P & info, Vertice<I> * begin, Vertice<I> * end) {
 
-	if (!PElement< Vertice<T> >::inList(begin, lVertices)) throw new Error("begin vertice undifined");
-	if (!PElement< Vertice<T> >::inList(end, lVertices)) throw new Error( "begin vertice undifined");
+	if (!PElement< Vertice<I> >::inList(begin, lVertices)) throw new Error("begin vertice undifined");
+	if (!PElement< Vertice<I> >::inList(end, lVertices)) throw new Error( "begin vertice undifined");
 
-	Edge<S, T> *  newVertice = new Edge<S, T>(key, info, begin, end);
+	Edge<P, I> *  newVertice = new Edge<P, I>(key, info, begin, end);
 
-	lEdges = new PElement< Edge<S, T> >(newVertice, lEdges);
+	lEdges = new PElement< Edge<P, I> >(newVertice, lEdges);
 
 	return newVertice;
 }
 
-template <class T>
+template <class I>
 class VerticeAlreadyInCopy {
 public:
-	const Vertice<T> * s;
-	VerticeAlreadyInCopy(const Vertice<T> * s) :s(s) {}
-	bool operator () (const Vertice<T> * vertice) const { return vertice->key == s->key; }
+	const Vertice<I> * s;
+	VerticeAlreadyInCopy(const Vertice<I> * s) :s(s) {}
+	bool operator () (const Vertice<I> * vertice) const { return vertice->key == s->key; }
 };
 
-template <class S, class T>
-void Graph<S, T>::copy(const Graph<S, T> & graph)
+template <class P, class I>
+void Graph<P, I>::copy(const Graph<P, I> & graph)
 {
-	const PElement<Vertice<T>> * pS;
+	const PElement<Vertice<I>> * pS;
 
 	// Vertices first
 	for (pS = graph.lVertices; pS; pS = pS->next) {
-		const Vertice<T> * sommet = pS->value;
+		const Vertice<I> * sommet = pS->value;
 		this->createVertice(sommet->key, sommet->value);
 	}
 
 	//edges next
 
-	const PElement<Edge<S, T>> * pA;
+	const PElement<Edge<P, I>> * pA;
 	for (pA = graph.lEdges; pA; pA = pA->next) {
-		const Edge<S, T> * a = pA->value;
-		Vertice<T> * d, *f;
-		PElement< Vertice<T> > * p;
-		VerticeAlreadyInCopy<T> conditionDebut(a->begin);
-		p = PElement< Vertice<T> >::inList(lVertices, conditionDebut);
+		const Edge<P, I> * a = pA->value;
+		Vertice<I> * d, *f;
+		PElement< Vertice<I> > * p;
+		VerticeAlreadyInCopy<I> conditionDebut(a->begin);
+		p = PElement< Vertice<I> >::inList(lVertices, conditionDebut);
 		d = p->value;
 
-		VerticeAlreadyInCopy<T> conditionFin(a->end);
-		p = PElement< Vertice<T> >::inList(lVertices, conditionFin);
+		VerticeAlreadyInCopy<I> conditionFin(a->end);
+		p = PElement< Vertice<I> >::inList(lVertices, conditionFin);
 		f = p->value;
 
 		this->createVertice(a->key, a->value, d, f);
 	}
 }
 
-template <class S, class T>
-void Graph<S, T>::eraseAll() {
-	PElement< Edge<S, T>>::erase(this->lEdges);
-	PElement<Vertice<T> >::erase(this->lVertices);
+template <class P, class I>
+void Graph<P, I>::eraseAll() {
+	PElement< Edge<P, I>>::erase(this->lEdges);
+	PElement<Vertice<I> >::erase(this->lVertices);
 	this->nextKey = 0;
 }
 
-template <class S, class T>
-PElement< pair< Vertice<T> *, Edge<S, T>* > >  *  Graph<S, T>::adjacencent(const Vertice<T> * vertice) const {
-	const PElement< Edge<S, T> > * l;
+template <class P, class I>
+PElement< pair< Vertice<I> *, Edge<P, I>* > >  *  Graph<P, I>::adjacencent(const Vertice<I> * vertice) const {
+	const PElement< Edge<P, I> > * l;
 
-	PElement< pair< Vertice<T> *, Edge<S, T>* > > * r;
+	PElement< pair< Vertice<I> *, Edge<P, I>* > > * r;
 
 	for (l = lEdges, r = NULL; l; l = l->next)
 
 		if (vertice == l->value->begin)
-			r = new PElement< pair< Vertice<T> *, Edge<S, T>* > >(new pair< Vertice<T> *, Edge<S, T>* >(l->value->end, l->value), r);
+			r = new PElement< pair< Vertice<I> *, Edge<P, I>* > >(new pair< Vertice<I> *, Edge<P, I>* >(l->value->end, l->value), r);
 		else
 			if (vertice == l->value->end)
-				r = new PElement< pair< Vertice<T> *, Edge<S, T>* > >(new pair< Vertice<T> *, Edge<S, T>* >(l->value->begin, l->value), r);
+				r = new PElement< pair< Vertice<I> *, Edge<P, I>* > >(new pair< Vertice<I> *, Edge<P, I>* >(l->value->begin, l->value), r);
 
 	return r;
 }
 
 
-template <class S, class T>
-PElement< Edge<S, T> > *  Graph<S, T>::adjacentVertices(const Vertice<T> * vertice) const {
-	PElement< pair< Vertice<T> *, Edge<S, T>* > > * ladj = this->adjacencent(vertice);
-	PElement< pair< Vertice<T> *, Edge<S, T>* > > * l;
+template <class P, class I>
+PElement< Edge<P, I> > *  Graph<P, I>::adjacentVertices(const Vertice<I> * vertice) const {
+	PElement< pair< Vertice<I> *, Edge<P, I>* > > * ladj = this->adjacencent(vertice);
+	PElement< pair< Vertice<I> *, Edge<P, I>* > > * l;
 
-	PElement< Edge<S, T> > * r;
+	PElement< Edge<P, I> > * r;
 
 	for (l = ladj, r = NULL; l; l = l->next)
-		r = new PElement< Edge<S, T> >(l->value->second, r);
+		r = new PElement< Edge<P, I> >(l->value->second, r);
 
-	PElement< pair< Vertice<T> *, Edge<S, T>* > >::erase(ladj);
+	PElement< pair< Vertice<I> *, Edge<P, I>* > >::erase(ladj);
 
 	return r;
 }
 
-template <class S, class T>
-PElement< Vertice<T> > *  Graph<S, T>::neighbors(const Vertice<T> * vertice) const
+template <class P, class I>
+PElement< Vertice<I> > *  Graph<P, I>::neighbors(const Vertice<I> * vertice) const
 {
-	PElement< pair< Vertice<T> *, Edge<S, T>* > > * ladj = this->adjacencent(vertice);
-	PElement< pair< Vertice<T> *, Edge<S, T>* > > * l;
+	PElement< pair< Vertice<I> *, Edge<P, I>* > > * ladj = this->adjacencent(vertice);
+	PElement< pair< Vertice<I> *, Edge<P, I>* > > * l;
 
-	PElement< Vertice<T> > * r;
+	PElement< Vertice<I> > * r;
 
 	for (l = ladj, r = NULL; l; l = l->next)
-		r = new PElement< Vertice<T> >(l->value->first, r);
+		r = new PElement< Vertice<I> >(l->value->first, r);
 
-	PElement< pair< Vertice<T> *, Edge<S, T>* > >::erase(ladj);
+	PElement< pair< Vertice<I> *, Edge<P, I>* > >::erase(ladj);
 
 	return r;
 }
 
-template <class S, class T>
-Edge<S, T> * Graph<S, T>::getEdgesByVertices(const Vertice<T> * s1, const Vertice<T> * s2) const
+template <class P, class I>
+Edge<P, I> * Graph<P, I>::getEdgesByVertices(const Vertice<I> * s1, const Vertice<I> * s2) const
 {
-	PElement<Edge<S, T> > * l;
+	PElement<Edge<P, I> > * l;
 
 	for (l = this->lEdges; l; l = l->next)
 		if (l->value->equals(s1, s2))
@@ -216,55 +216,55 @@ Edge<S, T> * Graph<S, T>::getEdgesByVertices(const Vertice<T> * s1, const Vertic
 }
 
 
-template <class S, class T>
-Graph<S, T>::operator string() const
+template <class P, class I>
+Graph<P, I>::operator string() const
 {
 	ostringstream oss;
 	oss << "Graphe( \n";
 	oss << "prochaine clef = " << this->nextKey << endl;
 	oss << "nombre de sommets = " << this->nbrVertices() << "\n";
 
-	oss << PElement<Vertice<T> >::toString(lVertices, "", "\n", "\n");
+	oss << PElement<Vertice<I> >::toString(lVertices, "", "\n", "\n");
 
 	oss << "nombre d'arêtes = " << this->nbrEdges() << "\n";
 
-	oss << PElement<Edge<S, T> >::toString(lEdges, "", "\n", "\n");
+	oss << PElement<Edge<P, I> >::toString(lEdges, "", "\n", "\n");
 	oss << ")";
 	return oss.str();
 }
 
-template <class S, class T>
+template <class P, class I>
 template< class WINDOW>
-bool Graph<S, T>::drawAllEdges(WINDOW & window) const
+bool Graph<P, I>::drawAllEdges(WINDOW & window) const
 {
 
-	PElement< Edge<S, T>> * pA;
+	PElement< Edge<P, I>> * pA;
 	for (pA = this->lEdges; pA; pA = pA->next)
 		if (!window.draw(pA->value)) return false;
 
 	return true;
 }
 
-template <class S, class T>
+template <class P, class I>
 template< class WINDOW>
-bool Graph<S, T>::drawAllVertices(WINDOW & window) const{
-	PElement< Vertice<T>> * pS;
+bool Graph<P, I>::drawAllVertices(WINDOW & window) const{
+	PElement< Vertice<I>> * pS;
 	for (pS = this->lVertices; pS; pS = pS->next)
 		if (!window.draw(pS->value)) return false;
 	return true;
 }
 
-template <class S, class T>
+template <class P, class I>
 template< class WINDOW>
-bool Graph<S, T>::draw(WINDOW & window) const{
+bool Graph<P, I>::draw(WINDOW & window) const{
 
 	if (!this->drawAllEdges(window)) return false;
 
 	return this->drawAllVertices(window);
 }
 
-template <class T, class WINDOW>
-bool draw(const PElement<Vertice<T>> * path, WINDOW & window, const unsigned int color){
+template <class I, class WINDOW>
+bool draw(const PElement<Vertice<I>> * path, WINDOW & window, const unsigned int color){
 	if (!(path && path->next))
 		return true;
 	else	{
@@ -275,7 +275,7 @@ bool draw(const PElement<Vertice<T>> * path, WINDOW & window, const unsigned int
 	}
 }
 
-template<class T>
-const T & max(const T &t1, const T &t2) {
+template<class I>
+const I & max(const I &t1, const I &t2) {
 	return t1 > t2 ? t1 : t2;
 }

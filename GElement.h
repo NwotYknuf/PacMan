@@ -13,14 +13,14 @@ using namespace std;
  * Template for a graph element, contains a Key and a Value
 */
 
-template <class T>
+template <class I>
 class GElement : public AElement{
 public:
-T value;
-GElement(const int key, const T & v): AElement(key), value(v) { }
+I value;
+GElement(const int key, const I & v): AElement(key), value(v) { }
 operator string() const { ostringstream o; o << this->AElement::operator string() << ", value = " << value; return o.str();}
 
-friend ostream & operator << (ostream & os, const GElement<T>& gElement) {return os << (string) gElement;}
+friend ostream & operator << (ostream & os, const GElement<I>& gElement) {return os << (string) gElement;}
 };
 
 #endif
