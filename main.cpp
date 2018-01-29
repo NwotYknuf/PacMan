@@ -127,7 +127,7 @@ int main(){
 
 #pragma region Graph
 
-		Graph<float, sf::Vector2<int>> graph;
+		Graph<EdgeInfo, sf::Vector2<int>> graph;
 
 		Vertice<sf::Vector2<int>> * s0, *s1, *s2, *s3, *s4, *s5, *s6, *s7, *s8, *s9, *s10, *s11;
 		s0 = graph.createVertice(sf::Vector2<int>(0, 0));
@@ -143,19 +143,33 @@ int main(){
 		s10 = graph.createVertice(sf::Vector2<int>(3, 4));
 		s11 = graph.createVertice(sf::Vector2<int>(4,4));
 
-		Edge<float, sf::Vector2<int>> *e0, *e1, *e2, *e3, *e4, *e5, *e6, *e7, *e8, *e9, *e10, *e11;
-		e0 = graph.createEdge(0.0f, s4, s0);
-		e1 = graph.createEdge(0.0f, s4, s1);
-		e2 = graph.createEdge(0.0f, s4, s2);
-		e3 = graph.createEdge(0.0f, s4, s3);
-		e4 = graph.createEdge(0.0f, s4, s5);
-		e5 = graph.createEdge(0.0f, s4, s6);
-		e6 = graph.createEdge(0.0f, s4, s7);
-		e7 = graph.createEdge(0.0f, s4, s8);
-		e8 = graph.createEdge(0.0f, s8, s9);
-		e9 = graph.createEdge(0.0f, s9, s10);
-		e10 = graph.createEdge(0.0f, s9, s11);
-		e11 = graph.createEdge(0.0f, s10, s11);
+		Edge<EdgeInfo, sf::Vector2<int>> *e0, *e1, *e2, *e3, *e4, *e5, *e6, *e7, *e8, *e9, *e10, *e11;
+		EdgeInfo e;
+
+		e.heat = 0;
+		//1 East West
+		e.direction = 1;
+		e1 = graph.createEdge(e, s4, s1);
+		e6 = graph.createEdge(e, s4, s7);
+		e11 = graph.createEdge(e, s10, s11);
+
+		// 2  North - East  South - West
+		e.direction = 2;
+		e2 = graph.createEdge(e, s4, s2);
+		e5 = graph.createEdge(e, s4, s6);
+
+		// 3 North South
+		e.direction = 3;
+		e3 = graph.createEdge(e, s4, s3);
+		e4 = graph.createEdge(e, s4, s5);
+		e9 = graph.createEdge(e, s9, s10);
+
+		// 4 North - West South - East
+		e.direction = 4;
+		e0 = graph.createEdge(e, s4, s0);
+		e7 = graph.createEdge(e, s4, s8);
+		e8 = graph.createEdge(e, s8, s9);
+		e10 = graph.createEdge(e, s9, s11);
 
 		sf::Texture graphTexture;
 		if (!graphTexture.loadFromFile("sprites\\tileset.png")) {

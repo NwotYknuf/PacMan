@@ -2,6 +2,9 @@
 #define CHARACTER_H
 
 #include "Graph.h"
+#include "PElement.h"
+#include <utility>
+
 template<class I, class P>
 class Character {
 public:
@@ -34,6 +37,10 @@ bool Character<I,P>::drawCharacter(WINDOW & window) const{
 
 template<class I, class P>
 inline void Character<I, P>::move(sf::Vector2<int> _displacement, Graph<float, sf::Vector2<int>>* graph){
+	
+	PElement< Edge<float, sf::Vector2<int>> > * adjacentEdges;
+	adjacentEdges = graph->adjacentEdges();
+
 
 }
 

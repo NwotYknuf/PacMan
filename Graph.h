@@ -65,7 +65,7 @@ public:
 
 	PElement< pair< Vertice<I> *, Edge<P, I>* > >  *  adjacent(const Vertice<I> * vertice) const;
 
-	PElement< Edge<P, I> > *  adjacentVertices(const Vertice<I> * vertice) const;
+	PElement< Edge<P, I> > *  adjacentEdges(const Vertice<I> * vertice) const;
 
 	PElement< Vertice<I> > *  neighbors(const Vertice<I> * vertice) const;
 
@@ -172,7 +172,7 @@ PElement< pair< Vertice<I> *, Edge<P, I>* > >  *  Graph<P, I>::adjacent(const Ve
 
 
 template <class P, class I>
-PElement< Edge<P, I> > *  Graph<P, I>::adjacentVertices(const Vertice<I> * vertice) const {
+PElement< Edge<P, I> > *  Graph<P, I>::adjacentEdges(const Vertice<I> * vertice) const {
 	PElement< pair< Vertice<I> *, Edge<P, I>* > > * ladj = this->adjacent(vertice);
 	PElement< pair< Vertice<I> *, Edge<P, I>* > > * l;
 
@@ -234,8 +234,7 @@ Graph<P, I>::operator string() const
 
 template <class P, class I>
 template< class WINDOW>
-bool Graph<P, I>::drawAllEdges(WINDOW & window) const
-{
+bool Graph<P, I>::drawAllEdges(WINDOW & window) const{
 
 	PElement< Edge<P, I>> * pA;
 	for (pA = this->lEdges; pA; pA = pA->next)
