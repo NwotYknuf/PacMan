@@ -16,7 +16,6 @@ public:
 	PElement< Vertice<I> > * lVertices;
 	PElement< Edge<P, I> > * lEdges;
 
-
 private:
 
 	//doesn't update nextKey
@@ -64,7 +63,7 @@ public:
 
 	int nbrEdges() const { return PElement< Edge<P, I> >::size(lEdges); }
 
-	PElement< pair< Vertice<I> *, Edge<P, I>* > >  *  adjacencent(const Vertice<I> * vertice) const;
+	PElement< pair< Vertice<I> *, Edge<P, I>* > >  *  adjacent(const Vertice<I> * vertice) const;
 
 	PElement< Edge<P, I> > *  adjacentVertices(const Vertice<I> * vertice) const;
 
@@ -155,7 +154,7 @@ void Graph<P, I>::eraseAll() {
 }
 
 template <class P, class I>
-PElement< pair< Vertice<I> *, Edge<P, I>* > >  *  Graph<P, I>::adjacencent(const Vertice<I> * vertice) const {
+PElement< pair< Vertice<I> *, Edge<P, I>* > >  *  Graph<P, I>::adjacent(const Vertice<I> * vertice) const {
 	const PElement< Edge<P, I> > * l;
 
 	PElement< pair< Vertice<I> *, Edge<P, I>* > > * r;
@@ -174,7 +173,7 @@ PElement< pair< Vertice<I> *, Edge<P, I>* > >  *  Graph<P, I>::adjacencent(const
 
 template <class P, class I>
 PElement< Edge<P, I> > *  Graph<P, I>::adjacentVertices(const Vertice<I> * vertice) const {
-	PElement< pair< Vertice<I> *, Edge<P, I>* > > * ladj = this->adjacencent(vertice);
+	PElement< pair< Vertice<I> *, Edge<P, I>* > > * ladj = this->adjacent(vertice);
 	PElement< pair< Vertice<I> *, Edge<P, I>* > > * l;
 
 	PElement< Edge<P, I> > * r;
@@ -190,7 +189,7 @@ PElement< Edge<P, I> > *  Graph<P, I>::adjacentVertices(const Vertice<I> * verti
 template <class P, class I>
 PElement< Vertice<I> > *  Graph<P, I>::neighbors(const Vertice<I> * vertice) const
 {
-	PElement< pair< Vertice<I> *, Edge<P, I>* > > * ladj = this->adjacencent(vertice);
+	PElement< pair< Vertice<I> *, Edge<P, I>* > > * ladj = this->adjacent(vertice);
 	PElement< pair< Vertice<I> *, Edge<P, I>* > > * l;
 
 	PElement< Vertice<I> > * r;

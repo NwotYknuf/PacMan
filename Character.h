@@ -1,9 +1,9 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
+#include "Graph.h"
 template<class I, class P>
 class Character {
-
 public:
 
 	I info;
@@ -16,6 +16,8 @@ public:
 
 	template< class WINDOW>
 	bool drawCharacter(WINDOW & window) const;
+
+	void move(sf::Vector2<int> _displacement, Graph<float, sf::Vector2<int>> * graph);
 
 };
 
@@ -30,4 +32,9 @@ bool Character<I,P>::drawCharacter(WINDOW & window) const{
 
 }
 
-#endif // !CHARACTER_H
+template<class I, class P>
+inline void Character<I, P>::move(sf::Vector2<int> _displacement, Graph<float, sf::Vector2<int>>* graph){
+
+}
+
+#endif 

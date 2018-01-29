@@ -34,7 +34,7 @@ bool DrawGraph<P,I>::draw(const Vertice<sf::Vector2<int>> *vertice) {
 }
 
 template<class P, class I>
-bool DrawGraph<P, I>::draw(const Edge<float, sf::Vector2<int>> * s){
+bool DrawGraph<P, I>::draw(const Edge<float, sf::Vector2<int>> * edge){
 	int height = _edgeSprite->getLocalBounds().height;
 	int width = _edgeSprite->getLocalBounds().width;
 
@@ -44,8 +44,8 @@ bool DrawGraph<P, I>::draw(const Edge<float, sf::Vector2<int>> * s){
 	sprite.setOrigin(height / 2, width / 2);
 
 	//position
-	sf::Vector2<float> begin(s->begin->value.x, s->begin->value.y);
-	sf::Vector2<float> diff(s->end->value.x - s->begin->value.x, s->end->value.y - s->begin->value.y);
+	sf::Vector2<float> begin(edge->begin->value.x, edge->begin->value.y);
+	sf::Vector2<float> diff(edge->end->value.x - edge->begin->value.x, edge->end->value.y - edge->begin->value.y);
 	sf::Vector2<float> pos = begin + diff / 2.0f;
 	sprite.setPosition((0.5f + pos.x )* height, (0.5f + pos.y) * width);
 	

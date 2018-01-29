@@ -219,7 +219,7 @@ int main(){
 						break;
 					case sf::Keyboard::Numpad9:
 						fantomAnimator.setCurentAnimation("walkUpRight");
-						fantom.position.x--;
+						fantom.position.x++;
 						fantom.position.y--;
 						break;
 					case sf::Keyboard::Numpad5:
