@@ -59,71 +59,7 @@ int main(){
 
 #pragma endregion
 
-#pragma region fantom
-		sf::Texture fantomTexture;
 
-		if (!fantomTexture.loadFromFile("sprites\\fantom.png")) {
-			throw Error("Can't load fantom.png");
-		}
-
-		sf::Sprite fantomSprite;
-		fantomSprite.setTexture(fantomTexture);
-
-		Animation fantomWalkLeft(&fantomSprite, 0.166666667);
-		fantomWalkLeft.addFrame(sf::IntRect(0, 0, 32, 32));
-		fantomWalkLeft.addFrame(sf::IntRect(32, 0, 32, 32));
-
-		Animation fantomWalkRight(&fantomSprite, 0.166666667);
-		fantomWalkRight.addFrame(sf::IntRect(64, 0, 32, 32));
-		fantomWalkRight.addFrame(sf::IntRect(96, 0, 32, 32));
-
-		Animation fantomWalkUp(&fantomSprite, 0.166666667);
-		fantomWalkUp.addFrame(sf::IntRect(128, 0, 32, 32));
-		fantomWalkUp.addFrame(sf::IntRect(160, 0, 32, 32));
-
-		Animation fantomWalkDown(&fantomSprite, 0.166666667);
-		fantomWalkDown.addFrame(sf::IntRect(192, 0, 32, 32));
-		fantomWalkDown.addFrame(sf::IntRect(224, 0, 32, 32));
-
-		Animation fantomWalkUpLeft(&fantomSprite, 0.166666667);
-		fantomWalkUpLeft.addFrame(sf::IntRect(0, 32, 32, 32));
-		fantomWalkUpLeft.addFrame(sf::IntRect(32, 32, 32, 32));
-
-		Animation fantomWalkUpRight(&fantomSprite, 0.166666667);
-		fantomWalkUpRight.addFrame(sf::IntRect(64, 32, 32, 32));
-		fantomWalkUpRight.addFrame(sf::IntRect(96, 32, 32, 32));
-
-		Animation fantomWalkDownRight(&fantomSprite, 0.166666667);
-		fantomWalkDownRight.addFrame(sf::IntRect(128, 32, 32, 32));
-		fantomWalkDownRight.addFrame(sf::IntRect(160, 32, 32, 32));
-
-		Animation fantomWalkDownLeft(&fantomSprite, 0.166666667);
-		fantomWalkDownLeft.addFrame(sf::IntRect(192, 32, 32, 32));
-		fantomWalkDownLeft.addFrame(sf::IntRect(224, 32, 32, 32));
-
-		Animation fantomStandStill(&fantomSprite, 0.333333333333);
-		fantomStandStill.addFrame(sf::IntRect(0, 0, 32, 32));
-		fantomStandStill.addFrame(sf::IntRect(64, 0, 32, 32));
-		
-
-		Animator fantomAnimator;
-		fantomAnimator.addAnimation("walkLeft", &fantomWalkLeft);
-		fantomAnimator.addAnimation("walkRight", &fantomWalkRight);
-		fantomAnimator.addAnimation("walkUp", &fantomWalkUp);
-		fantomAnimator.addAnimation("walkDown", &fantomWalkDown);
-		fantomAnimator.addAnimation("walkDownLeft", &fantomWalkDownLeft);
-		fantomAnimator.addAnimation("walkDownRight", &fantomWalkDownRight);
-		fantomAnimator.addAnimation("walkUpLeft", &fantomWalkUpLeft);
-		fantomAnimator.addAnimation("walkUpRight", &fantomWalkUpRight);
-		fantomAnimator.addAnimation("standStill", &fantomStandStill);
-
-		fantomAnimator.setCurentAnimation("walkLeft");
-
-		Character<unsigned, sf::Vector2<int>> fantom(0, sf::Vector2<int>(0, 0));
-
-		DrawCharacter<unsigned, sf::Vector2<int>>  drawChar(&window, &fantomSprite);
-
-#pragma endregion
 
 #pragma region Graph
 
@@ -188,6 +124,72 @@ int main(){
 		
 #pragma endregion
 		
+#pragma region fantom
+		sf::Texture fantomTexture;
+
+		if (!fantomTexture.loadFromFile("sprites\\fantom.png")) {
+			throw Error("Can't load fantom.png");
+		}
+
+		sf::Sprite fantomSprite;
+		fantomSprite.setTexture(fantomTexture);
+
+		Animation fantomWalkLeft(&fantomSprite, 0.166666667);
+		fantomWalkLeft.addFrame(sf::IntRect(0, 0, 32, 32));
+		fantomWalkLeft.addFrame(sf::IntRect(32, 0, 32, 32));
+
+		Animation fantomWalkRight(&fantomSprite, 0.166666667);
+		fantomWalkRight.addFrame(sf::IntRect(64, 0, 32, 32));
+		fantomWalkRight.addFrame(sf::IntRect(96, 0, 32, 32));
+
+		Animation fantomWalkUp(&fantomSprite, 0.166666667);
+		fantomWalkUp.addFrame(sf::IntRect(128, 0, 32, 32));
+		fantomWalkUp.addFrame(sf::IntRect(160, 0, 32, 32));
+
+		Animation fantomWalkDown(&fantomSprite, 0.166666667);
+		fantomWalkDown.addFrame(sf::IntRect(192, 0, 32, 32));
+		fantomWalkDown.addFrame(sf::IntRect(224, 0, 32, 32));
+
+		Animation fantomWalkUpLeft(&fantomSprite, 0.166666667);
+		fantomWalkUpLeft.addFrame(sf::IntRect(0, 32, 32, 32));
+		fantomWalkUpLeft.addFrame(sf::IntRect(32, 32, 32, 32));
+
+		Animation fantomWalkUpRight(&fantomSprite, 0.166666667);
+		fantomWalkUpRight.addFrame(sf::IntRect(64, 32, 32, 32));
+		fantomWalkUpRight.addFrame(sf::IntRect(96, 32, 32, 32));
+
+		Animation fantomWalkDownRight(&fantomSprite, 0.166666667);
+		fantomWalkDownRight.addFrame(sf::IntRect(128, 32, 32, 32));
+		fantomWalkDownRight.addFrame(sf::IntRect(160, 32, 32, 32));
+
+		Animation fantomWalkDownLeft(&fantomSprite, 0.166666667);
+		fantomWalkDownLeft.addFrame(sf::IntRect(192, 32, 32, 32));
+		fantomWalkDownLeft.addFrame(sf::IntRect(224, 32, 32, 32));
+
+		Animation fantomStandStill(&fantomSprite, 0.333333333333);
+		fantomStandStill.addFrame(sf::IntRect(0, 0, 32, 32));
+		fantomStandStill.addFrame(sf::IntRect(64, 0, 32, 32));
+
+
+		Animator fantomAnimator;
+		fantomAnimator.addAnimation("walkLeft", &fantomWalkLeft);
+		fantomAnimator.addAnimation("walkRight", &fantomWalkRight);
+		fantomAnimator.addAnimation("walkUp", &fantomWalkUp);
+		fantomAnimator.addAnimation("walkDown", &fantomWalkDown);
+		fantomAnimator.addAnimation("walkDownLeft", &fantomWalkDownLeft);
+		fantomAnimator.addAnimation("walkDownRight", &fantomWalkDownRight);
+		fantomAnimator.addAnimation("walkUpLeft", &fantomWalkUpLeft);
+		fantomAnimator.addAnimation("walkUpRight", &fantomWalkUpRight);
+		fantomAnimator.addAnimation("standStill", &fantomStandStill);
+
+		fantomAnimator.setCurentAnimation("walkLeft");
+
+		Character<unsigned, Vertice<sf::Vector2<int>>*> fantom(0, s0);
+
+		DrawCharacter<unsigned, Vertice<sf::Vector2<int>>*>  drawChar(&window, &fantomSprite);
+
+#pragma endregion
+
 		//main loop
 		GameClock*clock = GameClock::getInstance();
 
@@ -202,39 +204,28 @@ int main(){
 
 					case sf::Keyboard::Numpad4:
 						fantomAnimator.setCurentAnimation("walkLeft");
-						fantom.position.x--;
+						fantom.move(s8, &graph);
 						break;
 					case sf::Keyboard::Numpad6:
 						fantomAnimator.setCurentAnimation("walkRight");
-						fantom.position.x++;
 						break;
 					case sf::Keyboard::Numpad8:
 						fantomAnimator.setCurentAnimation("walkUp");
-						fantom.position.y--;
 						break;
 					case sf::Keyboard::Numpad2:
 						fantomAnimator.setCurentAnimation("walkDown");
-						fantom.position.y++;
 						break;
 					case sf::Keyboard::Numpad1:
 						fantomAnimator.setCurentAnimation("walkDownLeft");
-						fantom.position.x--;
-						fantom.position.y++;
 						break;
 					case sf::Keyboard::Numpad3:
 						fantomAnimator.setCurentAnimation("walkDownRight");
-						fantom.position.x++;
-						fantom.position.y++;
 						break;
 					case sf::Keyboard::Numpad7:
 						fantomAnimator.setCurentAnimation("walkUpLeft");
-						fantom.position.x--;
-						fantom.position.y--;
 						break;
 					case sf::Keyboard::Numpad9:
 						fantomAnimator.setCurentAnimation("walkUpRight");
-						fantom.position.x++;
-						fantom.position.y--;
 						break;
 					case sf::Keyboard::Numpad5:
 						fantomAnimator.setCurentAnimation("standStill");

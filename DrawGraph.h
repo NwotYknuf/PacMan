@@ -9,8 +9,8 @@ class DrawGraph{
 private :
 	sf::Sprite * _verticeSprite, *_edgeSprite;
 	sf::RenderWindow * _window;
-public:
 
+public:
 	DrawGraph(sf::RenderWindow * window, sf::Sprite * vertice, sf::Sprite * edge) :
 		_verticeSprite(vertice), _edgeSprite(edge), _window(window){ }
 

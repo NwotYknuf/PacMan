@@ -20,7 +20,7 @@ public:
 	template< class WINDOW>
 	bool drawCharacter(WINDOW & window) const;
 
-	void move(sf::Vector2<int> _displacement, Graph<float, sf::Vector2<int>> * graph);
+	void move(Vertice<sf::Vector2<int>>* vertice, Graph<EdgeInfo, sf::Vector2<int>> * graph);
 
 };
 
@@ -36,11 +36,15 @@ bool Character<I,P>::drawCharacter(WINDOW & window) const{
 }
 
 template<class I, class P>
-inline void Character<I, P>::move(sf::Vector2<int> _displacement, Graph<float, sf::Vector2<int>>* graph){
+inline void Character<I, P>::move(Vertice<sf::Vector2<int>>* vertice, Graph<EdgeInfo, sf::Vector2<int>>* graph){
 	
-	PElement< Edge<float, sf::Vector2<int>> > * adjacentEdges;
-	adjacentEdges = graph->adjacentEdges();
+	PElement<Vertice<sf::Vector2<int>>> * voisin;
 
+	voisin = graph->neighbors(position);
+
+	if (PElement<Vertice<sf::Vector2<int>>>::inList(vertice, voisin)) {
+		this->position = vertice;
+	}
 
 }
 

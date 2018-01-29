@@ -4,6 +4,7 @@
 #include <SFML\Graphics.hpp>
 #include <SFML\Window.hpp>
 #include <SFML\System.hpp>
+#include "Vertice.h"
 #include "Character.h"
 
 template<class I, class P>
@@ -18,7 +19,7 @@ public :
 
 	DrawCharacter(sf::RenderWindow *window, sf::Sprite * charSprite);
 
-	bool draw(const Character<unsigned, sf::Vector2<int>> * character);
+	bool draw(const Character<unsigned, Vertice<sf::Vector2<int>>*>* character);
 
 };
 
@@ -29,11 +30,11 @@ DrawCharacter<I, P>::DrawCharacter(sf::RenderWindow * window, sf::Sprite * charS
 }
 
 template<class I, class P>
-bool DrawCharacter < I, P > ::draw(const Character<unsigned, sf::Vector2<int>>* character) {
+bool DrawCharacter < I, P > ::draw(const Character<unsigned, Vertice<sf::Vector2<int>>*>* character) {
 	int h = _charSprite->getLocalBounds().height;
 	int w = _charSprite->getLocalBounds().width;
 
-	_charSprite->setPosition(character->position.x * w, character->position.y * h);
+	_charSprite->setPosition(character->position->value.x * w, character->position->value.y * h);
 	_window->draw(*_charSprite);
 	
 	return true;
