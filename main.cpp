@@ -59,8 +59,6 @@ int main(){
 
 #pragma endregion
 
-
-
 #pragma region Graph
 
 		Graph<EdgeInfo, sf::Vector2<int>> graph;
