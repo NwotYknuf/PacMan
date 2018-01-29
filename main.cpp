@@ -117,7 +117,7 @@ int main(){
 		fantomAnimator.addAnimation("walkUpRight", &fantomWalkUpRight);
 		fantomAnimator.addAnimation("standStill", &fantomStandStill);
 
-		fantomAnimator.setCurentAnimation("walkLeft");
+		fantomAnimator.setCurentAnimation("standStill");
 
 		Character<unsigned, sf::Vector2<int>> fantom(0, sf::Vector2<int>(0, 0));
 
