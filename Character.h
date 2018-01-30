@@ -5,14 +5,14 @@
 #include "PElement.h"
 #include <utility>
 
-template<class I, class P>
+template<class Info, class VerticeInfo>
 class Character {
 public:
 
-	I * info;
-	P * position;
+	Info * info;
+	Vertice<VerticeInfo> * position;
 
-	Character(I * _info, P * _pos) {
+	Character(Info * _info, Vertice<VerticeInfo> * _pos) {
 		info = _info;
 		position = _pos;
 	}
@@ -20,32 +20,30 @@ public:
 	template< class WINDOW>
 	bool drawCharacter(WINDOW & window) const;
 
-	void move(Vertice<sf::Vector2<int>>* vertice, Graph<EdgeInfo, sf::Vector2<int>> * graph);
+	template <class EdgeInformation>
+	void move(Vertice<VerticeInfo>* vertice, Graph<EdgeInformation, VerticeInfo> * graph);
 
 };
 
-template <class I, class P>
+template <class Info, class VerticeInfo>
 template< class WINDOW>
-bool Character<I,P>::drawCharacter(WINDOW & window) const{
+bool Character<Info, VerticeInfo>::drawCharacter(WINDOW & window) const {
 
-	if(!window.draw(this))
+	if (!window.draw(this))
 		return false;
-
 	return true;
 
 }
 
-template<class I, class P>
-void Character<I, P>::move(Vertice<sf::Vector2<int>>* vertice, Graph<EdgeInfo, sf::Vector2<int>>* graph){
-	
-	PElement<Vertice<sf::Vector2<int>>> * voisin;
-
+template<class Info, class VerticeInfo>
+template<class EdgeInformation>
+void Character<Info, VerticeInfo>::move(Vertice<VerticeInfo>* vertice, Graph<EdgeInformation, VerticeInfo>* graph) {
+	PElement<Vertice<VerticeInfo>> * voisin;
 	voisin = graph->neighbors(position);
 
-	if (PElement<Vertice<sf::Vector2<int>>>::inList(vertice, voisin)) {
+	if (PElement < Vertice<VerticeInfo>>::inList(vertice, voisin)) {
 		this->position = vertice;
 	}
-
 }
 
 #endif 
