@@ -9,10 +9,10 @@ template<class I, class P>
 class Character {
 public:
 
-	I info;
-	P position;
+	I * info;
+	P * position;
 
-	Character(I _info, P _pos) {
+	Character(I * _info, P * _pos) {
 		info = _info;
 		position = _pos;
 	}
@@ -36,7 +36,7 @@ bool Character<I,P>::drawCharacter(WINDOW & window) const{
 }
 
 template<class I, class P>
-inline void Character<I, P>::move(Vertice<sf::Vector2<int>>* vertice, Graph<EdgeInfo, sf::Vector2<int>>* graph){
+void Character<I, P>::move(Vertice<sf::Vector2<int>>* vertice, Graph<EdgeInfo, sf::Vector2<int>>* graph){
 	
 	PElement<Vertice<sf::Vector2<int>>> * voisin;
 

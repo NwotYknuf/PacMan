@@ -1,8 +1,8 @@
 #include "DrawCharacter.h"
 
 template<>
-bool DrawCharacter < unsigned, Vertice<sf::Vector2<int>>*>
-::draw(const Character<unsigned, Vertice<sf::Vector2<int>>*>* character) {
+bool DrawCharacter < unsigned, Vertice<sf::Vector2<int>>>
+::draw(const Character<unsigned, Vertice<sf::Vector2<int>>>* character) {
 	int h = _charSprite->getLocalBounds().height;
 	int w = _charSprite->getLocalBounds().width;
 

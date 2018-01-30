@@ -182,9 +182,9 @@ int main(){
 
 		fantomAnimator.setCurentAnimation("walkLeft");
 
-		Character<unsigned, Vertice<sf::Vector2<int>>*> fantom(0, s0);
+		Character<unsigned, Vertice<sf::Vector2<int>>> fantom(new unsigned(0), s0);
 
-		DrawCharacter<unsigned, Vertice<sf::Vector2<int>>*>  drawChar(&window, &fantomSprite);
+		DrawCharacter<unsigned, Vertice<sf::Vector2<int>>>  drawChar(&window, &fantomSprite);
 
 #pragma endregion
 
@@ -202,7 +202,7 @@ int main(){
 
 					case sf::Keyboard::Numpad4:
 						fantomAnimator.setCurentAnimation("walkLeft");
-						fantom.move(s8, &graph);
+						fantom.move(s4, &graph);
 						break;
 					case sf::Keyboard::Numpad6:
 						fantomAnimator.setCurentAnimation("walkRight");
