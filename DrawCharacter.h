@@ -7,7 +7,7 @@
 #include "Vertice.h"
 #include "Character.h"
 
-template<class Info, class VerticeInfo>
+template<class Info, class VerticeInformation>
 class DrawCharacter {
 private:
 
@@ -17,11 +17,11 @@ private:
 public :
 
 	DrawCharacter(sf::RenderWindow *window, sf::Sprite * charSprite);
-	bool draw(const Character<Info, VerticeInfo>* character);
+	bool draw(const Character<Info, VerticeInformation>* character);
 };
 
-template<class Info, class VerticeInfo>
-DrawCharacter<Info, VerticeInfo>::DrawCharacter(sf::RenderWindow * window, sf::Sprite * charSprite){
+template<class Info, class VerticeInformation>
+DrawCharacter<Info, VerticeInformation>::DrawCharacter(sf::RenderWindow * window, sf::Sprite * charSprite){
 	_window = window;
 	_charSprite = charSprite;
 }

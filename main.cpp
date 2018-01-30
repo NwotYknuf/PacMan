@@ -182,7 +182,7 @@ int main(){
 
 		fantomAnimator.setCurentAnimation("walkLeft");
 
-		Character<unsigned, sf::Vector2<int>> fantom(new unsigned(0), s0);
+		Character<unsigned, sf::Vector2<int>> fantom(new unsigned(0), s4);
 
 		DrawCharacter<unsigned, sf::Vector2<int>>  drawChar(&window, &fantomSprite);
 
@@ -202,28 +202,35 @@ int main(){
 
 					case sf::Keyboard::Numpad4:
 						fantomAnimator.setCurentAnimation("walkLeft");
-						fantom.move<EdgeInfo>(s4, &graph);
+						fantom.move<EdgeInfo>(sf::Vector2<int>(-1,0), &graph);
 						break;
 					case sf::Keyboard::Numpad6:
 						fantomAnimator.setCurentAnimation("walkRight");
+						fantom.move<EdgeInfo>(sf::Vector2<int>(1, 0), &graph);
 						break;
 					case sf::Keyboard::Numpad8:
 						fantomAnimator.setCurentAnimation("walkUp");
+						fantom.move<EdgeInfo>(sf::Vector2<int>(0, -1), &graph);
 						break;
 					case sf::Keyboard::Numpad2:
 						fantomAnimator.setCurentAnimation("walkDown");
+						fantom.move<EdgeInfo>(sf::Vector2<int>(0, 1), &graph);
 						break;
 					case sf::Keyboard::Numpad1:
 						fantomAnimator.setCurentAnimation("walkDownLeft");
+						fantom.move<EdgeInfo>(sf::Vector2<int>(-1, 1), &graph);
 						break;
 					case sf::Keyboard::Numpad3:
 						fantomAnimator.setCurentAnimation("walkDownRight");
+						fantom.move<EdgeInfo>(sf::Vector2<int>(1, 1), &graph);
 						break;
 					case sf::Keyboard::Numpad7:
 						fantomAnimator.setCurentAnimation("walkUpLeft");
+						fantom.move<EdgeInfo>(sf::Vector2<int>(-1, -1), &graph);
 						break;
 					case sf::Keyboard::Numpad9:
 						fantomAnimator.setCurentAnimation("walkUpRight");
+						fantom.move<EdgeInfo>(sf::Vector2<int>(1, -1), &graph);
 						break;
 					case sf::Keyboard::Numpad5:
 						fantomAnimator.setCurentAnimation("standStill");
