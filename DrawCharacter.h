@@ -7,9 +7,8 @@
 #include "Vertice.h"
 #include "Character.h"
 
-template<class I, class P>
+template<class Info, class VerticeInformation>
 class DrawCharacter {
-
 private:
 
 	sf::Sprite * _charSprite;
@@ -18,25 +17,24 @@ private:
 public :
 
 	DrawCharacter(sf::RenderWindow *window, sf::Sprite * charSprite);
-
-	bool draw(const Character<unsigned, Vertice<sf::Vector2<int>>*>* character);
-
+	bool draw(const Character<Info, VerticeInformation>* character);
 };
 
-template<class I, class P>
-DrawCharacter<I, P>::DrawCharacter(sf::RenderWindow * window, sf::Sprite * charSprite){
+template<class Info, class VerticeInformation>
+DrawCharacter<Info, VerticeInformation>::DrawCharacter(sf::RenderWindow * window, sf::Sprite * charSprite){
 	_window = window;
 	_charSprite = charSprite;
 }
 
-template<class I, class P>
-bool DrawCharacter < I, P > ::draw(const Character<unsigned, Vertice<sf::Vector2<int>>*>* character) {
+template<>
+bool DrawCharacter < unsigned, sf::Vector2<int>>
+::draw(const Character<unsigned, sf::Vector2<int>>* character) {
 	int h = _charSprite->getLocalBounds().height;
 	int w = _charSprite->getLocalBounds().width;
 
 	_charSprite->setPosition(character->position->value.x * w, character->position->value.y * h);
 	_window->draw(*_charSprite);
-	
+
 	return true;
 }
 
