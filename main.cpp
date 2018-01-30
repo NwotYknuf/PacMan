@@ -104,6 +104,7 @@ int main(){
 		e7 = graph.createEdge(e, s4, s8);
 		e8 = graph.createEdge(e, s8, s9);
 		e10 = graph.createEdge(e, s9, s11);
+		e11 = graph.createEdge(e, s0, s8);
 
 		sf::Texture graphTexture;
 		if (!graphTexture.loadFromFile("sprites\\tileset.png")) {
@@ -164,7 +165,7 @@ int main(){
 		fantomWalkDownLeft.addFrame(sf::IntRect(192, 32, 32, 32));
 		fantomWalkDownLeft.addFrame(sf::IntRect(224, 32, 32, 32));
 
-		Animation fantomStandStill(&fantomSprite, 0.333333333333);
+		Animation fantomStandStill(&fantomSprite, 0.45);
 		fantomStandStill.addFrame(sf::IntRect(0, 0, 32, 32));
 		fantomStandStill.addFrame(sf::IntRect(64, 0, 32, 32));
 
@@ -180,7 +181,7 @@ int main(){
 		fantomAnimator.addAnimation("walkUpRight", &fantomWalkUpRight);
 		fantomAnimator.addAnimation("standStill", &fantomStandStill);
 
-		fantomAnimator.setCurentAnimation("walkLeft");
+		fantomAnimator.setCurentAnimation("standStill");
 
 		Character<unsigned, Vertice<sf::Vector2<int>>*> fantom(0, s0);
 

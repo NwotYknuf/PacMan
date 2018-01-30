@@ -18,7 +18,7 @@ typedef struct EdgeInfo {
 	int direction;
 	/*
 	 * 1 East West
-	 * 2  North-East  South-West
+	 * 2 North-East South-West
 	 * 3 North South
 	 * 4 North-West South-East
 	 */
