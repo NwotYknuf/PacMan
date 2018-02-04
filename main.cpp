@@ -25,39 +25,7 @@ int main(){
 		sf::View view1(sf::FloatRect(144, 144, 256, 256));//For now
 		window.setView(view1);
 
-#pragma region pacman
-		sf::Texture texturePackman;
-		if (!texturePackman.loadFromFile("sprites\\Packman.png")) {
-			throw Error("Can't load Packman.png");
-		}
 
-		sf::Sprite pacmanSprite;
-		pacmanSprite.setTexture(texturePackman);
-		pacmanSprite.setTextureRect(sf::IntRect(0, 0, 32, 32));
-
-		Animation walkLeft(&pacmanSprite, 0.166666667);
-		walkLeft.addFrame(sf::IntRect(0, 0, 32, 32));
-		walkLeft.addFrame(sf::IntRect(32, 0, 32, 32));
-
-		Animation walkRight(&pacmanSprite, 0.166666667);
-		walkRight.addFrame(sf::IntRect(0, 0, 32, 32));
-		walkRight.addFrame(sf::IntRect(128, 0, 32, 32));
-
-		Animation walkUp(&pacmanSprite, 0.166666667);
-		walkUp.addFrame(sf::IntRect(0, 0, 32, 32));
-		walkUp.addFrame(sf::IntRect(64, 0, 32, 32));
-
-		Animation walkDown(&pacmanSprite, 0.166666667);
-		walkDown.addFrame(sf::IntRect(0, 0, 32, 32));
-		walkDown.addFrame(sf::IntRect(96, 0, 32, 32));
-
-		Animator pacManAnimator;
-		pacManAnimator.addAnimation("walkLeft", &walkLeft);
-		pacManAnimator.addAnimation("walkRight", &walkRight);
-		pacManAnimator.addAnimation("walkUp", &walkUp);
-		pacManAnimator.addAnimation("walkDown", &walkDown);
-
-#pragma endregion
 
 #pragma region Graph
 
@@ -217,6 +185,46 @@ int main(){
 		
 #pragma endregion
 		
+#pragma region pacman
+		sf::Texture texturePackman;
+		if (!texturePackman.loadFromFile("sprites\\Packman.png")) {
+			throw Error("Can't load Packman.png");
+		}
+
+		sf::Sprite pacmanSprite;
+		pacmanSprite.setTexture(texturePackman);
+		pacmanSprite.setTextureRect(sf::IntRect(0, 0, 32, 32));
+
+		Animation walkLeft(&pacmanSprite, 0.166666667);
+		walkLeft.addFrame(sf::IntRect(0, 0, 32, 32));
+		walkLeft.addFrame(sf::IntRect(32, 0, 32, 32));
+
+		Animation walkRight(&pacmanSprite, 0.166666667);
+		walkRight.addFrame(sf::IntRect(0, 0, 32, 32));
+		walkRight.addFrame(sf::IntRect(128, 0, 32, 32));
+
+		Animation walkUp(&pacmanSprite, 0.166666667);
+		walkUp.addFrame(sf::IntRect(0, 0, 32, 32));
+		walkUp.addFrame(sf::IntRect(64, 0, 32, 32));
+
+		Animation walkDown(&pacmanSprite, 0.166666667);
+		walkDown.addFrame(sf::IntRect(0, 0, 32, 32));
+		walkDown.addFrame(sf::IntRect(96, 0, 32, 32));
+
+		Animator pacManAnimator;
+		pacManAnimator.addAnimation("walkLeft", &walkLeft);
+		pacManAnimator.addAnimation("walkRight", &walkRight);
+		pacManAnimator.addAnimation("walkUp", &walkUp);
+		pacManAnimator.addAnimation("walkDown", &walkDown);
+
+		pacManAnimator.setCurentAnimation("walkLeft");
+
+		Character<unsigned, sf::Vector2<int>> pacman(new unsigned(0), vertices[44]);
+
+		DrawCharacter<unsigned, sf::Vector2<int>>  drawCharPacman(&window, &pacmanSprite);
+
+#pragma endregion
+
 #pragma region fantom
 		sf::Texture fantomTexture;
 
@@ -263,7 +271,6 @@ int main(){
 		fantomStandStill.addFrame(sf::IntRect(0, 0, 32, 32));
 		fantomStandStill.addFrame(sf::IntRect(64, 0, 32, 32));
 
-
 		Animator fantomAnimator;
 		fantomAnimator.addAnimation("walkLeft", &fantomWalkLeft);
 		fantomAnimator.addAnimation("walkRight", &fantomWalkRight);
@@ -279,7 +286,7 @@ int main(){
 
 		Character<unsigned, sf::Vector2<int>> fantom(new unsigned(0), vertices[0]);
 
-		DrawCharacter<unsigned, sf::Vector2<int>>  drawChar(&window, &fantomSprite);
+		DrawCharacter<unsigned, sf::Vector2<int>>  drawCharFantom(&window, &fantomSprite);
 
 #pragma endregion
 
@@ -340,9 +347,15 @@ int main(){
 			if (clock->getElapsedTime() >= 1.0f/60.0f) {
 				window.clear();
 				graph.draw(drawGraph);
-				window.draw(fantomSprite);
+				
 				fantomAnimator.playAnnimation();
-				fantom.drawCharacter(drawChar);
+				window.draw(fantomSprite);
+				fantom.drawCharacter(drawCharFantom);
+
+				pacManAnimator.playAnnimation();
+				window.draw(pacmanSprite);
+				pacman.drawCharacter(drawCharPacman);
+
 				window.display();
 				clock->restart();
 			}
