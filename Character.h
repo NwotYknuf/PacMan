@@ -6,13 +6,13 @@
 #include <utility>
 
 template<class Info, class VerticeInformation>
-class Character {
+class GCharacter {
 public:
 
 	Info * info;
 	Vertice<VerticeInformation> * position;
 
-	Character(Info * _info, Vertice<VerticeInformation> * _pos) {
+	GCharacter(Info * _info, Vertice<VerticeInformation> * _pos) {
 		info = _info;
 		position = _pos;
 	}
@@ -22,14 +22,16 @@ public:
 
 	template <class EdgeInformation>
 	void move(Vertice<VerticeInformation>* vertice, Graph<EdgeInformation, VerticeInformation> * graph);
-
+	
 	template <class EdgeInformation>
-	void move(const sf::Vector2<int> &vector, Graph<EdgeInformation, VerticeInformation> * graph);
+	void move(const sf::Vector2<int> &vector, 
+		Graph<EdgeInformation, VerticeInformation> * graph);
+
 };
 
 template <class Info, class VerticeInformation>
 template< class WINDOW>
-bool Character<Info, VerticeInformation>::drawCharacter(WINDOW & window) const {
+bool GCharacter<Info, VerticeInformation>::drawCharacter(WINDOW & window) const {
 
 	if (!window.draw(this))
 		return false;
@@ -39,7 +41,10 @@ bool Character<Info, VerticeInformation>::drawCharacter(WINDOW & window) const {
 
 template<class Info, class VerticeInformation>
 template<class EdgeInformation>
-void Character<Info, VerticeInformation>::move(Vertice<VerticeInformation>* vertice, Graph<EdgeInformation, VerticeInformation>* graph) {
+void GCharacter<Info, VerticeInformation>::move(
+	Vertice<VerticeInformation>* vertice, 
+	Graph<EdgeInformation, VerticeInformation>* graph) {
+	
 	PElement<Vertice<VerticeInformation>> * voisin;
 	voisin = graph->neighbors(position);
 
@@ -50,7 +55,7 @@ void Character<Info, VerticeInformation>::move(Vertice<VerticeInformation>* vert
 
 template<>
 template<class EdgeInformation>
-void Character<unsigned, sf::Vector2<int>>::move(
+void GCharacter<unsigned, sf::Vector2<int>>::move(
 	const sf::Vector2<int>& vector, 
 	Graph<EdgeInformation, sf::Vector2<int>>* graph){
 
@@ -67,9 +72,7 @@ void Character<unsigned, sf::Vector2<int>>::move(
 			target = voisin->value->begin;
 		}		
 		
-		sf::Vector2<int> diff(
-			target->value.x - this->position->value.x,
-			target->value.y - this->position->value.y);
+		sf::Vector2<int> diff(target->value - this->position->value);
 			
 		if (diff == vector) {
 			this->position = target;

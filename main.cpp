@@ -24,9 +24,7 @@ int main(){
 		sf::Event event;
 		sf::View view1(sf::FloatRect(144, 144, 256, 256));//For now
 		window.setView(view1);
-
-
-
+		
 #pragma region Graph
 
 		Graph<EdgeInfo, sf::Vector2<int>> graph;
@@ -243,9 +241,9 @@ int main(){
 
 		pacManAnimator.setCurentAnimation("standStill");
 
-		Character<unsigned, sf::Vector2<int>> pacman(new unsigned(0), vertices[44]);
+		GCharacter<unsigned, sf::Vector2<int>> pacman(new unsigned(0), vertices[44]);
 
-		DrawCharacter<unsigned, sf::Vector2<int>>  drawCharPacman(&window, &pacmanSprite);
+		DrawCharacter<unsigned, sf::Vector2<int>>  drawCharPacman(&window, &pacmanSprite, &pacManAnimator);
 
 #pragma endregion
 
@@ -308,9 +306,9 @@ int main(){
 
 		fantomAnimator.setCurentAnimation("standStill");
 
-		Character<unsigned, sf::Vector2<int>> fantom(new unsigned(0), vertices[0]);
+		GCharacter<unsigned, sf::Vector2<int>> fantom(new unsigned(0), vertices[0]);
 
-		DrawCharacter<unsigned, sf::Vector2<int>>  drawCharFantom(&window, &fantomSprite);
+		DrawCharacter<unsigned, sf::Vector2<int>>  drawCharFantom(&window, &fantomSprite, &fantomAnimator);
 
 #pragma endregion
 
@@ -372,12 +370,7 @@ int main(){
 				window.clear();
 				graph.draw(drawGraph);
 				
-				fantomAnimator.playAnnimation();
-				window.draw(fantomSprite);
 				fantom.drawCharacter(drawCharFantom);
-
-				pacManAnimator.playAnnimation();
-				window.draw(pacmanSprite);
 				pacman.drawCharacter(drawCharPacman);
 
 				window.display();
