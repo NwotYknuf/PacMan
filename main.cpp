@@ -86,11 +86,9 @@ int main(){
 
 
 		vector<Edge<EdgeInfo, sf::Vector2<int>>*> edges;
-		EdgeInfo e;
+		EdgeInfo e(0,1);
 
-		e.heat = 0;
 		//1 East West
-		e.direction = 1;
 		edges.push_back(graph.createEdge(e, vertices[0], vertices[1]));
 		edges.push_back(graph.createEdge(e, vertices[1], vertices[2]));
 		edges.push_back(graph.createEdge(e, vertices[2], vertices[3]));

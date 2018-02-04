@@ -13,18 +13,6 @@ using namespace std;
  * represents an edge with two Vertices and an information T
 */
 
-typedef struct EdgeInfo {
-	float heat;
-	int direction;
-	/*
-	 * 1 East West
-	 * 2 North-East South-West
-	 * 3 North South
-	 * 4 North-West South-East
-	 */
-
-} EdgeInfo;
-
 template <class P, class I>
 class Edge : public GElement<P>{
 public:

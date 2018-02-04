@@ -3,6 +3,7 @@
 
 #include<SFML\Graphics.hpp>
 #include<SFML\Window.hpp>
+#include"EdgeInfo.h"
 
 template<class P, class I>
 class DrawGraph{
