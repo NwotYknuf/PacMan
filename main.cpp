@@ -195,29 +195,55 @@ int main(){
 		pacmanSprite.setTexture(texturePackman);
 		pacmanSprite.setTextureRect(sf::IntRect(0, 0, 32, 32));
 
-		Animation walkLeft(&pacmanSprite, 0.166666667);
-		walkLeft.addFrame(sf::IntRect(0, 0, 32, 32));
-		walkLeft.addFrame(sf::IntRect(32, 0, 32, 32));
+		Animation pacmanWalkLeft(&pacmanSprite, 0.166666667);
+		pacmanWalkLeft.addFrame(sf::IntRect(0, 0, 32, 32));
+		pacmanWalkLeft.addFrame(sf::IntRect(32, 0, 32, 32));
 
-		Animation walkRight(&pacmanSprite, 0.166666667);
-		walkRight.addFrame(sf::IntRect(0, 0, 32, 32));
-		walkRight.addFrame(sf::IntRect(128, 0, 32, 32));
+		Animation pacmanWalkRight(&pacmanSprite, 0.166666667);
+		pacmanWalkRight.addFrame(sf::IntRect(64, 0, 32, 32));
+		pacmanWalkRight.addFrame(sf::IntRect(96, 0, 32, 32));
 
-		Animation walkUp(&pacmanSprite, 0.166666667);
-		walkUp.addFrame(sf::IntRect(0, 0, 32, 32));
-		walkUp.addFrame(sf::IntRect(64, 0, 32, 32));
+		Animation pacmanWalkUp(&pacmanSprite, 0.166666667);
+		pacmanWalkUp.addFrame(sf::IntRect(128, 0, 32, 32));
+		pacmanWalkUp.addFrame(sf::IntRect(160, 0, 32, 32));
 
-		Animation walkDown(&pacmanSprite, 0.166666667);
-		walkDown.addFrame(sf::IntRect(0, 0, 32, 32));
-		walkDown.addFrame(sf::IntRect(96, 0, 32, 32));
+		Animation pacmanWalkDown(&pacmanSprite, 0.166666667);
+		pacmanWalkDown.addFrame(sf::IntRect(192, 0, 32, 32));
+		pacmanWalkDown.addFrame(sf::IntRect(224, 0, 32, 32));
+
+		Animation pacmanWalkUpLeft(&pacmanSprite, 0.166666667);
+		pacmanWalkUpLeft.addFrame(sf::IntRect(0, 32, 32, 32));
+		pacmanWalkUpLeft.addFrame(sf::IntRect(32, 32, 32, 32));
+
+		Animation pacmanWalkUpRight(&pacmanSprite, 0.166666667);
+		pacmanWalkUpRight.addFrame(sf::IntRect(64, 32, 32, 32));
+		pacmanWalkUpRight.addFrame(sf::IntRect(96, 32, 32, 32));
+
+		Animation pacmanWalkDownRight(&pacmanSprite, 0.166666667);
+		pacmanWalkDownRight.addFrame(sf::IntRect(128, 32, 32, 32));
+		pacmanWalkDownRight.addFrame(sf::IntRect(160, 32, 32, 32));
+
+		Animation pacmanWalkDownLeft(&pacmanSprite, 0.166666667);
+		pacmanWalkDownLeft.addFrame(sf::IntRect(192, 32, 32, 32));
+		pacmanWalkDownLeft.addFrame(sf::IntRect(224, 32, 32, 32));
+
+		Animation pacmanStandStill(&pacmanSprite, 0.45);
+		pacmanStandStill.addFrame(sf::IntRect(0, 0, 32, 32));
+		pacmanStandStill.addFrame(sf::IntRect(64, 0, 32, 32));
 
 		Animator pacManAnimator;
-		pacManAnimator.addAnimation("walkLeft", &walkLeft);
-		pacManAnimator.addAnimation("walkRight", &walkRight);
-		pacManAnimator.addAnimation("walkUp", &walkUp);
-		pacManAnimator.addAnimation("walkDown", &walkDown);
 
-		pacManAnimator.setCurentAnimation("walkLeft");
+		pacManAnimator.addAnimation("walkLeft", &pacmanWalkLeft);
+		pacManAnimator.addAnimation("walkRight", &pacmanWalkRight);
+		pacManAnimator.addAnimation("walkUp", &pacmanWalkUp);
+		pacManAnimator.addAnimation("walkDown", &pacmanWalkDown);
+		pacManAnimator.addAnimation("walkDownLeft", &pacmanWalkDownLeft);
+		pacManAnimator.addAnimation("walkDownRight", &pacmanWalkDownRight);
+		pacManAnimator.addAnimation("walkUpLeft", &pacmanWalkUpLeft);
+		pacManAnimator.addAnimation("walkUpRight", &pacmanWalkUpRight);
+		pacManAnimator.addAnimation("standStill", &pacmanStandStill);
+
+		pacManAnimator.setCurentAnimation("standStill");
 
 		Character<unsigned, sf::Vector2<int>> pacman(new unsigned(0), vertices[44]);
 
@@ -303,39 +329,39 @@ int main(){
 					switch (event.key.code) {
 
 					case sf::Keyboard::Numpad4:
-						fantomAnimator.setCurentAnimation("walkLeft");
-						fantom.move<EdgeInfo>(sf::Vector2<int>(-1,0), &graph);
+						pacManAnimator.setCurentAnimation("walkLeft");
+						pacman.move<EdgeInfo>(sf::Vector2<int>(-1,0), &graph);
 						break;
 					case sf::Keyboard::Numpad6:
-						fantomAnimator.setCurentAnimation("walkRight");
-						fantom.move<EdgeInfo>(sf::Vector2<int>(1, 0), &graph);
+						pacManAnimator.setCurentAnimation("walkRight");
+						pacman.move<EdgeInfo>(sf::Vector2<int>(1, 0), &graph);
 						break;
 					case sf::Keyboard::Numpad8:
-						fantomAnimator.setCurentAnimation("walkUp");
-						fantom.move<EdgeInfo>(sf::Vector2<int>(0, -1), &graph);
+						pacManAnimator.setCurentAnimation("walkUp");
+						pacman.move<EdgeInfo>(sf::Vector2<int>(0, -1), &graph);
 						break;
 					case sf::Keyboard::Numpad2:
-						fantomAnimator.setCurentAnimation("walkDown");
-						fantom.move<EdgeInfo>(sf::Vector2<int>(0, 1), &graph);
+						pacManAnimator.setCurentAnimation("walkDown");
+						pacman.move<EdgeInfo>(sf::Vector2<int>(0, 1), &graph);
 						break;
 					case sf::Keyboard::Numpad1:
-						fantomAnimator.setCurentAnimation("walkDownLeft");
-						fantom.move<EdgeInfo>(sf::Vector2<int>(-1, 1), &graph);
+						pacManAnimator.setCurentAnimation("walkDownLeft");
+						pacman.move<EdgeInfo>(sf::Vector2<int>(-1, 1), &graph);
 						break;
 					case sf::Keyboard::Numpad3:
-						fantomAnimator.setCurentAnimation("walkDownRight");
-						fantom.move<EdgeInfo>(sf::Vector2<int>(1, 1), &graph);
+						pacManAnimator.setCurentAnimation("walkDownRight");
+						pacman.move<EdgeInfo>(sf::Vector2<int>(1, 1), &graph);
 						break;
 					case sf::Keyboard::Numpad7:
-						fantomAnimator.setCurentAnimation("walkUpLeft");
-						fantom.move<EdgeInfo>(sf::Vector2<int>(-1, -1), &graph);
+						pacManAnimator.setCurentAnimation("walkUpLeft");
+						pacman.move<EdgeInfo>(sf::Vector2<int>(-1, -1), &graph);
 						break;
 					case sf::Keyboard::Numpad9:
-						fantomAnimator.setCurentAnimation("walkUpRight");
-						fantom.move<EdgeInfo>(sf::Vector2<int>(1, -1), &graph);
+						pacManAnimator.setCurentAnimation("walkUpRight");
+						pacman.move<EdgeInfo>(sf::Vector2<int>(1, -1), &graph);
 						break;
 					case sf::Keyboard::Numpad5:
-						fantomAnimator.setCurentAnimation("standStill");
+						pacManAnimator.setCurentAnimation("standStill");
 						break;						
 					}
 					break;
