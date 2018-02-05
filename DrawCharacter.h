@@ -7,6 +7,7 @@
 #include "Vertice.h"
 #include "Character.h"
 #include "Animator.h"
+#include "VerticeInfo.h"
 
 template<class Info, class VerticeInformation>
 class DrawCharacter {
@@ -30,12 +31,12 @@ DrawCharacter<Info, VerticeInformation>::DrawCharacter(sf::RenderWindow * window
 }
 
 template<>
-bool DrawCharacter < unsigned, sf::Vector2<int>>
-::draw(const GCharacter<unsigned, sf::Vector2<int>>* character) {
+bool DrawCharacter < unsigned, VerticeInfo>
+::draw(const GCharacter<unsigned, VerticeInfo>* character) {
 	int h = _charSprite->getLocalBounds().height;
 	int w = _charSprite->getLocalBounds().width;
 
-	_charSprite->setPosition(character->position->value.x * w, character->position->value.y * h);
+	_charSprite->setPosition(character->position->value.info.pos.x * w, character->position->value.info.pos.y * h);
 
 	_animator->playAnnimation();
 	_window->draw(*_charSprite);

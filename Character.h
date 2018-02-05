@@ -55,15 +55,15 @@ void GCharacter<Info, VerticeInformation>::move(
 
 template<>
 template<class EdgeInformation>
-void GCharacter<unsigned, sf::Vector2<int>>::move(
+void GCharacter<unsigned, VerticeInfo>::move(
 	const sf::Vector2<int>& vector, 
-	Graph<EdgeInformation, sf::Vector2<int>>* graph){
+	Graph<EdgeInformation, VerticeInfo>* graph){
 
-	PElement<Edge<EdgeInformation, sf::Vector2<int>>> * voisin;
+	PElement<Edge<EdgeInformation, VerticeInfo>> * voisin;
 	voisin = graph->adjacentEdges(position);
 
 	while (voisin != NULL) {
-		Vertice<sf::Vector2<int>> * target;
+		Vertice<VerticeInfo> * target;
 		
 		if (this->position == voisin->value->begin) {
 			target = voisin->value->end;
@@ -72,7 +72,7 @@ void GCharacter<unsigned, sf::Vector2<int>>::move(
 			target = voisin->value->begin;
 		}		
 		
-		sf::Vector2<int> diff(target->value - this->position->value);
+		sf::Vector2<int> diff(target->value.info.pos - this->position->value.info.pos);
 			
 		if (diff == vector) {
 			this->position = target;

@@ -3,7 +3,7 @@
 #include <utility>
 #include "PElement.h"
 #include "Edge.h"
-#include "Edge.h"
+#include "Error.h"
 
 template <class P, class I>
 class Graph {
@@ -148,8 +148,8 @@ void Graph<P, I>::copy(const Graph<P, I> & graph)
 
 template <class P, class I>
 void Graph<P, I>::eraseAll() {
-	PElement< Edge<P, I>>::erase(this->lEdges);
-	PElement<Vertice<I> >::erase(this->lVertices);
+	PElement< Edge<P, I>>::eraseAll(this->lEdges);
+	PElement<Vertice<I> >::eraseAll(this->lVertices);
 	this->nextKey = 0;
 }
 
@@ -181,7 +181,7 @@ PElement< Edge<P, I> > *  Graph<P, I>::adjacentEdges(const Vertice<I> * vertice)
 	for (l = ladj, r = NULL; l; l = l->next)
 		r = new PElement< Edge<P, I> >(l->value->second, r);
 
-	PElement< pair< Vertice<I> *, Edge<P, I>* > >::erase(ladj);
+	PElement< pair< Vertice<I> *, Edge<P, I>* > >::eraseAll(ladj);
 
 	return r;
 }
@@ -197,7 +197,7 @@ PElement< Vertice<I> > *  Graph<P, I>::neighbors(const Vertice<I> * vertice) con
 	for (l = ladj, r = NULL; l; l = l->next)
 		r = new PElement< Vertice<I> >(l->value->first, r);
 
-	PElement< pair< Vertice<I> *, Edge<P, I>* > >::erase(ladj);
+	PElement< pair< Vertice<I> *, Edge<P, I>* > >::eraseAll(ladj);
 
 	return r;
 }

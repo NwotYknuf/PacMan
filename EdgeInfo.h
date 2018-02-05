@@ -8,6 +8,7 @@ class EdgeInfo {
 public:
 	float heat;
 	int direction;
+	float distance;
 	/*
 	* 1 Horizontal
 	* 2 Diagonal Right
@@ -19,7 +20,7 @@ public:
 		: heat(_heat), direction(_direction) { }
 	
 	EdgeInfo(const EdgeInfo &e) 
-		: heat(e.heat), direction(e.direction) { }
+		: heat(e.heat), direction(e.direction), distance(e.distance) { }
 	
 	friend ostream& operator << (ostream& os, const EdgeInfo &e) {
 		os << "heat : " << e.heat << " direction : ";
@@ -37,6 +38,8 @@ public:
 		case 4:
 			os << "Diagonal left";
 		}
+
+		os << "distance : " << e.distance;
 
 		return os;
 	}

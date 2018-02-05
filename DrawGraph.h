@@ -4,6 +4,7 @@
 #include<SFML\Graphics.hpp>
 #include<SFML\Window.hpp>
 #include"EdgeInfo.h"
+#include "VerticeInfo.h"
 
 template<class P, class I>
 class DrawGraph{
@@ -15,13 +16,13 @@ public:
 	DrawGraph(sf::RenderWindow * window, sf::Sprite * vertice, sf::Sprite * edge) :
 		_verticeSprite(vertice), _edgeSprite(edge), _window(window){ }
 
-	bool draw(const Vertice<sf::Vector2<int>> *_vertice);
+	bool draw(const Vertice<VerticeInfo> *_vertice);
 
-	bool draw(const Edge<EdgeInfo, sf::Vector2<int>> * s);
+	bool draw(const Edge<EdgeInfo, VerticeInfo> * s);
 };
 
 template<class P, class I>
-bool DrawGraph<P,I>::draw(const Vertice<sf::Vector2<int>> *vertice) {
+bool DrawGraph<P,I>::draw(const Vertice<VerticeInfo> *vertice) {
 	int h = _verticeSprite->getLocalBounds().height;
 	int l = _verticeSprite->getLocalBounds().width;
 
@@ -29,13 +30,13 @@ bool DrawGraph<P,I>::draw(const Vertice<sf::Vector2<int>> *vertice) {
 	sprite.setTexture(*_verticeSprite->getTexture());
 	sprite.setTextureRect(_verticeSprite->getTextureRect());
 
-	sprite.setPosition(l * vertice->value.x, h * vertice->value.y);
+	sprite.setPosition(l * vertice->value.info.pos.x, h * vertice->value.info.pos.y);
 	_window->draw(sprite);
 	return true;
 }
 
 template<class P, class I>
-bool DrawGraph<P, I>::draw(const Edge<EdgeInfo, sf::Vector2<int>> * edge){
+bool DrawGraph<P, I>::draw(const Edge<EdgeInfo,VerticeInfo> * edge){
 	int height = _edgeSprite->getLocalBounds().height;
 	int width = _edgeSprite->getLocalBounds().width;
 
@@ -45,8 +46,8 @@ bool DrawGraph<P, I>::draw(const Edge<EdgeInfo, sf::Vector2<int>> * edge){
 	sprite.setOrigin(height / 2, width / 2);
 
 	//position
-	sf::Vector2<float> begin(edge->begin->value.x, edge->begin->value.y);
-	sf::Vector2<float> diff(edge->end->value.x - edge->begin->value.x, edge->end->value.y - edge->begin->value.y);
+	sf::Vector2<float> begin(edge->begin->value.info.pos.x, edge->begin->value.info.pos.y);
+	sf::Vector2<float> diff(edge->end->value.info.pos.x - edge->begin->value.info.pos.x, edge->end->value.info.pos.y - edge->begin->value.info.pos.y);
 	sf::Vector2<float> pos = begin + diff / 2.0f;
 	sprite.setPosition((0.5f + pos.x )* height, (0.5f + pos.y) * width);
 	

@@ -48,11 +48,11 @@ public:
 	static void insertOrdered(I * a, PElement<I> * & l,	bool(*lessOrEqual)(const I * a1, const I * a2)){
 
 		if (!l){
-			t = PElement<I>(a, NULL);
+			l = new PElement<I>(a, NULL);
 		}
 
 		if(lessOrEqual(l->value, a)){
-			l = new PElement(a, v);
+			l = new PElement(a, l);
 		}
 		else{
 			insertOrdered(a, l->next, lessOrEqual);
@@ -74,7 +74,7 @@ public:
 
 	static bool remove(const I * a, PElement<I> * & l){
 		if (!l){
-			return;
+			return false;
 		}
 				
 		if (l->value == a){
@@ -83,9 +83,10 @@ public:
 			l = l->next;
 			delete(mem);
 			delete(val);
+			return true;
 		}
 		else{
-			remove(a, l->next);
+			return remove(a, l->next);
 		}
 	}
 
@@ -99,10 +100,18 @@ public:
 		}
 	}
 
-	static void erase(PElement<I>* & l) {
+	static void eraseAll(PElement<I>* & l) {
 		if (l != NULL) {
-			erase(l->next);
+			eraseAll(l->next);
 			delete(l->value);
+			delete(l);
+		}
+		l = NULL;
+	}
+
+	static void erasePointer(PElement<I>* & l) {
+		if (l != NULL) {
+			erasePointer(l->next);
 			delete(l);
 		}
 		l = NULL;
