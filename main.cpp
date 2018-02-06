@@ -84,6 +84,12 @@ int main(){
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(10, 11))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(11, 11))));
 			
+		for (Vertice<VerticeInfo>* v : vertices) {
+			v->value.aStarInfo.cost = 1;
+			v->value.info.pacmanIsHere = false;
+		}
+
+		vertices[0]->value.info.pacmanIsHere = true;
 
 		vector<Edge<EdgeInfo, VerticeInfo>*> edges;
 		EdgeInfo e(0,1);
@@ -326,7 +332,12 @@ int main(){
 					switch (event.key.code) {
 
 					case sf::Keyboard::A:
-						AStar<Graph<EdgeInfo, VerticeInfo>, Vertice<VerticeInfo>>::aStarTarget(graph, pacman.position,fantom.position, AStarTools::squaredDistance);
+						cout << *pacman.position;
+						break;
+
+					case sf::Keyboard::Z:
+						AStarTools::target = fantom.position;
+						AStar<Graph<EdgeInfo, VerticeInfo>, Vertice<VerticeInfo>>::aStar(graph, pacman.position, AStarTools::computeHeuristic);
 						break;
 
 					case sf::Keyboard::Numpad4:

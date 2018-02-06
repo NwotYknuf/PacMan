@@ -15,11 +15,13 @@ public:
 
 	operator string() const {
 		ostringstream oss;
-		oss << info << endl;
-		oss << aStarInfo;
+		oss << "Vertice informations : " << info << endl;
+		oss << "A* informations : " << aStarInfo << endl;
 		return oss.str();
 	}
 
-	friend ostream & operator <<(ostream & os, const VerticeInfo &pos) { return os << (string)pos; }
+	friend ostream & operator <<(ostream & os, const VerticeInfo &v) { 
+		return os << (string)v;
+	}
 
 };

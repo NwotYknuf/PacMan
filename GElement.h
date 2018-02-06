@@ -16,11 +16,19 @@ using namespace std;
 template <class I>
 class GElement : public AElement{
 public:
-I value;
-GElement(const int key, const I & v): AElement(key), value(v) { }
-operator string() const { ostringstream o; o << this->AElement::operator string() << ", value = " << value; return o.str();}
+	I value;
+	GElement(const int key, const I & v): AElement(key), value(v) { }
 
-friend ostream & operator << (ostream & os, const GElement<I>& gElement) {return os << (string) gElement;}
+	operator string() const { 
+		ostringstream o;
+		o << this->AElement::operator string() << endl;
+		o<< value;
+		return o.str();
+	}
+
+	friend ostream & operator << (ostream & os, const GElement<I>& gElement) {
+		return os << (string) gElement;
+	}
 };
 
 #endif

@@ -18,9 +18,13 @@ public :
 
 	friend ostream& operator <<(ostream &os, const Informations &info) {
 
-		os << "position : (" << info.pos.x << ", " << info.pos.y << ")" << endl;
+		os << "{ position : (" << info.pos.x << ", " << info.pos.y << ") Pacman is here :";
+
 		if (info.pacmanIsHere)
-			os << " Pacman is here";
+			os << "yes";
+		else
+			os << "no";
+		os << " }";
 		return os;
 	}
 

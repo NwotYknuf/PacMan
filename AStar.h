@@ -59,8 +59,7 @@ public:
 
 	}
 
-	static V * aStar(G &graph, V *start,
-		float(*computeHeuristic)(const V * s)) {
+	static V * aStar(G &graph, V *start, float(*computeHeuristic)(const V * s1)) {
 
 		freeAllVertices(graph);
 		PElement<V> * opened;
@@ -68,44 +67,44 @@ public:
 		father(start) = NULL;
 		cost(start) = 0;
 
-		opened = new PElement<V>(start, NULL); state(start) = OPENED;
+		opened = new PElement<V>(start, NULL); state(start) = AStarInfo::OPEN;
 
 		while (opened) {
 
-			V  *s = PElement<V>::depile(opened); state(s) = CLOSED;
+			V  *s = PElement<V>::unstack(opened); state(s) = AStarInfo::CLOSED;
 
 			if (isFinal(s)) {
-				PElement<V>::eraseAll(opened); //TODO
+				PElement<V>::erasePointer(opened);
 				return s;
 			}
 
-			PElement< pair<V*, double> > * neighborList = neighbors(s, graph);
-			PElement< pair<V*, double> > * l;
+			PElement< pair<V*, float> > * neighbors = neighborsList(s, graph);
+			PElement< pair<V*, float> > * l;
 
-			for (l = neighborList; l; l = l->s) {
+			for (l = neighbors; l; l = l->next) {
 
-				V *v = l->v->first;
-				double newCost = cost(s) + l->v->second;//TODO
+				V *v = l->value->second;
+				float newCost = cost(s) + l->value->second;
 
-				if (etat(v) == LIBRE) {
+				if (state(v) == AStarInfo::FREE) {
 					heuristic(v) = computeHeuristic(v);
 					updateNeighbors(v, s, newCost, opened);
 				}
 				else
 					if (newCost < cost(v)) {
-						if (state(v) == OPENED)
-							PElement<V>::retire(v, opened);
+						if (state(v) == AStarInfo::OPEN)
+							PElement<V>::remove(v, opened);
 
 						updateNeighbors(v, s, newCost, opened);
 					}
 			}
-			PElement< pair<V*, double> >::eraseAll(neighborList);
+			PElement< pair<V*, float> >::eraseAll(neighbors);
 		}
 
 		return NULL;
 	}
 
-	static void updateNeighbors(V *v, V* s, const double & newCost, PElement<V> * &opened){
+	static void updateNeighbors(V *v, V* s, const float & newCost, PElement<V> * &opened){
 		father(v) = s;
 		cost(v) = newCost;
 		globalCost(v) = cost(v) + heuristic(v);
@@ -127,8 +126,8 @@ PElement<V> * path(V *target, PElement<V> * & start){
 		}
 		else{
 			PElement<V> * d = path(father(target), start);
-			d->s = new PElement<V>(target, NULL);
-			return d->s;
+			d->next = new PElement<V>(target, NULL);
+			return d->next;
 		}
 	}
 }

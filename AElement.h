@@ -11,12 +11,19 @@ Base element containing only a key
 
 class AElement{
 public:
-int key;
+	int key;
 
-explicit AElement(const int _key): key(_key) {}
-operator string() const { ostringstream o; o <<"key = " << key ; return o.str(); }
+	explicit AElement(const int _key): key(_key) { }
 
-friend ostream & operator << (ostream & os, const AElement& aElement) {return os << (string) aElement;}
+	operator string() const { 
+		ostringstream o; 
+		o <<"key = " << key ;
+		return o.str();
+	}
+
+	friend ostream & operator << (ostream & os, const AElement& aElement) {
+		return os << (string) aElement;
+	}
 };
 
 #endif

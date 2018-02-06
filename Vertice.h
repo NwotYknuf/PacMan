@@ -28,8 +28,8 @@ Vertice<I>::operator string () const{
 ostringstream oss;
 
 oss <<"Vertice("<<endl;
-oss << GElement<I>::operator string()<<endl;
-oss<<"degree = " << degree << endl;
+oss << "degree = " << degree << endl;
+oss << GElement<I>::operator string();
 oss<<")";
 return oss.str();
 }

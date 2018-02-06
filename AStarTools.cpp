@@ -3,6 +3,7 @@
 Vertice<VerticeInfo>* AStarTools::target = NULL;
 
 float AStarTools::squaredDistance(const Vertice<VerticeInfo>* v1, const Vertice<VerticeInfo>* v2){
+
 	int deltaX = v2->value.info.pos.x - v1->value.info.pos.x;
 	int deltaY = v2->value.info.pos.y - v1->value.info.pos.y;
 	
@@ -37,7 +38,7 @@ PElement<pair<Vertice<VerticeInfo>*, float>>* AStarTools::neighborsList(const Ve
 	for (lA = ladj, lVC = NULL; lA; lA = lA->next)
 		lVC = new PElement< pair<Vertice<VerticeInfo>*, float> >(new pair<Vertice<VerticeInfo>*, float>(lA->value->first, lA->value->second->value.distance), lVC);
 
-	PElement< pair< Vertice<VerticeInfo> *, Edge<EdgeInfo, VerticeInfo> * > >::erasePointer(ladj);
+	PElement< pair< Vertice<VerticeInfo> *, Edge<EdgeInfo, VerticeInfo> * > >::eraseAll(ladj);
 	return lVC;
 }
 

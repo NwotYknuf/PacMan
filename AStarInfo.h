@@ -20,10 +20,15 @@ public :
 
 	operator string() const {
 		ostringstream o; 
-		o << "cost : " << state;
-		o << "heuristic : " << cost;
-		o << "globalCost : " << heuristic;
-		o << "father : "<<  father;
+		o << "{ cost : " << state;
+		o << " heuristic : " << cost;
+		o << " globalCost : " << heuristic;
+		o << " father : ";
+		if (father != NULL)
+			o << *father;
+		else
+			o<<"NULL";
+		o << " }" << endl;
 		return o.str(); 
 	}
 
