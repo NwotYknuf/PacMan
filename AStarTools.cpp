@@ -36,7 +36,9 @@ PElement<pair<Vertice<VerticeInfo>*, float>>* AStarTools::neighborsList(const Ve
 	PElement< pair<Vertice<VerticeInfo>*, float> > * lVC;
 
 	for (lA = ladj, lVC = NULL; lA; lA = lA->next)
-		lVC = new PElement< pair<Vertice<VerticeInfo>*, float> >(new pair<Vertice<VerticeInfo>*, float>(lA->value->first, lA->value->second->value.distance), lVC);
+		lVC = new PElement< pair<Vertice<VerticeInfo>*, float> >(
+			new pair<Vertice<VerticeInfo>*, float>(
+				lA->value->first, lA->value->second->value.distance), lVC);
 
 	PElement< pair< Vertice<VerticeInfo> *, Edge<EdgeInfo, VerticeInfo> * > >::eraseAll(ladj);
 	return lVC;
@@ -128,4 +130,13 @@ const Vertice<VerticeInfo>* lastElement(const Vertice<VerticeInfo>* head){
 			return head;
 		else
 			return lastElement(father(head));
+}
+
+Vertice<VerticeInfo>* penultimateElement(Vertice<VerticeInfo>* head) {
+	if (!head || !father(head)) return NULL;
+	else
+		if (father(father(head)) == NULL)
+			return head;
+		else
+			return penultimateElement(father(head));
 }

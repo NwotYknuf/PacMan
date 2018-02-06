@@ -43,3 +43,4 @@ bool isFinal(const Vertice<VerticeInfo> * v);
 
 int pathLenght(const Vertice<VerticeInfo>* head);
 const Vertice<VerticeInfo> * lastElement(const Vertice<VerticeInfo>* head);
+Vertice<VerticeInfo> * penultimateElement(Vertice<VerticeInfo>* head);

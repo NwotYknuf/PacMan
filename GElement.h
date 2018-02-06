@@ -17,6 +17,7 @@ template <class I>
 class GElement : public AElement{
 public:
 	I value;
+
 	GElement(const int key, const I & v): AElement(key), value(v) { }
 
 	operator string() const { 

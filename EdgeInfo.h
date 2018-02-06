@@ -16,8 +16,8 @@ public:
 	* 4 Diagonal Left
 	*/
 
-	EdgeInfo(float _heat, int _direction) 
-		: heat(_heat), direction(_direction) { }
+	EdgeInfo(float _heat, int _direction, float _distance = 1.0f) 
+		: heat(_heat), direction(_direction), distance(_distance) { }
 	
 	EdgeInfo(const EdgeInfo &e) 
 		: heat(e.heat), direction(e.direction), distance(e.distance) { }
