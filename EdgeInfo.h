@@ -17,8 +17,8 @@ public:
 	* 4 Diagonal Left
 	*/
 
-	EdgeInfo(float _heat, int _direction, bool gom = false) 
-		: heat(_heat), direction(_direction), pacGom(gom) { }
+	EdgeInfo(float _heat, int _direction, float _distance = 1.0f, bool gom = false)
+		: heat(_heat), direction(_direction), distance(_distance), pacGom(gom) { }
 	
 	EdgeInfo(const EdgeInfo &e, bool gom = false)
 		: heat(e.heat), direction(e.direction), distance(e.distance), pacGom(gom) { }

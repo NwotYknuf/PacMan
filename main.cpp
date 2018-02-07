@@ -39,7 +39,7 @@ int main(){
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(9, 5))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(10, 5))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(11, 5))));
-
+		
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(5, 6))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(6, 6))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(7, 6))));
@@ -83,17 +83,10 @@ int main(){
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(9, 11))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(10, 11))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(11, 11))));
-			
-		for (Vertice<VerticeInfo>* v : vertices) {
-			v->value.aStarInfo.cost = 1;
-			v->value.info.pacmanIsHere = false;
-		}
-
-		vertices[0]->value.info.pacmanIsHere = true;
-
+	
 		vector<Edge<EdgeInfo, VerticeInfo>*> edges;
-		EdgeInfo e(0,1);
 		EdgeInfo ePC(0, 1, true);
+		EdgeInfo e(0,1,1.0f);
 
 		//1 East West
 		edges.push_back(graph.createEdge(e, vertices[0], vertices[1]));
@@ -102,7 +95,7 @@ int main(){
 		edges.push_back(graph.createEdge(e, vertices[3], vertices[4]));
 		edges.push_back(graph.createEdge(e, vertices[4], vertices[5]));
 		edges.push_back(graph.createEdge(e, vertices[5], vertices[6]));
-
+		
 		edges.push_back(graph.createEdge(e, vertices[8], vertices[9]));
 		edges.push_back(graph.createEdge(e, vertices[9], vertices[10]));
 		edges.push_back(graph.createEdge(e, vertices[10], vertices[11]));
@@ -176,6 +169,7 @@ int main(){
 		if (!pacGomTexture.loadFromFile("sprites\\tileset.png")) {
 			throw Error("can't load tileset.png");
 		}
+		
 		sf::Texture graphTexture;
 		if (!graphTexture.loadFromFile("sprites\\tileset.png")) {
 			throw Error("can't load tileset.png");
@@ -280,6 +274,8 @@ int main(){
 
 		GCharacter<unsigned, VerticeInfo> pacman(new unsigned(0), vertices[44]);
 
+		vertices[44]->value.info.pacmanIsHere = true;
+
 		DrawCharacter<unsigned, VerticeInfo>  drawCharPacman(&window, &pacmanSprite, &pacManAnimator);
 
 #pragma endregion
@@ -349,6 +345,9 @@ int main(){
 
 		
 		//main loop
+		PElement<Vertice<VerticeInfo>> * pathToFantom;
+		Vertice<VerticeInfo> * result;
+		sf::Vector2<int> v;
 		GameClock*clock = GameClock::getInstance();
 
 		while (window.isOpen()) {
@@ -359,62 +358,80 @@ int main(){
 					break;
 				case sf::Event::KeyPressed:
 					switch (event.key.code) {
-
-					case sf::Keyboard::A:
-						cout << *pacman.position;
-						break;
-
+						
 					case sf::Keyboard::Z:
-						AStarTools::target = fantom.position;
-						AStar<Graph<EdgeInfo, VerticeInfo>, Vertice<VerticeInfo>>::aStar(graph, pacman.position, AStarTools::computeHeuristic);
+						AStarTools::target = pacman.position;
+						result = AStar<Graph<EdgeInfo, VerticeInfo>, Vertice<VerticeInfo>>::aStar(graph, fantom.position, AStarTools::computeHeuristic);
+						result = penultimateElement(result);
+						if (result) {
+							v = sf::Vector2<int>(result->value.info.pos.x - fantom.position->value.info.pos.x,
+								result->value.info.pos.y - fantom.position->value.info.pos.y);
+							fantom.move(v, &graph);
+						}
 						break;
 
 					case sf::Keyboard::Numpad4:
 						pacManAnimator.setCurentAnimation("walkLeft");
+						pacman.position->value.info.pacmanIsHere = false;
 						pacman.move<EdgeInfo>(sf::Vector2<int>(-1,0), &graph);
+						pacman.position->value.info.pacmanIsHere = true;
 						break;
 					case sf::Keyboard::Numpad6:
 						pacManAnimator.setCurentAnimation("walkRight");
+						pacman.position->value.info.pacmanIsHere = false;
 						pacman.move<EdgeInfo>(sf::Vector2<int>(1, 0), &graph);
+						pacman.position->value.info.pacmanIsHere = true;
 						break;
 					case sf::Keyboard::Numpad8:
 						pacManAnimator.setCurentAnimation("walkUp");
+						pacman.position->value.info.pacmanIsHere = false;
 						pacman.move<EdgeInfo>(sf::Vector2<int>(0, -1), &graph);
+						pacman.position->value.info.pacmanIsHere = true;
 						break;
 					case sf::Keyboard::Numpad2:
 						pacManAnimator.setCurentAnimation("walkDown");
+						pacman.position->value.info.pacmanIsHere = false;
 						pacman.move<EdgeInfo>(sf::Vector2<int>(0, 1), &graph);
+						pacman.position->value.info.pacmanIsHere = true;
 						break;
 					case sf::Keyboard::Numpad1:
 						pacManAnimator.setCurentAnimation("walkDownLeft");
+						pacman.position->value.info.pacmanIsHere = false;
 						pacman.move<EdgeInfo>(sf::Vector2<int>(-1, 1), &graph);
+						pacman.position->value.info.pacmanIsHere = true;
 						break;
 					case sf::Keyboard::Numpad3:
 						pacManAnimator.setCurentAnimation("walkDownRight");
+						pacman.position->value.info.pacmanIsHere = false;
 						pacman.move<EdgeInfo>(sf::Vector2<int>(1, 1), &graph);
+						pacman.position->value.info.pacmanIsHere = true;
 						break;
 					case sf::Keyboard::Numpad7:
 						pacManAnimator.setCurentAnimation("walkUpLeft");
+						pacman.position->value.info.pacmanIsHere = false;
 						pacman.move<EdgeInfo>(sf::Vector2<int>(-1, -1), &graph);
+						pacman.position->value.info.pacmanIsHere = true;
 						break;
 					case sf::Keyboard::Numpad9:
 						pacManAnimator.setCurentAnimation("walkUpRight");
+						pacman.position->value.info.pacmanIsHere = false;
 						pacman.move<EdgeInfo>(sf::Vector2<int>(1, -1), &graph);
+						pacman.position->value.info.pacmanIsHere = true;
 						break;
 					case sf::Keyboard::Numpad5:
 						pacManAnimator.setCurentAnimation("standStill");
-						break;						
+						break;
 					}
 					break;
 				default:
 					break;
+
 				}
 			}
 
 			if (clock->getElapsedTime() >= 1.0f/60.0f) {
 				window.clear();
 				graph.draw(drawGraph);
-				
 				fantom.drawCharacter(drawCharFantom);
 				pacman.drawCharacter(drawCharPacman);
 

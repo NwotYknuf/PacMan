@@ -67,12 +67,14 @@ public:
 		father(start) = NULL;
 		cost(start) = 0;
 
-		opened = new PElement<V>(start, NULL); state(start) = AStarInfo::OPEN;
+		opened = new PElement<V>(start, NULL); 
+		state(start) = AStarInfo::OPEN;
 
 		while (opened) {
 
-			V  *s = PElement<V>::unstack(opened); state(s) = AStarInfo::CLOSED;
-
+			V  *s = PElement<V>::unstack(opened); 
+			state(s) = AStarInfo::CLOSED;
+			
 			if (isFinal(s)) {
 				PElement<V>::erasePointer(opened);
 				return s;
@@ -108,7 +110,8 @@ public:
 		father(v) = s;
 		cost(v) = newCost;
 		globalCost(v) = cost(v) + heuristic(v);
-		PElement<V>::insertOrdered(v, opened, lessOrEqual); state(v) = AStarInfo::FREE;
+		PElement<V>::insertOrdered(v, opened, lessOrEqual); 
+		state(v) = AStarInfo::FREE;
 	}
 
 };
