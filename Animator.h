@@ -19,7 +19,7 @@ public:
 
 	void setCurentAnimation(string name);
 
-	void playAnnimation();
+	void playAnimation();
 
 };
 

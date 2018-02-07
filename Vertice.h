@@ -17,7 +17,7 @@ class Vertice : public GElement<I>{
 public:
 int degree;	
 
-Vertice(const int key, const I & v):GElement<I>(key,v),degree(0){}
+Vertice(const int key, const I & v, bool Gom = false):GElement<I>(key,v),degree(0){}
 
 operator string () const;
 

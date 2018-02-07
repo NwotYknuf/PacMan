@@ -83,7 +83,7 @@ public:
 
 			for (l = neighbors; l; l = l->next) {
 
-				V *v = l->value->second;
+				V *v = l->value->first;
 				float newCost = cost(s) + l->value->second;
 
 				if (state(v) == AStarInfo::FREE) {

@@ -9,6 +9,7 @@ public:
 	float heat;
 	int direction;
 	float distance;
+	bool pacGom;
 	/*
 	* 1 Horizontal
 	* 2 Diagonal Right
@@ -16,11 +17,11 @@ public:
 	* 4 Diagonal Left
 	*/
 
-	EdgeInfo(float _heat, int _direction) 
-		: heat(_heat), direction(_direction) { }
+	EdgeInfo(float _heat, int _direction, bool gom = false) 
+		: heat(_heat), direction(_direction), pacGom(gom) { }
 	
-	EdgeInfo(const EdgeInfo &e) 
-		: heat(e.heat), direction(e.direction), distance(e.distance) { }
+	EdgeInfo(const EdgeInfo &e, bool gom = false)
+		: heat(e.heat), direction(e.direction), distance(e.distance), pacGom(gom) { }
 	
 	friend ostream& operator << (ostream& os, const EdgeInfo &e) {
 		os << "heat : " << e.heat << " direction : ";

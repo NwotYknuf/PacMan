@@ -68,7 +68,7 @@ int main(){
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(9, 9))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(11, 9))));
 
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(5, 10))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(5, 10), true)));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(6, 10))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(7, 10))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(8, 10))));
@@ -76,9 +76,9 @@ int main(){
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(10, 10))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(11, 10))));
 
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(5, 11))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(5, 11), true)));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(6, 11))));
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(7, 11))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(7, 11), true)));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(8, 11))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(9, 11))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(10, 11))));
@@ -93,6 +93,7 @@ int main(){
 
 		vector<Edge<EdgeInfo, VerticeInfo>*> edges;
 		EdgeInfo e(0,1);
+		EdgeInfo ePC(0, 1, true);
 
 		//1 East West
 		edges.push_back(graph.createEdge(e, vertices[0], vertices[1]));
@@ -171,10 +172,39 @@ int main(){
 		edges.push_back(graph.createEdge(e, vertices[22], vertices[29]));
 		edges.push_back(graph.createEdge(e, vertices[29], vertices[36]));
 
+		sf::Texture pacGomTexture;
+		if (!pacGomTexture.loadFromFile("sprites\\tileset.png")) {
+			throw Error("can't load tileset.png");
+		}
 		sf::Texture graphTexture;
 		if (!graphTexture.loadFromFile("sprites\\tileset.png")) {
 			throw Error("can't load tileset.png");
 		}
+
+		sf::Sprite prefabPacGomVertice;
+		prefabPacGomVertice.setTexture(pacGomTexture);
+		prefabPacGomVertice.setTextureRect(sf::IntRect(32, 0, 32, 32));
+
+		Animation pacGomVerticeAnimation(&prefabPacGomVertice, 0.166666667);
+		pacGomVerticeAnimation.addFrame(sf::IntRect(32, 0, 32, 32));
+		pacGomVerticeAnimation.addFrame(sf::IntRect(64, 0, 32, 32));
+
+		Animator pacGomVerticeAnimator;
+		pacGomVerticeAnimator.addAnimation("ON", &pacGomVerticeAnimation);
+		pacGomVerticeAnimator.setCurentAnimation("ON");
+
+		sf::Sprite prefabPacGomEdge;
+		prefabPacGomEdge.setTexture(pacGomTexture);
+		prefabPacGomEdge.setTextureRect(sf::IntRect(32, 32, 32, 32));
+		prefabPacGomEdge.setTextureRect(sf::IntRect(64, 32, 32, 32));
+
+		Animation pacGomEdgeAnimation(&prefabPacGomEdge, 0.166666667);
+		pacGomEdgeAnimation.addFrame(sf::IntRect(32, 32, 32, 32));
+		pacGomEdgeAnimation.addFrame(sf::IntRect(64, 32, 32, 32));
+
+		Animator pacGomEdgeAnimator;
+		pacGomEdgeAnimator.addAnimation("ON", &pacGomEdgeAnimation);
+		pacGomEdgeAnimator.setCurentAnimation("ON");
 
 		sf::Sprite prefabVertice;
 		prefabVertice.setTexture(graphTexture);
@@ -184,7 +214,7 @@ int main(){
 		prefabEdge.setTexture(graphTexture);
 		prefabEdge.setTextureRect(sf::IntRect(32, 0, 32, 32));
 
-		DrawGraph<EdgeInfo, VerticeInfo> drawGraph(&window, &prefabVertice, &prefabEdge);
+		DrawGraph<EdgeInfo, VerticeInfo> drawGraph(&window, &prefabVertice, &prefabEdge, &prefabPacGomVertice, &prefabPacGomEdge, &pacGomEdgeAnimator, &pacGomVerticeAnimator);
 		
 #pragma endregion
 		
@@ -317,7 +347,6 @@ int main(){
 
 		DrawCharacter<unsigned, VerticeInfo>  drawCharFantom(&window, &fantomSprite, &fantomAnimator);
 
-#pragma endregion
 		
 		//main loop
 		GameClock*clock = GameClock::getInstance();

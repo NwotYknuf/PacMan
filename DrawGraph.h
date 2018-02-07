@@ -9,12 +9,13 @@
 template<class P, class I>
 class DrawGraph{
 private :
-	sf::Sprite * _verticeSprite, *_edgeSprite;
+	sf::Sprite * _verticeSprite, *_edgeSprite, *_verticePacGomSprite, *_edgePacGomSprite;
+	Animator * _animEdge, *_animVertice;
 	sf::RenderWindow * _window;
 
 public:
-	DrawGraph(sf::RenderWindow * window, sf::Sprite * vertice, sf::Sprite * edge) :
-		_verticeSprite(vertice), _edgeSprite(edge), _window(window){ }
+	DrawGraph(sf::RenderWindow * window, sf::Sprite * vertice, sf::Sprite * edge, sf::Sprite * pacGomVertice, sf::Sprite * pacGomEdge, Animator * animEdge, Animator * animVertice) :
+		_verticeSprite(vertice), _edgeSprite(edge), _window(window), _verticePacGomSprite(pacGomVertice), _edgePacGomSprite(pacGomEdge), _animEdge(animEdge), _animVertice(animVertice){}
 
 	bool draw(const Vertice<VerticeInfo> *_vertice);
 
@@ -27,10 +28,18 @@ bool DrawGraph<P,I>::draw(const Vertice<VerticeInfo> *vertice) {
 	int l = _verticeSprite->getLocalBounds().width;
 
 	sf::Sprite sprite;
-	sprite.setTexture(*_verticeSprite->getTexture());
-	sprite.setTextureRect(_verticeSprite->getTextureRect());
+	if (vertice->value.info.pacGom) {
+		sprite.setTexture(*_verticePacGomSprite->getTexture());
+		sprite.setTextureRect(_verticePacGomSprite->getTextureRect());
+	}
+	else {
+		sprite.setTexture(*_verticeSprite->getTexture());
+		sprite.setTextureRect(_verticeSprite->getTextureRect());
+	}
 
 	sprite.setPosition(l * vertice->value.info.pos.x, h * vertice->value.info.pos.y);
+	if (vertice->value.info.pacGom)
+		_animVertice->playAnimation();
 	_window->draw(sprite);
 	return true;
 }
@@ -41,8 +50,14 @@ bool DrawGraph<P, I>::draw(const Edge<EdgeInfo,VerticeInfo> * edge){
 	int width = _edgeSprite->getLocalBounds().width;
 
 	sf::Sprite sprite;
-	sprite.setTexture(*_edgeSprite->getTexture());
-	sprite.setTextureRect(_edgeSprite->getTextureRect());
+	if (edge->value.pacGom) {
+		sprite.setTexture(*_edgePacGomSprite->getTexture());
+		sprite.setTextureRect(_edgePacGomSprite->getTextureRect());
+	}
+	else {
+		sprite.setTexture(*_edgeSprite->getTexture());
+		sprite.setTextureRect(_edgeSprite->getTextureRect());
+	}
 	sprite.setOrigin(height / 2, width / 2);
 
 	//position
@@ -69,7 +84,8 @@ bool DrawGraph<P, I>::draw(const Edge<EdgeInfo,VerticeInfo> * edge){
 	default:
 		break;
 	}
-
+	if (edge->value.pacGom)
+		_animEdge->playAnimation();
 	_window->draw(sprite);
 	return true;
 }

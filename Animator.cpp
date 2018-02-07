@@ -12,7 +12,7 @@ void Animator::setCurentAnimation(string name) {
 	_currentAnimation = _animations[name];
 }
 
-void Animator::playAnnimation() {
+void Animator::playAnimation() {
 	if (_currentAnimation)
 		_currentAnimation->playAnnimation();
 }

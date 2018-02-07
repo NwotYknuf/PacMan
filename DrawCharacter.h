@@ -38,7 +38,7 @@ bool DrawCharacter < unsigned, VerticeInfo>
 
 	_charSprite->setPosition(character->position->value.info.pos.x * w, character->position->value.info.pos.y * h);
 
-	_animator->playAnnimation();
+	_animator->playAnimation();
 	_window->draw(*_charSprite);
 
 	return true;
