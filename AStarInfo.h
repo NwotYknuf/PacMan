@@ -13,7 +13,7 @@ public :
 	float cost, heuristic, globalCost;
 	AElement * father;
 
-	explicit AStarInfo(AElement * father = NULL, const int state = FREE, const double & c = 0, const double & h = 0, const double & g = 0) :
+	explicit AStarInfo(AElement * father = NULL, const int state = FREE, const float & c = 0, const float & h = 0, const float & g = 0) :
 		father(father), state(state), cost(c), heuristic(h), globalCost(g) { }
 
 	friend ostream & operator << (ostream & os, const AStarInfo & info) { return os << (string)info; }

@@ -33,8 +33,8 @@ DrawCharacter<Info, VerticeInformation>::DrawCharacter(sf::RenderWindow * window
 template<>
 bool DrawCharacter < unsigned, VerticeInfo>
 ::draw(const GCharacter<unsigned, VerticeInfo>* character) {
-	int h = _charSprite->getLocalBounds().height;
-	int w = _charSprite->getLocalBounds().width;
+	float h = _charSprite->getLocalBounds().height;
+	float w = _charSprite->getLocalBounds().width;
 
 	_charSprite->setPosition(character->position->value.info.pos.x * w, character->position->value.info.pos.y * h);
 

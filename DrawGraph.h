@@ -24,8 +24,8 @@ public:
 
 template<class P, class I>
 bool DrawGraph<P,I>::draw(const Vertice<VerticeInfo> *vertice) {
-	int h = _verticeSprite->getLocalBounds().height;
-	int l = _verticeSprite->getLocalBounds().width;
+	float h = _verticeSprite->getLocalBounds().height;
+	float l = _verticeSprite->getLocalBounds().width;
 
 	sf::Sprite sprite;
 	if (vertice->value.info.pacGom) {
@@ -46,8 +46,8 @@ bool DrawGraph<P,I>::draw(const Vertice<VerticeInfo> *vertice) {
 
 template<class P, class I>
 bool DrawGraph<P, I>::draw(const Edge<EdgeInfo,VerticeInfo> * edge){
-	int height = _edgeSprite->getLocalBounds().height;
-	int width = _edgeSprite->getLocalBounds().width;
+	float height = _edgeSprite->getLocalBounds().height;
+	float width = _edgeSprite->getLocalBounds().width;
 
 	sf::Sprite sprite;
 	if (edge->value.pacGom) {

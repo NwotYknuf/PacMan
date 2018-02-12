@@ -343,7 +343,8 @@ int main(){
 
 		DrawCharacter<unsigned, VerticeInfo>  drawCharFantom(&window, &fantomSprite, &fantomAnimator);
 
-		
+#pragma endregion
+
 		//main loop
 		PElement<Vertice<VerticeInfo>> * pathToFantom;
 		Vertice<VerticeInfo> * result;
