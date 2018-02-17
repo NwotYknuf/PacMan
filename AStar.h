@@ -72,7 +72,7 @@ public:
 
 		while (opened) {
 
-			V  *s = PElement<V>::unstack(opened); 
+			V  *s = PElement<V>::unstack(opened);
 			state(s) = AStarInfo::CLOSED;
 			
 			if (isFinal(s)) {

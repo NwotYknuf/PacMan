@@ -51,7 +51,7 @@ public:
 			l = new PElement<I>(a, NULL);
 		}
 
-		if(lessOrEqual(l->value, a)){
+		if(lessOrEqual(a, l->value)){
 			l = new PElement(a, l);
 		}
 		else{
