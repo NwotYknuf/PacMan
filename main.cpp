@@ -32,11 +32,11 @@ int main(){
 		Graph<EdgeInfo, VerticeInfo> graph;
 		vector<Vertice<VerticeInfo>*> vertices;
 
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(5, 5))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(5, 5), true)));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(6, 5))));
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(7, 5))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(7, 5), true)));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(8, 5))));
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(9, 5))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(9, 5), true)));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(10, 5))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(11, 5))));
 		
@@ -85,24 +85,24 @@ int main(){
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(11, 11))));
 	
 		vector<Edge<EdgeInfo, VerticeInfo>*> edges;
-		EdgeInfo ePC(0, 1, true);
+		EdgeInfo ePC(0, 1, 1.0f, true);
 		EdgeInfo e(0,1,1.0f);
 
 		//1 East West
-		edges.push_back(graph.createEdge(e, vertices[0], vertices[1]));
+		edges.push_back(graph.createEdge(ePC, vertices[0], vertices[1]));
 		edges.push_back(graph.createEdge(e, vertices[1], vertices[2]));
 		edges.push_back(graph.createEdge(e, vertices[2], vertices[3]));
 		edges.push_back(graph.createEdge(e, vertices[3], vertices[4]));
-		edges.push_back(graph.createEdge(e, vertices[4], vertices[5]));
+		edges.push_back(graph.createEdge(ePC, vertices[4], vertices[5]));
 		edges.push_back(graph.createEdge(e, vertices[5], vertices[6]));
 		
 		edges.push_back(graph.createEdge(e, vertices[8], vertices[9]));
 		edges.push_back(graph.createEdge(e, vertices[9], vertices[10]));
-		edges.push_back(graph.createEdge(e, vertices[10], vertices[11]));
+		edges.push_back(graph.createEdge(ePC, vertices[10], vertices[11]));
 		edges.push_back(graph.createEdge(e, vertices[11], vertices[12]));
 
 		edges.push_back(graph.createEdge(e, vertices[19], vertices[20]));
-		edges.push_back(graph.createEdge(e, vertices[20], vertices[21]));
+		edges.push_back(graph.createEdge(ePC, vertices[20], vertices[21]));
 		edges.push_back(graph.createEdge(e, vertices[21], vertices[22]));
 		edges.push_back(graph.createEdge(e, vertices[22], vertices[23]));
 		edges.push_back(graph.createEdge(e, vertices[23], vertices[24]));
@@ -179,9 +179,9 @@ int main(){
 		prefabPacGomVertice.setTexture(pacGomTexture);
 		prefabPacGomVertice.setTextureRect(sf::IntRect(32, 0, 32, 32));
 
-		Animation pacGomVerticeAnimation(&prefabPacGomVertice, 0.166666667);
-		pacGomVerticeAnimation.addFrame(sf::IntRect(32, 0, 32, 32));
-		pacGomVerticeAnimation.addFrame(sf::IntRect(64, 0, 32, 32));
+		Animation pacGomVerticeAnimation(&prefabPacGomVertice, 2.5);
+		pacGomVerticeAnimation.addFrame(sf::IntRect(0, 32, 32, 32));
+		pacGomVerticeAnimation.addFrame(sf::IntRect(0, 64, 32, 32));
 
 		Animator pacGomVerticeAnimator;
 		pacGomVerticeAnimator.addAnimation("ON", &pacGomVerticeAnimation);
@@ -190,11 +190,11 @@ int main(){
 		sf::Sprite prefabPacGomEdge;
 		prefabPacGomEdge.setTexture(pacGomTexture);
 		prefabPacGomEdge.setTextureRect(sf::IntRect(32, 32, 32, 32));
-		prefabPacGomEdge.setTextureRect(sf::IntRect(64, 32, 32, 32));
+		prefabPacGomEdge.setTextureRect(sf::IntRect(32, 64, 32, 32));
 
 		Animation pacGomEdgeAnimation(&prefabPacGomEdge, 0.166666667);
 		pacGomEdgeAnimation.addFrame(sf::IntRect(32, 32, 32, 32));
-		pacGomEdgeAnimation.addFrame(sf::IntRect(64, 32, 32, 32));
+		pacGomEdgeAnimation.addFrame(sf::IntRect(32, 64, 32, 32));
 
 		Animator pacGomEdgeAnimator;
 		pacGomEdgeAnimator.addAnimation("ON", &pacGomEdgeAnimation);

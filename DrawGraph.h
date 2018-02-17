@@ -10,6 +10,7 @@ template<class P, class I>
 class DrawGraph{
 private :
 	sf::Sprite * _verticeSprite, *_edgeSprite, *_verticePacGomSprite, *_edgePacGomSprite;
+	Animation * _pacGomEdge = NULL;
 	Animator * _animEdge, *_animVertice;
 	sf::RenderWindow * _window;
 
@@ -31,8 +32,7 @@ bool DrawGraph<P,I>::draw(const Vertice<VerticeInfo> *vertice) {
 	if (vertice->value.info.pacGom) {
 		sprite.setTexture(*_verticePacGomSprite->getTexture());
 		sprite.setTextureRect(_verticePacGomSprite->getTextureRect());
-	}
-	else {
+	} else {
 		sprite.setTexture(*_verticeSprite->getTexture());
 		sprite.setTextureRect(_verticeSprite->getTextureRect());
 	}
@@ -66,23 +66,52 @@ bool DrawGraph<P, I>::draw(const Edge<EdgeInfo,VerticeInfo> * edge){
 	sf::Vector2<float> pos = begin + diff / 2.0f;
 	sprite.setPosition((0.5f + pos.x )* height, (0.5f + pos.y) * width);
 	
-	//"rotation"
-	
-	switch(edge->value.direction) {
-	case 1:
-		sprite.setTextureRect(sf::IntRect(32,0,32,32));
-		break;
-	case 2 :
-		sprite.setTextureRect(sf::IntRect(64, 0, 32, 32));
-		break;
-	case 3 :
-		sprite.setTextureRect(sf::IntRect(96, 0, 32, 32));
-		break;
-	case 4 :
-		sprite.setTextureRect(sf::IntRect(128, 0, 32, 32));
-		break;
-	default:
-		break;
+	/*"rotation"
+	* 1 Horizontal
+	* 2 Diagonal Right
+	* 3 Vertical
+	* 4 Diagonal Left
+	*/
+	if (edge->value.pacGom) {
+
+		switch (edge->value.direction) {
+		case 1:
+			_pacGomEdge.addAnimation(sf::IntRect(32, 32, 32, 32));
+			_pacGomEdge.addAnimation(sf::IntRect(32, 64, 32, 32));
+			break;
+		case 2:
+			_pacGomEdge.addAnimation(sf::IntRect(64, 32, 32, 32));
+			_pacGomEdge.addAnimation(sf::IntRect(64, 64, 32, 32));
+			break;
+		case 3:
+			_pacGomEdge.addAnimation(sf::IntRect(96, 32, 32, 32));
+			_pacGomEdge.addAnimation(sf::IntRect(96, 64, 32, 32));
+			break;
+		case 4:
+			_pacGomEdge.addAnimation(sf::IntRect(128, 32, 32, 32));
+			_pacGomEdge.addAnimation(sf::IntRect(128, 64, 32,32));
+			break;
+		default:
+			break;
+		}
+	}
+	else {
+		switch (edge->value.direction) {
+		case 1:
+			sprite.setTextureRect(sf::IntRect(32, 0, 32, 32));
+			break;
+		case 2:
+			sprite.setTextureRect(sf::IntRect(64, 0, 32, 32));
+			break;
+		case 3:
+			sprite.setTextureRect(sf::IntRect(96, 0, 32, 32));
+			break;
+		case 4:
+			sprite.setTextureRect(sf::IntRect(128, 0, 32, 32));
+			break;
+		default:
+			break;
+		}
 	}
 	if (edge->value.pacGom)
 		_animEdge->playAnimation();
