@@ -1,32 +1,19 @@
 #include "Animation.h"
 #include "GameClock.h"
 
-Animation::Animation(sf::Sprite *sprite, double timeBetweenFrames){
-	_sprite = sprite;
+Animation::Animation(float timeBetweenFrames){
 	_currentFrame = 0;
 	_timeBetweenFrames = timeBetweenFrames;
 }
 
-Animation::~Animation(){
-}
+Animation::~Animation(){ }
 
 void Animation::addFrame(const sf::IntRect &rect){
 	_frames.push_back(rect);
 }
 
-void Animation::playAnnimation() {
-
-	_timeElapsed += GameClock::getInstance()->getElapsedTime();
-
-	if (_timeElapsed > _timeBetweenFrames) {
-
-		_currentFrame++;
-
-		if (_currentFrame >= _frames.size()) {
-			_currentFrame = 0;
-		}
-		_sprite->setTextureRect(_frames[_currentFrame]);
-
-		_timeElapsed = 0;
-	}
+void Animation::nextFrame() {
+	_currentFrame++;
+	if (_currentFrame > _frames.size() - 1)
+		_currentFrame = 0;
 }

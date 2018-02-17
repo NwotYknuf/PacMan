@@ -1,6 +1,5 @@
 #include "Animator.h"
-
-Animator::Animator(){ }
+#include "GameClock.h"
 
 Animator::~Animator(){ }
 
@@ -10,9 +9,19 @@ void Animator::addAnimation(string name, Animation * animation) {
 
 void Animator::setCurentAnimation(string name) {
 	_currentAnimation = _animations[name];
+	_sprite->setTextureRect(_currentAnimation->getRect());
 }
 
 void Animator::playAnimation() {
-	if (_currentAnimation)
-		_currentAnimation->playAnnimation();
+
+	_timeElapsed += GameClock::getInstance()->getElapsedTime();
+
+	if (_timeElapsed > _currentAnimation->getTimeBetweenFrame()) {
+		_currentAnimation->nextFrame();
+		_timeElapsed = 0;
+	}
+
+	if (_currentAnimation) {
+		_sprite->setTextureRect(_currentAnimation->getRect());
+	}
 }

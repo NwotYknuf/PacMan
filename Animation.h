@@ -7,17 +7,16 @@
 class Animation{
 private:
 	std::vector<sf::IntRect> _frames;
-	sf::Sprite *_sprite;
-	int _currentFrame;
 	float _timeBetweenFrames;
-	float _timeElapsed;
+	int _currentFrame;
 
 public:
-	Animation(sf::Sprite *sprite, double timeBetweenFrames);
+	Animation(float timeBetweenFrames);
 	~Animation();
 	void addFrame(const sf::IntRect &rect);
-	void playAnnimation();
-
+	float getTimeBetweenFrame() { return _timeBetweenFrames; }
+	void nextFrame();
+	sf::IntRect& getRect() { return _frames[_currentFrame]; }
 };
 
 #endif

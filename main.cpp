@@ -32,11 +32,11 @@ int main(){
 		Graph<EdgeInfo, VerticeInfo> graph;
 		vector<Vertice<VerticeInfo>*> vertices;
 
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(5, 5), true)));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(5, 5))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(6, 5))));
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(7, 5), true)));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(7, 5))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(8, 5))));
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(9, 5), true)));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(9, 5))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(10, 5))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(11, 5))));
 		
@@ -68,7 +68,7 @@ int main(){
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(9, 9))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(11, 9))));
 
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(5, 10), true)));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(5, 10))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(6, 10))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(7, 10))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(8, 10))));
@@ -76,9 +76,9 @@ int main(){
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(10, 10))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(11, 10))));
 
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(5, 11), true)));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(5, 11))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(6, 11))));
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(7, 11), true)));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(7, 11))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(8, 11))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(9, 11))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(10, 11))));
@@ -86,7 +86,7 @@ int main(){
 	
 		vector<Edge<EdgeInfo, VerticeInfo>*> edges;
 		EdgeInfo ePC(0, 1, 1.0f, true);
-		EdgeInfo e(0,1,1.0f);
+		EdgeInfo e(0,1,1.0f, false);
 
 		//1 East West
 		edges.push_back(graph.createEdge(ePC, vertices[0], vertices[1]));
@@ -164,51 +164,68 @@ int main(){
 		edges.push_back(graph.createEdge(e, vertices[15], vertices[22]));
 		edges.push_back(graph.createEdge(e, vertices[22], vertices[29]));
 		edges.push_back(graph.createEdge(e, vertices[29], vertices[36]));
-
-		sf::Texture pacGomTexture;
-		if (!pacGomTexture.loadFromFile("sprites\\tileset.png")) {
-			throw Error("can't load tileset.png");
-		}
-		
+				
 		sf::Texture graphTexture;
 		if (!graphTexture.loadFromFile("sprites\\tileset.png")) {
 			throw Error("can't load tileset.png");
-		}
+		}		
+		
+		sf::Sprite graphSprite;
+		graphSprite.setTexture(graphTexture);
+		graphSprite.setTextureRect(sf::IntRect(0, 0, 32, 32));
 
-		sf::Sprite prefabPacGomVertice;
-		prefabPacGomVertice.setTexture(pacGomTexture);
-		prefabPacGomVertice.setTextureRect(sf::IntRect(32, 0, 32, 32));
+		//Vertice
+		Animation verticeNoPacgom(2.5);
+		verticeNoPacgom.addFrame(sf::IntRect(0, 0, 32, 32));
 
-		Animation pacGomVerticeAnimation(&prefabPacGomVertice, 2.5);
-		pacGomVerticeAnimation.addFrame(sf::IntRect(0, 32, 32, 32));
-		pacGomVerticeAnimation.addFrame(sf::IntRect(0, 64, 32, 32));
+		Animation VerticeWithPacgom(2.5);
+		VerticeWithPacgom.addFrame(sf::IntRect(0, 32, 32, 32));
+		VerticeWithPacgom.addFrame(sf::IntRect(0, 64, 32, 32));
+		
+		//Edge
+		Animation edgeHorizontalNoPacgom(2.5f);
+		edgeHorizontalNoPacgom.addFrame(sf::IntRect(32, 0, 32, 32));
 
-		Animator pacGomVerticeAnimator;
-		pacGomVerticeAnimator.addAnimation("ON", &pacGomVerticeAnimation);
-		pacGomVerticeAnimator.setCurentAnimation("ON");
+		Animation edgeHorizontalWithPacgom(2.5f);
+		edgeHorizontalWithPacgom.addFrame(sf::IntRect(32, 32, 32, 32));
+		edgeHorizontalWithPacgom.addFrame(sf::IntRect(32, 64, 32, 32));
 
-		sf::Sprite prefabPacGomEdge;
-		prefabPacGomEdge.setTexture(pacGomTexture);
-		prefabPacGomEdge.setTextureRect(sf::IntRect(32, 32, 32, 32));
-		prefabPacGomEdge.setTextureRect(sf::IntRect(32, 64, 32, 32));
+		Animation edgeTopRightNoPacgom(2.5f);
+		edgeTopRightNoPacgom.addFrame(sf::IntRect(64, 0, 32, 32));
 
-		Animation pacGomEdgeAnimation(&prefabPacGomEdge, 0.166666667);
-		pacGomEdgeAnimation.addFrame(sf::IntRect(32, 32, 32, 32));
-		pacGomEdgeAnimation.addFrame(sf::IntRect(32, 64, 32, 32));
+		Animation edgeTopRightWithPacgom(2.5f);
+		edgeTopRightWithPacgom.addFrame(sf::IntRect(64, 32, 32, 32));
+		edgeTopRightWithPacgom.addFrame(sf::IntRect(64, 64, 32, 32));
 
-		Animator pacGomEdgeAnimator;
-		pacGomEdgeAnimator.addAnimation("ON", &pacGomEdgeAnimation);
-		pacGomEdgeAnimator.setCurentAnimation("ON");
+		Animation edgeVerticalNoPacgom(2.5f);
+		edgeVerticalNoPacgom.addFrame(sf::IntRect(96, 0, 32, 32));
 
-		sf::Sprite prefabVertice;
-		prefabVertice.setTexture(graphTexture);
-		prefabVertice.setTextureRect(sf::IntRect(0, 0, 32, 32));
+		Animation edgeVerticalWithPacgom(2.5f);
+		edgeVerticalWithPacgom.addFrame(sf::IntRect(96, 32, 32, 32));
+		edgeVerticalWithPacgom.addFrame(sf::IntRect(96, 64, 32, 32));
 
-		sf::Sprite prefabEdge;
-		prefabEdge.setTexture(graphTexture);
-		prefabEdge.setTextureRect(sf::IntRect(32, 0, 32, 32));
+		Animation edgeTopLeftNoPacgom(2.5f);
+		edgeTopLeftNoPacgom.addFrame(sf::IntRect(128, 0, 32, 32));
 
-		DrawGraph<EdgeInfo, VerticeInfo> drawGraph(&window, &prefabVertice, &prefabEdge, &prefabPacGomVertice, &prefabPacGomEdge, &pacGomEdgeAnimator, &pacGomVerticeAnimator);
+		Animation edgeTopLeftWithPacgom(2.5f);
+		edgeTopLeftWithPacgom.addFrame(sf::IntRect(128, 32, 32, 32));
+		edgeTopLeftWithPacgom.addFrame(sf::IntRect(128, 64, 32, 32));
+		
+		Animator graphAnimator(&graphSprite);
+		graphAnimator.addAnimation("VerticeNoPacgom", &verticeNoPacgom);
+		graphAnimator.addAnimation("VerticePacgom", &VerticeWithPacgom);
+		
+		graphAnimator.addAnimation("EdgeHorizontalNoPacgom", &edgeHorizontalNoPacgom);
+		graphAnimator.addAnimation("EdgeTopRightNoPacgom", &edgeTopRightNoPacgom);
+		graphAnimator.addAnimation("EdgeVerticalNoPacgom", &edgeVerticalNoPacgom);
+		graphAnimator.addAnimation("EdgeTopLeftNoPacgom", &edgeTopLeftNoPacgom);
+
+		graphAnimator.addAnimation("EdgeHorizontalPacgom", &edgeHorizontalWithPacgom);
+		graphAnimator.addAnimation("EdgeTopRightPacgom", &edgeTopRightWithPacgom);
+		graphAnimator.addAnimation("EdgeVerticalPacgom", &edgeVerticalWithPacgom);
+		graphAnimator.addAnimation("EdgeTopLeftPacgom", &edgeTopLeftWithPacgom);		
+
+		DrawGraph<EdgeInfo, VerticeInfo> drawGraph(&window, &graphAnimator, &graphTexture);
 		
 #pragma endregion
 		
@@ -222,43 +239,43 @@ int main(){
 		pacmanSprite.setTexture(texturePackman);
 		pacmanSprite.setTextureRect(sf::IntRect(0, 0, 32, 32));
 
-		Animation pacmanWalkLeft(&pacmanSprite, 0.166666667);
+		Animation pacmanWalkLeft(0.166666667);
 		pacmanWalkLeft.addFrame(sf::IntRect(0, 0, 32, 32));
 		pacmanWalkLeft.addFrame(sf::IntRect(32, 0, 32, 32));
 
-		Animation pacmanWalkRight(&pacmanSprite, 0.166666667);
+		Animation pacmanWalkRight(0.166666667);
 		pacmanWalkRight.addFrame(sf::IntRect(64, 0, 32, 32));
 		pacmanWalkRight.addFrame(sf::IntRect(96, 0, 32, 32));
 
-		Animation pacmanWalkUp(&pacmanSprite, 0.166666667);
+		Animation pacmanWalkUp(0.166666667);
 		pacmanWalkUp.addFrame(sf::IntRect(128, 0, 32, 32));
 		pacmanWalkUp.addFrame(sf::IntRect(160, 0, 32, 32));
 
-		Animation pacmanWalkDown(&pacmanSprite, 0.166666667);
+		Animation pacmanWalkDown(0.166666667);
 		pacmanWalkDown.addFrame(sf::IntRect(192, 0, 32, 32));
 		pacmanWalkDown.addFrame(sf::IntRect(224, 0, 32, 32));
 
-		Animation pacmanWalkUpLeft(&pacmanSprite, 0.166666667);
+		Animation pacmanWalkUpLeft(0.166666667);
 		pacmanWalkUpLeft.addFrame(sf::IntRect(0, 32, 32, 32));
 		pacmanWalkUpLeft.addFrame(sf::IntRect(32, 32, 32, 32));
 
-		Animation pacmanWalkUpRight(&pacmanSprite, 0.166666667);
+		Animation pacmanWalkUpRight(0.166666667);
 		pacmanWalkUpRight.addFrame(sf::IntRect(64, 32, 32, 32));
 		pacmanWalkUpRight.addFrame(sf::IntRect(96, 32, 32, 32));
 
-		Animation pacmanWalkDownRight(&pacmanSprite, 0.166666667);
+		Animation pacmanWalkDownRight(0.166666667);
 		pacmanWalkDownRight.addFrame(sf::IntRect(128, 32, 32, 32));
 		pacmanWalkDownRight.addFrame(sf::IntRect(160, 32, 32, 32));
 
-		Animation pacmanWalkDownLeft(&pacmanSprite, 0.166666667);
+		Animation pacmanWalkDownLeft(0.166666667);
 		pacmanWalkDownLeft.addFrame(sf::IntRect(192, 32, 32, 32));
 		pacmanWalkDownLeft.addFrame(sf::IntRect(224, 32, 32, 32));
 
-		Animation pacmanStandStill(&pacmanSprite, 0.45);
+		Animation pacmanStandStill(0.45);
 		pacmanStandStill.addFrame(sf::IntRect(0, 0, 32, 32));
 		pacmanStandStill.addFrame(sf::IntRect(64, 0, 32, 32));
 
-		Animator pacManAnimator;
+		Animator pacManAnimator(&pacmanSprite);
 
 		pacManAnimator.addAnimation("walkLeft", &pacmanWalkLeft);
 		pacManAnimator.addAnimation("walkRight", &pacmanWalkRight);
@@ -293,43 +310,43 @@ int main(){
 		sf::Sprite fantomSprite;
 		fantomSprite.setTexture(fantomTexture);
 
-		Animation fantomWalkLeft(&fantomSprite, 0.166666667);
+		Animation fantomWalkLeft(0.166666667);
 		fantomWalkLeft.addFrame(sf::IntRect(0, 0, 32, 32));
 		fantomWalkLeft.addFrame(sf::IntRect(32, 0, 32, 32));
 
-		Animation fantomWalkRight(&fantomSprite, 0.166666667);
+		Animation fantomWalkRight(0.166666667);
 		fantomWalkRight.addFrame(sf::IntRect(64, 0, 32, 32));
 		fantomWalkRight.addFrame(sf::IntRect(96, 0, 32, 32));
 
-		Animation fantomWalkUp(&fantomSprite, 0.166666667);
+		Animation fantomWalkUp(0.166666667);
 		fantomWalkUp.addFrame(sf::IntRect(128, 0, 32, 32));
 		fantomWalkUp.addFrame(sf::IntRect(160, 0, 32, 32));
 
-		Animation fantomWalkDown(&fantomSprite, 0.166666667);
+		Animation fantomWalkDown(0.166666667);
 		fantomWalkDown.addFrame(sf::IntRect(192, 0, 32, 32));
 		fantomWalkDown.addFrame(sf::IntRect(224, 0, 32, 32));
 
-		Animation fantomWalkUpLeft(&fantomSprite, 0.166666667);
+		Animation fantomWalkUpLeft(0.166666667);
 		fantomWalkUpLeft.addFrame(sf::IntRect(0, 32, 32, 32));
 		fantomWalkUpLeft.addFrame(sf::IntRect(32, 32, 32, 32));
 
-		Animation fantomWalkUpRight(&fantomSprite, 0.166666667);
+		Animation fantomWalkUpRight(0.166666667);
 		fantomWalkUpRight.addFrame(sf::IntRect(64, 32, 32, 32));
 		fantomWalkUpRight.addFrame(sf::IntRect(96, 32, 32, 32));
 
-		Animation fantomWalkDownRight(&fantomSprite, 0.166666667);
+		Animation fantomWalkDownRight(0.166666667);
 		fantomWalkDownRight.addFrame(sf::IntRect(128, 32, 32, 32));
 		fantomWalkDownRight.addFrame(sf::IntRect(160, 32, 32, 32));
 
-		Animation fantomWalkDownLeft(&fantomSprite, 0.166666667);
+		Animation fantomWalkDownLeft(0.166666667);
 		fantomWalkDownLeft.addFrame(sf::IntRect(192, 32, 32, 32));
 		fantomWalkDownLeft.addFrame(sf::IntRect(224, 32, 32, 32));
 
-		Animation fantomStandStill(&fantomSprite, 0.45);
+		Animation fantomStandStill(0.45);
 		fantomStandStill.addFrame(sf::IntRect(0, 0, 32, 32));
 		fantomStandStill.addFrame(sf::IntRect(64, 0, 32, 32));
 
-		Animator fantomAnimator;
+		Animator fantomAnimator(&fantomSprite);
 		fantomAnimator.addAnimation("walkLeft", &fantomWalkLeft);
 		fantomAnimator.addAnimation("walkRight", &fantomWalkRight);
 		fantomAnimator.addAnimation("walkUp", &fantomWalkUp);
@@ -449,8 +466,7 @@ int main(){
 				window.clear();
 				graph.draw(drawGraph);
 				fantom.drawCharacter(drawCharFantom);
-				pacman.drawCharacter(drawCharPacman);
-				
+				pacman.drawCharacter(drawCharPacman);				
 				window.display();
 				clock->restart();
 			}
