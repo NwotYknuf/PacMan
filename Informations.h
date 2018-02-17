@@ -13,9 +13,8 @@ public :
 	bool pacmanIsHere;
 	bool pacGom;
 	
-	Informations(const sf::Vector2<int> &v, bool p = false) : pos(v) {
+	Informations(const sf::Vector2<int> &v, bool p = false) : pos(v), pacGom(p) {
 		pacmanIsHere = false;
-		pacGom = false;
 	}
 
 	friend ostream& operator <<(ostream &os, const Informations &info) {
