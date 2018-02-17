@@ -5,11 +5,13 @@
 #include <SFML\Window.hpp>
 #include <SFML\System.hpp>
 #include "Vertice.h"
-#include "Character.h"
+#include "GCharacter.h"
 #include "Animator.h"
 #include "VerticeInfo.h"
+#include "PacmanInfo.h"
+#include "FantomInfo.h"
 
-template<class Info, class VerticeInformation>
+template<class Vinfo, class Einfo, class Cinfo>
 class DrawCharacter {
 private:
 
@@ -20,19 +22,33 @@ private:
 public :
 
 	DrawCharacter(sf::RenderWindow *window, sf::Sprite * charSprite, Animator * animator);
-	bool draw(const GCharacter<Info, VerticeInformation>* character);
+	bool draw(const GCharacter<Vinfo, Einfo, Cinfo>* character);
 };
 
-template<class Info, class VerticeInformation>
-DrawCharacter<Info, VerticeInformation>::DrawCharacter(sf::RenderWindow * window, sf::Sprite * charSprite, Animator * animator){
+template<class Vinfo, class Einfo, class Cinfo>
+DrawCharacter<Vinfo, Einfo, Cinfo>::DrawCharacter(sf::RenderWindow * window, sf::Sprite * charSprite, Animator * animator){
 	_window = window;
 	_charSprite = charSprite;
 	_animator = animator;
 }
 
 template<>
-bool DrawCharacter < unsigned, VerticeInfo>
-::draw(const GCharacter<unsigned, VerticeInfo>* character) {
+bool DrawCharacter < VerticeInfo, EdgeInfo, PacmanInfo>
+::draw(const GCharacter<VerticeInfo, EdgeInfo, PacmanInfo>* character) {
+	float h = _charSprite->getLocalBounds().height;
+	float w = _charSprite->getLocalBounds().width;
+
+	_charSprite->setPosition(character->position->value.info.pos.x * w, character->position->value.info.pos.y * h);
+
+	_animator->playAnimation();
+	_window->draw(*_charSprite);
+
+	return true;
+}
+
+template<>
+bool DrawCharacter < VerticeInfo, EdgeInfo, FantomInfo>
+::draw(const GCharacter<VerticeInfo, EdgeInfo, FantomInfo>* character) {
 	float h = _charSprite->getLocalBounds().height;
 	float w = _charSprite->getLocalBounds().width;
 

@@ -170,7 +170,6 @@ PElement< pair< Vertice<I> *, Edge<P, I>* > >  *  Graph<P, I>::adjacent(const Ve
 	return r;
 }
 
-
 template <class P, class I>
 PElement< Edge<P, I> > *  Graph<P, I>::adjacentEdges(const Vertice<I> * vertice) const {
 	PElement< pair< Vertice<I> *, Edge<P, I>* > > * ladj = this->adjacent(vertice);
@@ -213,7 +212,6 @@ Edge<P, I> * Graph<P, I>::getEdgesByVertices(const Vertice<I> * s1, const Vertic
 
 	return NULL;
 }
-
 
 template <class P, class I>
 Graph<P, I>::operator string() const
