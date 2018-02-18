@@ -175,39 +175,39 @@ int main(){
 		graphSprite.setTextureRect(sf::IntRect(0, 0, 32, 32));
 
 		//Vertice
-		Animation verticeNoPacgom(2.5f);
+		Animation verticeNoPacgom(0.5f);
 		verticeNoPacgom.addFrame(sf::IntRect(0, 0, 32, 32));
 
-		Animation VerticeWithPacgom(2.5f);
+		Animation VerticeWithPacgom(0.5f);
 		VerticeWithPacgom.addFrame(sf::IntRect(0, 32, 32, 32));
 		VerticeWithPacgom.addFrame(sf::IntRect(0, 64, 32, 32));
 		
 		//Edge
-		Animation edgeHorizontalNoPacgom(2.5f);
+		Animation edgeHorizontalNoPacgom(0.5f);
 		edgeHorizontalNoPacgom.addFrame(sf::IntRect(32, 0, 32, 32));
 
-		Animation edgeHorizontalWithPacgom(2.5f);
+		Animation edgeHorizontalWithPacgom(0.5f);
 		edgeHorizontalWithPacgom.addFrame(sf::IntRect(32, 32, 32, 32));
 		edgeHorizontalWithPacgom.addFrame(sf::IntRect(32, 64, 32, 32));
 
-		Animation edgeTopRightNoPacgom(2.5f);
+		Animation edgeTopRightNoPacgom(0.5f);
 		edgeTopRightNoPacgom.addFrame(sf::IntRect(64, 0, 32, 32));
 
-		Animation edgeTopRightWithPacgom(2.5f);
+		Animation edgeTopRightWithPacgom(0.5f);
 		edgeTopRightWithPacgom.addFrame(sf::IntRect(64, 32, 32, 32));
 		edgeTopRightWithPacgom.addFrame(sf::IntRect(64, 64, 32, 32));
 
-		Animation edgeVerticalNoPacgom(2.5f);
+		Animation edgeVerticalNoPacgom(0.5f);
 		edgeVerticalNoPacgom.addFrame(sf::IntRect(96, 0, 32, 32));
 
-		Animation edgeVerticalWithPacgom(2.5f);
+		Animation edgeVerticalWithPacgom(0.5f);
 		edgeVerticalWithPacgom.addFrame(sf::IntRect(96, 32, 32, 32));
 		edgeVerticalWithPacgom.addFrame(sf::IntRect(96, 64, 32, 32));
 
-		Animation edgeTopLeftNoPacgom(2.5f);
+		Animation edgeTopLeftNoPacgom(0.5f);
 		edgeTopLeftNoPacgom.addFrame(sf::IntRect(128, 0, 32, 32));
 
-		Animation edgeTopLeftWithPacgom(2.5f);
+		Animation edgeTopLeftWithPacgom(0.5f);
 		edgeTopLeftWithPacgom.addFrame(sf::IntRect(128, 32, 32, 32));
 		edgeTopLeftWithPacgom.addFrame(sf::IntRect(128, 64, 32, 32));
 		
