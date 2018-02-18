@@ -11,16 +11,15 @@
 
 template<class Vinfo, class Einfo, class Cinfo>
 class GCharacter {
-private:
-	Graph<Einfo, Vinfo> * _graph;
 
 public:
 	Cinfo info;
 	Vertice<Vinfo> * position;
+	Graph<Einfo, Vinfo> * graph;
 
-	GCharacter(Cinfo _info, Graph<Einfo, Vinfo>* graph) {
+	GCharacter(Cinfo _info, Graph<Einfo, Vinfo>* _graph) {
 		info = _info;
-		_graph = graph;
+		graph = _graph;
 	}
 
 	template< class WINDOW>
@@ -56,7 +55,7 @@ void GCharacter<Vinfo, Einfo, Cinfo>
 ::move(Vertice<Vinfo>* vertice) {
 
 	PElement<Vertice<Vinfo>> * voisin;
-	voisin = _graph->neighbors(this->position);
+	voisin = graph->neighbors(this->position);
 
 	if (PElement < Vertice<Vinfo>>::inList(vertice, voisin)) {
 		this->updateInfos(vertice);
@@ -75,7 +74,7 @@ void GCharacter<VerticeInfo, EdgeInfo, PacmanInfo>::updateInfos(Vertice<VerticeI
 
 	//Update edge heat
 	Edge<EdgeInfo, VerticeInfo> *v;
-	v = _graph->getEdgesByVertices(this->position, vertice);
+	v = graph->getEdgesByVertices(this->position, vertice);
 	v->value.heat = 1.0f;
 
 	//update packman is here

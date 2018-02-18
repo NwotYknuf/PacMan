@@ -2,6 +2,6 @@
 class FantomInfo
 {
 public:
-	FantomInfo();
-	~FantomInfo();
+	FantomInfo() { }
+	~FantomInfo() { }
 };

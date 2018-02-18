@@ -14,6 +14,7 @@
 #include "AStar.h"
 #include "AStarTools.h"
 #include "Informations.h"
+#include "PacmanBehavior.h"
 
 const float sqrt2 = 1.41421356237f;
 
@@ -298,6 +299,8 @@ int main(){
 
 		DrawCharacter<VerticeInfo, EdgeInfo, PacmanInfo>  drawCharPacman(&window, &pacmanSprite, &pacManAnimator);
 
+		PacmanBehavior<VerticeInfo, EdgeInfo, PacmanInfo> pacmanBehavior;
+
 #pragma endregion
 
 #pragma region fantom
@@ -393,68 +396,16 @@ int main(){
 						break;
 
 					case sf::Keyboard::Numpad4:
-						pacManAnimator.setCurentAnimation("walkLeft");
-						v = sf::Vector2<int>(-1, 0);
-						break;
 					case sf::Keyboard::Numpad6:
-						pacManAnimator.setCurentAnimation("walkRight");
-						v = sf::Vector2<int>(1, 0);
-						break;
 					case sf::Keyboard::Numpad8:
-						pacManAnimator.setCurentAnimation("walkUp");
-						v = sf::Vector2<int>(0, -1);
-						break;
 					case sf::Keyboard::Numpad2:
-						pacManAnimator.setCurentAnimation("walkDown");
-						v = sf::Vector2<int>(0, 1);
-						break;
 					case sf::Keyboard::Numpad1:
-						pacManAnimator.setCurentAnimation("walkDownLeft");
-						v = sf::Vector2<int>(-1, 1);
-						break;
 					case sf::Keyboard::Numpad3:
-						pacManAnimator.setCurentAnimation("walkDownRight");
-						v = sf::Vector2<int>(1, 1);
-						break;
 					case sf::Keyboard::Numpad7:
-						pacManAnimator.setCurentAnimation("walkUpLeft");
-						v = sf::Vector2<int>(-1, -1);
-						break;
 					case sf::Keyboard::Numpad9:
-						pacManAnimator.setCurentAnimation("walkUpRight");
-						v = sf::Vector2<int>(1, -1);
-						break;
-					case sf::Keyboard::Numpad5:
-						pacManAnimator.setCurentAnimation("standStill");
-						v = sf::Vector2<int>(0, 0);
+						pacmanBehavior.setLastInput(event.key.code);
 						break;
 					}
-
-					PElement<Edge<EdgeInfo, VerticeInfo>> * voisin;
-					voisin = graph.adjacentEdges(pacman.position);
-
-					//A remplacer
-					while (voisin != NULL) {
-						Vertice<VerticeInfo> * target;
-
-						if (pacman.position == voisin->value->begin) {
-							target = voisin->value->end;
-						}
-						else {
-							target = voisin->value->begin;
-						}
-
-						sf::Vector2<int> diff(target->value.info.pos - pacman.position->value.info.pos);
-
-						if (diff == v) {
-							pacman.updateInfos(target);
-						}
-
-						voisin = voisin->next;
-					}
-
-					v = sf::Vector2<int>(0, 0);
-
 					break;
 				default:
 					break;
@@ -464,6 +415,8 @@ int main(){
 
 			if (clock->getElapsedTime() >= 1.0f/60.0f) {
 				window.clear();
+
+				pacman.update(pacmanBehavior);
 
 				drawGraph.update();
 				drawCharFantom.update();
