@@ -464,9 +464,15 @@ int main(){
 
 			if (clock->getElapsedTime() >= 1.0f/60.0f) {
 				window.clear();
+
+				drawGraph.update();
+				drawCharFantom.update();
+				drawCharPacman.update();
+
 				graph.draw(drawGraph);
 				fantom.drawCharacter(drawCharFantom);
-				pacman.drawCharacter(drawCharPacman);				
+				pacman.drawCharacter(drawCharPacman);		
+
 				window.display();
 				clock->restart();
 			}

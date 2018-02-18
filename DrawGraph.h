@@ -20,6 +20,8 @@ public:
 	bool draw(const Vertice<VerticeInfo> *_vertice);
 
 	bool draw(const Edge<EdgeInfo, VerticeInfo> * s);
+
+	void update();
 };
 
 template<class P, class I>
@@ -84,6 +86,11 @@ bool DrawGraph<P, I>::draw(const Edge<EdgeInfo,VerticeInfo> * edge){
 	_graphAnimator->playAnimation();
 	_window->draw(sprite);
 	return true;
+}
+
+template<class P, class I>
+void DrawGraph<P, I>::update() {
+	_graphAnimator->update();
 }
 
 #endif // !DRAWGRAPH_H

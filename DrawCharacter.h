@@ -22,7 +22,10 @@ private:
 public :
 
 	DrawCharacter(sf::RenderWindow *window, sf::Sprite * charSprite, Animator * animator);
+
 	bool draw(const GCharacter<Vinfo, Einfo, Cinfo>* character);
+
+	void update();
 };
 
 template<class Vinfo, class Einfo, class Cinfo>
@@ -46,6 +49,7 @@ bool DrawCharacter < VerticeInfo, EdgeInfo, PacmanInfo>
 	return true;
 }
 
+
 template<>
 bool DrawCharacter < VerticeInfo, EdgeInfo, FantomInfo>
 ::draw(const GCharacter<VerticeInfo, EdgeInfo, FantomInfo>* character) {
@@ -58,6 +62,11 @@ bool DrawCharacter < VerticeInfo, EdgeInfo, FantomInfo>
 	_window->draw(*_charSprite);
 
 	return true;
+}
+
+template<class Vinfo, class Einfo, class Cinfo>
+void DrawCharacter<Vinfo, Einfo, Cinfo>::update() {
+	_animator->update();
 }
 
 #endif

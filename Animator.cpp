@@ -9,19 +9,19 @@ void Animator::addAnimation(string name, Animation * animation) {
 
 void Animator::setCurentAnimation(string name) {
 	_currentAnimation = _animations[name];
-	_sprite->setTextureRect(_currentAnimation->getRect());
+}
+
+void Animator::update() {
+
+	for (pair<string, Animation*> p : _animations)	{
+		p.second->update();
+	}
 }
 
 void Animator::playAnimation() {
-
-	_timeElapsed += GameClock::getInstance()->getElapsedTime();
-
-	if (_timeElapsed > _currentAnimation->getTimeBetweenFrame()) {
-		_currentAnimation->nextFrame();
-		_timeElapsed = 0;
-	}
-
+	
 	if (_currentAnimation) {
 		_sprite->setTextureRect(_currentAnimation->getRect());
 	}
+
 }

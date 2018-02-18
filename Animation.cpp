@@ -17,3 +17,13 @@ void Animation::nextFrame() {
 	if (_currentFrame > _frames.size() - 1)
 		_currentFrame = 0;
 }
+
+void Animation::update() {
+	_timeElapsed += GameClock::getInstance()->getElapsedTime();
+
+	if (_timeElapsed > _timeBetweenFrames) {
+		nextFrame();
+		_timeElapsed -= _timeBetweenFrames;
+	}
+	
+}

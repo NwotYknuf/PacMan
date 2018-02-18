@@ -12,8 +12,6 @@ private:
 	map<string, Animation*> _animations;
 	Animation * _currentAnimation;
 
-	float _timeElapsed = 0;
-
 public:
 	Animator(sf::Sprite * sprite) { _sprite = sprite; }
 	~Animator();
@@ -21,6 +19,8 @@ public:
 	void addAnimation(string name, Animation* animation);
 
 	void setCurentAnimation(string name);
+
+	void update();
 
 	void playAnimation();
 
