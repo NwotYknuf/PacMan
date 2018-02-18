@@ -85,24 +85,24 @@ int main(){
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(11, 11))));
 	
 		vector<Edge<EdgeInfo, VerticeInfo>*> edges;
-		EdgeInfo ePC(0, 1, 1.0f, true);
-		EdgeInfo e(0,1,1.0f, false);
+		EdgeInfo e(0, 1, 1.0f);
+		// Sans pacgomme : EdgeInfo e(0,1,1.0f, false);
 
 		//1 East West
-		edges.push_back(graph.createEdge(ePC, vertices[0], vertices[1]));
+		edges.push_back(graph.createEdge(e, vertices[0], vertices[1]));
 		edges.push_back(graph.createEdge(e, vertices[1], vertices[2]));
 		edges.push_back(graph.createEdge(e, vertices[2], vertices[3]));
 		edges.push_back(graph.createEdge(e, vertices[3], vertices[4]));
-		edges.push_back(graph.createEdge(ePC, vertices[4], vertices[5]));
+		edges.push_back(graph.createEdge(e, vertices[4], vertices[5]));
 		edges.push_back(graph.createEdge(e, vertices[5], vertices[6]));
 		
 		edges.push_back(graph.createEdge(e, vertices[8], vertices[9]));
 		edges.push_back(graph.createEdge(e, vertices[9], vertices[10]));
-		edges.push_back(graph.createEdge(ePC, vertices[10], vertices[11]));
+		edges.push_back(graph.createEdge(e, vertices[10], vertices[11]));
 		edges.push_back(graph.createEdge(e, vertices[11], vertices[12]));
 
 		edges.push_back(graph.createEdge(e, vertices[19], vertices[20]));
-		edges.push_back(graph.createEdge(ePC, vertices[20], vertices[21]));
+		edges.push_back(graph.createEdge(e, vertices[20], vertices[21]));
 		edges.push_back(graph.createEdge(e, vertices[21], vertices[22]));
 		edges.push_back(graph.createEdge(e, vertices[22], vertices[23]));
 		edges.push_back(graph.createEdge(e, vertices[23], vertices[24]));
@@ -175,10 +175,10 @@ int main(){
 		graphSprite.setTextureRect(sf::IntRect(0, 0, 32, 32));
 
 		//Vertice
-		Animation verticeNoPacgom(2.5);
+		Animation verticeNoPacgom(2.5f);
 		verticeNoPacgom.addFrame(sf::IntRect(0, 0, 32, 32));
 
-		Animation VerticeWithPacgom(2.5);
+		Animation VerticeWithPacgom(2.5f);
 		VerticeWithPacgom.addFrame(sf::IntRect(0, 32, 32, 32));
 		VerticeWithPacgom.addFrame(sf::IntRect(0, 64, 32, 32));
 		
