@@ -22,7 +22,7 @@ public:
 };
 
 template<class Vinfo, class Einfo, class Cinfo>
-const float PacmanBehavior<Vinfo, Einfo, Cinfo>::UPDATE_RATE = 0.5f;
+const float PacmanBehavior<Vinfo, Einfo, Cinfo>::UPDATE_RATE = 0.2f;
 
 template<class Vinfo, class Einfo, class Cinfo>
 void PacmanBehavior<Vinfo, Einfo, Cinfo>::update(GCharacter<Vinfo, Einfo, Cinfo>* pacman) {
@@ -63,6 +63,8 @@ void PacmanBehavior<Vinfo, Einfo, Cinfo>::update(GCharacter<Vinfo, Einfo, Cinfo>
 		PElement<Edge<EdgeInfo, VerticeInfo>> * voisin;
 		voisin = pacman->graph->adjacentEdges(pacman->position);
 
+		bool success = false;
+
 		while (voisin != NULL) {
 
 			Vertice<VerticeInfo> * target;
@@ -74,10 +76,16 @@ void PacmanBehavior<Vinfo, Einfo, Cinfo>::update(GCharacter<Vinfo, Einfo, Cinfo>
 
 			sf::Vector2<int> diff(target->value.info.pos - pacman->position->value.info.pos);
 
-			if (diff == v)
+			if (diff == v) {
 				pacman->updateInfos(target);
+				success = true;
+			}
 
 			voisin = voisin->next;
+		}
+
+		if (!success) {
+			pacman->updateInfosFailure();
 		}
 
 		_timeElapsed -= UPDATE_RATE;

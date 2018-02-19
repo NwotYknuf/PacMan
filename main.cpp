@@ -425,7 +425,7 @@ int main(){
 				graph.draw(drawGraph);
 				fantom.drawCharacter(drawCharFantom);
 				pacman.drawCharacter(drawCharPacman);		
-
+				
 				window.display();
 				clock->restart();
 			}

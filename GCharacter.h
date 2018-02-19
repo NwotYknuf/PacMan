@@ -32,6 +32,8 @@ public:
 
 	void updateInfos(Vertice<Vinfo>* vertice);
 
+	void updateInfosFailure();
+	
 };
 
 template <class Vinfo, class Einfo, class Cinfo>
@@ -60,10 +62,17 @@ void GCharacter<Vinfo, Einfo, Cinfo>
 	if (PElement < Vertice<Vinfo>>::inList(vertice, voisin)) {
 		this->updateInfos(vertice);
 	}
+	else {
+		this->updateInfosFailure();
+	}
 }
 
 template<>
 void GCharacter<VerticeInfo, EdgeInfo, FantomInfo>::updateInfos(Vertice<VerticeInfo>* vertice) {
+
+	//Update direction vector
+	this->info.direction = vertice->value.info.pos - this->position->value.info.pos;
+
 	//change the position
 	this->position = vertice;
 
@@ -71,6 +80,9 @@ void GCharacter<VerticeInfo, EdgeInfo, FantomInfo>::updateInfos(Vertice<VerticeI
 
 template<>
 void GCharacter<VerticeInfo, EdgeInfo, PacmanInfo>::updateInfos(Vertice<VerticeInfo>* vertice){
+
+	//Update direction vector
+	this->info.direction = vertice->value.info.pos - this->position->value.info.pos;
 
 	//Update edge heat
 	Edge<EdgeInfo, VerticeInfo> *v;
@@ -94,6 +106,22 @@ void GCharacter<VerticeInfo, EdgeInfo, PacmanInfo>::updateInfos(Vertice<VerticeI
 
 	//change the position
 	this->position = vertice;
+
+}
+
+template<>
+void GCharacter<VerticeInfo, EdgeInfo, PacmanInfo>::updateInfosFailure() {
+
+	//Update direction vector
+	this->info.direction = sf::Vector2<int>(0,0);
+
+}
+
+template<>
+void GCharacter<VerticeInfo, EdgeInfo, FantomInfo>::updateInfosFailure() {
+
+	//Update direction vector
+	this->info.direction = sf::Vector2<int>(0, 0);
 
 }
 

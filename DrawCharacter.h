@@ -38,6 +38,27 @@ DrawCharacter<Vinfo, Einfo, Cinfo>::DrawCharacter(sf::RenderWindow * window, sf:
 template<>
 bool DrawCharacter < VerticeInfo, EdgeInfo, PacmanInfo>
 ::draw(const GCharacter<VerticeInfo, EdgeInfo, PacmanInfo>* character) {
+	//animation
+	string str = character->info.direction == sf::Vector2<int>(0, 0) ? "standStill" : "walk";
+
+	switch (character->info.direction.y) {
+		case 1:
+			str += "Down";
+			break;
+		case -1:
+			str += "Up";
+	}
+	switch (character->info.direction.x) {
+	case 1:
+		str += "Right";
+		break;
+	case -1:
+		str += "Left";
+	}
+
+	_animator->setCurentAnimation(str);
+
+	//placement
 	float h = _charSprite->getLocalBounds().height;
 	float w = _charSprite->getLocalBounds().width;
 
@@ -49,10 +70,29 @@ bool DrawCharacter < VerticeInfo, EdgeInfo, PacmanInfo>
 	return true;
 }
 
-
 template<>
 bool DrawCharacter < VerticeInfo, EdgeInfo, FantomInfo>
 ::draw(const GCharacter<VerticeInfo, EdgeInfo, FantomInfo>* character) {
+	//animation
+	string str = character->info.direction == sf::Vector2<int>(0, 0) ? "standStill" : "walk";
+
+	switch (character->info.direction.y) {
+	case 1:
+		str += "Down";
+		break;
+	case -1:
+		str += "Up";
+	}
+	switch (character->info.direction.x) {
+	case 1:
+		str += "Right";
+		break;
+	case -1:
+		str += "Left";
+	}
+
+	_animator->setCurentAnimation(str); 
+	
 	float h = _charSprite->getLocalBounds().height;
 	float w = _charSprite->getLocalBounds().width;
 
