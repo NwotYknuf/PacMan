@@ -18,7 +18,7 @@ public:
 	PElement(I* _value, PElement<I>* _next) : value(_value), next(_next){ }
 
 	static int size(const PElement<I> * l){
-		return l->next == NULL ? 1: 1 + PElement<I>::size(l->next);
+		return l == NULL ? 0: 1 + PElement<I>::size(l->next);
 	}
 
 	static const string toString(const PElement<I> * p,

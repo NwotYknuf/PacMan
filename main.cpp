@@ -15,6 +15,7 @@
 #include "AStarTools.h"
 #include "Informations.h"
 #include "PacmanBehavior.h"
+#include "FantomBehavior.h"
 #include "Window.h"
 
 const float sqrt2 = 1.41421356237f;
@@ -371,11 +372,11 @@ int main(){
 
 		DrawCharacter<VerticeInfo, EdgeInfo, FantomInfo>  drawCharFantom(&window, &fantomSprite, &fantomAnimator, transform);
 
+		FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo> fantomBehavior(FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::aStar);
+
 #pragma endregion
 
 		//main loop
-		Vertice<VerticeInfo> * result;
-		sf::Vector2<int> v;
 		GameClock*clock = GameClock::getInstance();
 
 		while (window.isOpen()) {
@@ -386,16 +387,7 @@ int main(){
 					break;
 				case sf::Event::KeyPressed:
 					switch (event.key.code) {
-
-					case sf::Keyboard::Z:
-						AStarTools::target = pacman.position;
-						result = AStar<Graph<EdgeInfo, VerticeInfo>, Vertice<VerticeInfo>>::aStar(graph, fantom.position, AStarTools::computeHeuristic);
-						result = penultimateElement(result);
-						if (result) {
-							fantom.move(result);
-						}
-						break;
-
+						
 					case sf::Keyboard::Numpad4:
 					case sf::Keyboard::Numpad6:
 					case sf::Keyboard::Numpad8:
@@ -416,8 +408,10 @@ int main(){
 
 			if (clock->getElapsedTime() >= 0.016666666f) {
 				window.clear();
-
+				
 				pacman.update(pacmanBehavior);
+				AStarTools::target = pacman.position;
+				fantom.update(fantomBehavior);
 
 				drawGraph.update();
 				drawCharFantom.update();
@@ -427,6 +421,10 @@ int main(){
 				fantom.drawCharacter(drawCharFantom);
 				pacman.drawCharacter(drawCharPacman);		
 				
+				if (pacman.position == fantom.position) {
+					window.close();
+				}
+
 				window.display();
 				clock->restart();
 			}

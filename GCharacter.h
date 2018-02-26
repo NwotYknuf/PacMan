@@ -28,7 +28,7 @@ public:
 	template< class BEHAVIOR>
 	void update(BEHAVIOR & behavior);
 
-	void move(Vertice<Vinfo>* vertice);
+	bool move(Vertice<Vinfo>* vertice);
 
 	void updateInfos(Vertice<Vinfo>* vertice);
 
@@ -53,7 +53,7 @@ void GCharacter<Vinfo, Einfo, Cinfo>::update(BEHAVIOR & behavior){
 }
 
 template<class Vinfo, class Einfo, class Cinfo>
-void GCharacter<Vinfo, Einfo, Cinfo>
+bool GCharacter<Vinfo, Einfo, Cinfo>
 ::move(Vertice<Vinfo>* vertice) {
 
 	PElement<Vertice<Vinfo>> * voisin;
@@ -61,9 +61,11 @@ void GCharacter<Vinfo, Einfo, Cinfo>
 
 	if (PElement < Vertice<Vinfo>>::inList(vertice, voisin)) {
 		this->updateInfos(vertice);
+		return true;
 	}
 	else {
 		this->updateInfosFailure();
+		return false;
 	}
 }
 

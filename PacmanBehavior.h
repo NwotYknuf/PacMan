@@ -22,6 +22,34 @@ public:
 };
 
 template<class Vinfo, class Einfo, class Cinfo>
+bool move(GCharacter<Vinfo, Einfo, Cinfo>* pacman, sf::Vector2<int> v) {
+
+	PElement<Edge<EdgeInfo, VerticeInfo>> * voisin;
+	voisin = pacman->graph->adjacentEdges(pacman->position);
+
+	while (voisin != NULL) {
+
+		Vertice<VerticeInfo> * target;
+
+		if (pacman->position == voisin->value->begin)
+			target = voisin->value->end;
+		else
+			target = voisin->value->begin;
+
+		sf::Vector2<int> diff(target->value.info.pos - pacman->position->value.info.pos);
+
+		if (diff == v) {
+			pacman->updateInfos(target);
+			return true;
+		}
+
+		voisin = voisin->next;
+	}
+	pacman->updateInfosFailure();
+	return false;
+}
+
+template<class Vinfo, class Einfo, class Cinfo>
 const float PacmanBehavior<Vinfo, Einfo, Cinfo>::UPDATE_RATE = 0.2f;
 
 template<class Vinfo, class Einfo, class Cinfo>
@@ -60,33 +88,7 @@ void PacmanBehavior<Vinfo, Einfo, Cinfo>::update(GCharacter<Vinfo, Einfo, Cinfo>
 			break;
 		}
 
-		PElement<Edge<EdgeInfo, VerticeInfo>> * voisin;
-		voisin = pacman->graph->adjacentEdges(pacman->position);
-
-		bool success = false;
-
-		while (voisin != NULL) {
-
-			Vertice<VerticeInfo> * target;
-
-			if (pacman->position == voisin->value->begin)
-				target = voisin->value->end;
-			else
-				target = voisin->value->begin;
-
-			sf::Vector2<int> diff(target->value.info.pos - pacman->position->value.info.pos);
-
-			if (diff == v) {
-				pacman->updateInfos(target);
-				success = true;
-			}
-
-			voisin = voisin->next;
-		}
-
-		if (!success) {
-			pacman->updateInfosFailure();
-		}
+		move(pacman, v);
 
 		_timeElapsed -= UPDATE_RATE;
 	}
