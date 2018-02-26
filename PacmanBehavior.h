@@ -9,7 +9,7 @@ private:
 	sf::Keyboard::Key _lastInput;
 	sf::Vector2<int> v;
 	float _timeElapsed = 0.0f;
-
+	
 	const static float UPDATE_RATE;
 
 public:
