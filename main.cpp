@@ -15,6 +15,8 @@
 #include "AStarTools.h"
 #include "Informations.h"
 #include "PacmanBehavior.h"
+#include "FantomBehavior.h"
+#include "Window.h"
 
 const float sqrt2 = 1.41421356237f;
 
@@ -25,24 +27,66 @@ int main(){
 		//initialisation
 		sf::RenderWindow  window(sf::VideoMode(768, 768), "PacMan");
 		sf::Event event;
-		sf::View view1(sf::FloatRect(144, 144, 256, 256));//For now
-		window.setView(view1);
-		
+
+		WorldToScreen transform(sf::Vector2<float>(-1.0f, -1.0f), sf::Vector2<float>(7.0f, 7.0f), sf::Vector2<float>(0.0f, 0.0f), sf::Vector2<float>(768.0f, 768.0f));
+
 #pragma region Graph
 
 		Graph<EdgeInfo, VerticeInfo> graph;
 		vector<Vertice<VerticeInfo>*> vertices;
 
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(0, 0))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(1, 0))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(2, 0))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(3, 0))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(4, 0))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(5, 0))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(6, 0))));
+		
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(0, 1))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(1, 1))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(2, 1))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(3, 1))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(4, 1))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(5, 1))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(6, 1))));
+
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(0, 2))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(2, 2))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(3, 2))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(4, 2))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(6, 2))));
+
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(0, 3))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(1, 3))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(2, 3))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(3, 3))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(4, 3))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(5, 3))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(6, 3))));
+
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(0, 4))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(2, 4))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(3, 4))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(4, 4))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(6, 4))));
+
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(0, 5))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(1, 5))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(2, 5))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(3, 5))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(4, 5))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(5, 5))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(6, 5))));
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(7, 5))));
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(8, 5))));
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(9, 5))));
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(10, 5))));
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(11, 5))));
-		
+
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(0, 6))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(1, 6))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(2, 6))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(3, 6))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(4, 6))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(5, 6))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(6, 6))));
+
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(7, 6))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(8, 6))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(9, 6))));
@@ -226,7 +270,7 @@ int main(){
 		graphAnimator.addAnimation("EdgeVerticalPacgom", &edgeVerticalWithPacgom);
 		graphAnimator.addAnimation("EdgeTopLeftPacgom", &edgeTopLeftWithPacgom);		
 
-		DrawGraph<EdgeInfo, VerticeInfo> drawGraph(&window, &graphAnimator, &graphTexture);
+		DrawGraph<EdgeInfo, VerticeInfo> drawGraph(&window, &graphAnimator, &graphTexture, transform);
 		
 #pragma endregion
 		
@@ -297,7 +341,7 @@ int main(){
 		pacman.position = vertices[44];
 		vertices[44]->value.info.pacmanIsHere = true;
 
-		DrawCharacter<VerticeInfo, EdgeInfo, PacmanInfo>  drawCharPacman(&window, &pacmanSprite, &pacManAnimator);
+		DrawCharacter<VerticeInfo, EdgeInfo, PacmanInfo>  drawCharPacman(&window, &pacmanSprite, &pacManAnimator, transform);
 
 		PacmanBehavior<VerticeInfo, EdgeInfo, PacmanInfo> pacmanBehavior;
 
@@ -368,13 +412,13 @@ int main(){
 
 		fantom.position = vertices[0];
 
-		DrawCharacter<VerticeInfo, EdgeInfo, FantomInfo>  drawCharFantom(&window, &fantomSprite, &fantomAnimator);
+		DrawCharacter<VerticeInfo, EdgeInfo, FantomInfo>  drawCharFantom(&window, &fantomSprite, &fantomAnimator, transform);
+
+		FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo> fantomBehavior(FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::aStar);
 
 #pragma endregion
 
 		//main loop
-		Vertice<VerticeInfo> * result;
-		sf::Vector2<int> v;
 		GameClock*clock = GameClock::getInstance();
 
 		while (window.isOpen()) {
@@ -385,16 +429,7 @@ int main(){
 					break;
 				case sf::Event::KeyPressed:
 					switch (event.key.code) {
-
-					case sf::Keyboard::Z:
-						AStarTools::target = pacman.position;
-						result = AStar<Graph<EdgeInfo, VerticeInfo>, Vertice<VerticeInfo>>::aStar(graph, fantom.position, AStarTools::computeHeuristic);
-						result = penultimateElement(result);
-						if (result) {
-							fantom.move(result);
-						}
-						break;
-
+						
 					case sf::Keyboard::Numpad4:
 					case sf::Keyboard::Numpad6:
 					case sf::Keyboard::Numpad8:
@@ -413,10 +448,12 @@ int main(){
 				}
 			}
 
-			if (clock->getElapsedTime() >= 1.0f/60.0f) {
+			if (clock->getElapsedTime() >= 0.016666666f) {
 				window.clear();
-
+				
 				pacman.update(pacmanBehavior);
+				AStarTools::target = pacman.position;
+				fantom.update(fantomBehavior);
 
 				drawGraph.update();
 				drawCharFantom.update();
@@ -426,6 +463,10 @@ int main(){
 				fantom.drawCharacter(drawCharFantom);
 				pacman.drawCharacter(drawCharPacman);		
 				
+				if (pacman.position == fantom.position) {
+					window.close();
+				}
+
 				window.display();
 				clock->restart();
 			}
