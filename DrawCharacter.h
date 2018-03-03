@@ -1,36 +1,36 @@
 #ifndef DRAWCHARACTER_H
 #define DRAWCHARACTER_H
 
-#include <SFML\Graphics.hpp>
-#include <SFML\Window.hpp>
-#include <SFML\System.hpp>
 #include "Vertice.h"
 #include "GCharacter.h"
 #include "Animator.h"
 #include "VerticeInfo.h"
 #include "PacmanInfo.h"
 #include "FantomInfo.h"
+#include "Window.h"
 
 template<class Vinfo, class Einfo, class Cinfo>
-class DrawCharacter {
+class DrawCharacter : public Window{
 private:
 
 	sf::Sprite * _charSprite;
 	Animator * _animator;
-	sf::RenderWindow *_window;
 	
 public :
 
-	DrawCharacter(sf::RenderWindow *window, sf::Sprite * charSprite, Animator * animator);
+	DrawCharacter(sf::RenderWindow *window, sf::Sprite * charSprite, Animator * animator, WorldToScreen worldToScreenTransform);
 
 	bool draw(const GCharacter<Vinfo, Einfo, Cinfo>* character);
 
 	void update();
+
 };
 
 template<class Vinfo, class Einfo, class Cinfo>
-DrawCharacter<Vinfo, Einfo, Cinfo>::DrawCharacter(sf::RenderWindow * window, sf::Sprite * charSprite, Animator * animator){
-	_window = window;
+DrawCharacter<Vinfo, Einfo, Cinfo>::DrawCharacter(
+	sf::RenderWindow * window, 	sf::Sprite * charSprite, 
+	Animator * animator, 	WorldToScreen worldToScreenTransform)
+		: Window(window, worldToScreenTransform){
 	_charSprite = charSprite;
 	_animator = animator;
 }
@@ -59,12 +59,19 @@ bool DrawCharacter < VerticeInfo, EdgeInfo, PacmanInfo>
 	_animator->setCurentAnimation(str);
 
 	//placement
-	float h = _charSprite->getLocalBounds().height;
-	float w = _charSprite->getLocalBounds().width;
+	sf::Vector2<float> screenCoord = _worldToScreenTransform(
+		sf::Vector2<float>(character->position->value.info.pos.x, character->position->value.info.pos.y));
 
-	_charSprite->setPosition(character->position->value.info.pos.x * w, character->position->value.info.pos.y * h);
+	_charSprite->setPosition(screenCoord.x, screenCoord.y);
 
 	_animator->playAnimation();
+
+	//zoom
+	_charSprite->setOrigin(_charSprite->getLocalBounds().height / 2.0f, _charSprite->getLocalBounds().width / 2.0f);
+	float zoomX = _worldToScreenTransform.zoom / _charSprite->getLocalBounds().width;
+	float zoomY = _worldToScreenTransform.zoom / _charSprite->getLocalBounds().height;
+	_charSprite->setScale(sf::Vector2<float>(zoomX, zoomY));
+
 	_window->draw(*_charSprite);
 
 	return true;
@@ -91,14 +98,21 @@ bool DrawCharacter < VerticeInfo, EdgeInfo, FantomInfo>
 		str += "Left";
 	}
 
-	_animator->setCurentAnimation(str); 
+	_animator->setCurentAnimation(str);
 	
-	float h = _charSprite->getLocalBounds().height;
-	float w = _charSprite->getLocalBounds().width;
+	sf::Vector2<float> screenCoord = _worldToScreenTransform(
+		sf::Vector2<float>(character->position->value.info.pos.x, character->position->value.info.pos.y));
 
-	_charSprite->setPosition(character->position->value.info.pos.x * w, character->position->value.info.pos.y * h);
+	_charSprite->setPosition(screenCoord.x, screenCoord.y);
 
 	_animator->playAnimation();
+
+	//zoom
+	_charSprite->setOrigin(_charSprite->getLocalBounds().height / 2.0f, _charSprite->getLocalBounds().width / 2.0f);
+	float zoomX = _worldToScreenTransform.zoom / _charSprite->getLocalBounds().width;
+	float zoomY = _worldToScreenTransform.zoom / _charSprite->getLocalBounds().height;
+	_charSprite->setScale(sf::Vector2<float>(zoomX, zoomY));
+	
 	_window->draw(*_charSprite);
 
 	return true;
