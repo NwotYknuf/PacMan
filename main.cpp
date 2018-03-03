@@ -83,11 +83,11 @@ int main(){
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(8, 11))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(9, 11))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(10, 11))));
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(11, 11))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(11, 11), false))); // Where Pacman is at the beginning
 	
 		vector<Edge<EdgeInfo, VerticeInfo>*> edges;
 		EdgeInfo e(0, 1, 1.0f);
-		// Sans pacgomme : EdgeInfo e(0,1,1.0f, false);
+		// without pacgomme : EdgeInfo e(0,1,1.0f, false);
 
 		//1 East West
 		edges.push_back(graph.createEdge(e, vertices[0], vertices[1]));
