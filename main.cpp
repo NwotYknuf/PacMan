@@ -28,188 +28,387 @@ int main(){
 		sf::RenderWindow  window(sf::VideoMode(768, 768), "PacMan");
 		sf::Event event;
 
-		WorldToScreen transform(sf::Vector2<float>(-1.0f, -1.0f), sf::Vector2<float>(7.0f, 7.0f), sf::Vector2<float>(0.0f, 0.0f), sf::Vector2<float>(768.0f, 768.0f));
+		WorldToScreen transform(sf::Vector2<float>(-1.0f, 15.0f), sf::Vector2<float>(13.0f, -1.0f), sf::Vector2<float>(0.0f, 0.0f), sf::Vector2<float>(768.0f, 768.0f));
 
 #pragma region Graph
 
 		Graph<EdgeInfo, VerticeInfo> graph;
 		vector<Vertice<VerticeInfo>*> vertices;
-
+		
+		//Line 0
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(0, 0))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(1, 0))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(2, 0))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(3, 0))));
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(4, 0))));
+
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(5, 0))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(6, 0))));
-		
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(7, 0))));
+
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(9, 0))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(10, 0))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(11, 0))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(12, 0))));
+
+		//Line 1
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(0, 1))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(1, 1))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(2, 1))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(3, 1))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(4, 1))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(5, 1))));
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(6, 1))));
 
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(7, 1))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(8, 1))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(9, 1))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(10, 1))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(11, 1))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(12, 1))));
+
+		//Line 2
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(0, 2))));
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(2, 2))));
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(3, 2))));
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(4, 2))));
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(6, 2))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(1, 2))));
 
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(3, 2))));
+		
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(5, 2))));
+
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(7, 2))));
+
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(9, 2))));
+
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(11, 2))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(12, 2))));
+
+		//Line 3
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(0, 3))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(1, 3))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(2, 3))));
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(3, 3))));
+
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(4, 3))));
+
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(5, 3))));
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(6, 3))));
 
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(0, 4))));
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(2, 4))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(7, 3))));
+
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(8, 3))));
+
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(10, 3))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(11, 3))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(12, 3))));
+
+		//Line 4
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(1, 4))));
+
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(3, 4))));
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(4, 4))));
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(6, 4))));
 
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(0, 5))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(5, 4))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(6, 4))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(7, 4))));
+
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(9, 4))));
+
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(11, 4))));
+
+		//Line 5
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(1, 5))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(2, 5))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(3, 5))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(4, 5))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(5, 5))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(6, 5))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(7, 5))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(8, 5))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(9, 5))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(10, 5))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(11, 5))));
 
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(0, 6))));
+		//Line 6
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(1, 6))));
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(2, 6))));
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(3, 6))));
+
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(4, 6))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(5, 6))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(6, 6))));
-
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(7, 6))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(8, 6))));
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(9, 6))));
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(10, 6))));
+
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(11, 6))));
 
+		//Line 7
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(0, 7))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(1, 7))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(2, 7))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(3, 7))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(4, 7))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(5, 7))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(6, 7))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(7, 7))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(8, 7))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(9, 7))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(10, 7))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(11, 7))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(12, 7))));
+
+		//Line 8
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(0, 8))));
+
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(2, 8))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(3, 8))));
 
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(5, 8))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(6, 8))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(7, 8))));
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(8, 8))));
+
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(9, 8))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(10, 8))));
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(11, 8))));
 
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(12, 8))));
+
+		//Line 9
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(0, 9))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(1, 9))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(2, 9))));
+
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(4, 9))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(5, 9))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(6, 9))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(7, 9))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(8, 9))));
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(9, 9))));
+
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(10, 9))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(11, 9))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(12, 9))));
+
+		//Line 10
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(0, 10))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(1, 10))));
+
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(3, 10))));
 
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(5, 10))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(6, 10))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(7, 10))));
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(8, 10))));
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(9, 10))));
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(10, 10))));
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(11, 10))));
 
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(9, 10))));
+
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(11, 10))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(12, 10))));
+
+		//Line 11
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(0, 11))));
+
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(2, 11))));
+
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(4, 11))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(5, 11))));
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(6, 11))));
+
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(7, 11))));
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(8, 11))));
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(9, 11))));
+
 		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(10, 11))));
-		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(11, 11), false))); // Where Pacman is at the beginning
-	
+
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(12, 11))));
+
+		//Line 12
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(1, 12))));
+
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(3, 12))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(4, 12))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(5, 12))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(6, 12))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(7, 12))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(8, 12))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(9, 12))));
+		
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(11, 12))));
+
+		//Line 13
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(2, 13))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(3, 13))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(4, 13))));
+
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(6, 13))));
+
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(8, 13))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(9, 13))));
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(10, 13))));
+
+		//Line 14
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(3, 14))));
+
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(5, 14))));
+
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(7, 14))));
+
+		vertices.push_back(graph.createVertice(Informations(sf::Vector2<int>(9, 14))));
+		
 		vector<Edge<EdgeInfo, VerticeInfo>*> edges;
+		
 		EdgeInfo e(0, 1, 1.0f);
 		// without pacgomme : EdgeInfo e(0,1,1.0f, false);
 
 		//1 East West
+
+		//Line 0
 		edges.push_back(graph.createEdge(e, vertices[0], vertices[1]));
 		edges.push_back(graph.createEdge(e, vertices[1], vertices[2]));
 		edges.push_back(graph.createEdge(e, vertices[2], vertices[3]));
-		edges.push_back(graph.createEdge(e, vertices[3], vertices[4]));
+
 		edges.push_back(graph.createEdge(e, vertices[4], vertices[5]));
 		edges.push_back(graph.createEdge(e, vertices[5], vertices[6]));
-		
+
+		edges.push_back(graph.createEdge(e, vertices[7], vertices[8]));
 		edges.push_back(graph.createEdge(e, vertices[8], vertices[9]));
 		edges.push_back(graph.createEdge(e, vertices[9], vertices[10]));
-		edges.push_back(graph.createEdge(e, vertices[10], vertices[11]));
-		edges.push_back(graph.createEdge(e, vertices[11], vertices[12]));
 
+		//Line 1
+		edges.push_back(graph.createEdge(e, vertices[12], vertices[13]));
+		edges.push_back(graph.createEdge(e, vertices[13], vertices[14]));
+		edges.push_back(graph.createEdge(e, vertices[14], vertices[15]));
+		edges.push_back(graph.createEdge(e, vertices[15], vertices[16]));
+
+		edges.push_back(graph.createEdge(e, vertices[17], vertices[18]));
+		edges.push_back(graph.createEdge(e, vertices[18], vertices[19]));
 		edges.push_back(graph.createEdge(e, vertices[19], vertices[20]));
 		edges.push_back(graph.createEdge(e, vertices[20], vertices[21]));
-		edges.push_back(graph.createEdge(e, vertices[21], vertices[22]));
-		edges.push_back(graph.createEdge(e, vertices[22], vertices[23]));
-		edges.push_back(graph.createEdge(e, vertices[23], vertices[24]));
-		edges.push_back(graph.createEdge(e, vertices[24], vertices[25]));
 
+		//Line 3
+		edges.push_back(graph.createEdge(e, vertices[31], vertices[32]));
 		edges.push_back(graph.createEdge(e, vertices[32], vertices[33]));
-		edges.push_back(graph.createEdge(e, vertices[33], vertices[34]));
-		edges.push_back(graph.createEdge(e, vertices[34], vertices[35]));
-		edges.push_back(graph.createEdge(e, vertices[35], vertices[36]));
 
 		edges.push_back(graph.createEdge(e, vertices[38], vertices[39]));
 		edges.push_back(graph.createEdge(e, vertices[39], vertices[40]));
-		edges.push_back(graph.createEdge(e, vertices[40], vertices[41]));
-		edges.push_back(graph.createEdge(e, vertices[41], vertices[42]));
-		edges.push_back(graph.createEdge(e, vertices[42], vertices[43]));
+
+		//Line 4
 		edges.push_back(graph.createEdge(e, vertices[43], vertices[44]));
+		edges.push_back(graph.createEdge(e, vertices[44], vertices[45]));
+
+
+		//Line 5
+		edges.push_back(graph.createEdge(e, vertices[48], vertices[49]));
+		edges.push_back(graph.createEdge(e, vertices[49], vertices[50]));
+		edges.push_back(graph.createEdge(e, vertices[50], vertices[51]));
+
+		edges.push_back(graph.createEdge(e, vertices[55], vertices[56]));
+		edges.push_back(graph.createEdge(e, vertices[56], vertices[57]));
+		edges.push_back(graph.createEdge(e, vertices[57], vertices[58]));
+
+		//Line 6
+		edges.push_back(graph.createEdge(e, vertices[60], vertices[61]));
+		edges.push_back(graph.createEdge(e, vertices[61], vertices[62]));
+		edges.push_back(graph.createEdge(e, vertices[62], vertices[63]));
+		edges.push_back(graph.createEdge(e, vertices[63], vertices[64]));
+
+		//Line 7
+		edges.push_back(graph.createEdge(e, vertices[66], vertices[67]));
+		edges.push_back(graph.createEdge(e, vertices[67], vertices[68]));
+		edges.push_back(graph.createEdge(e, vertices[68], vertices[69]));
+		edges.push_back(graph.createEdge(e, vertices[69], vertices[70]));
+
+		edges.push_back(graph.createEdge(e, vertices[74], vertices[75]));
+		edges.push_back(graph.createEdge(e, vertices[75], vertices[76]));
+		edges.push_back(graph.createEdge(e, vertices[76], vertices[77]));
+		edges.push_back(graph.createEdge(e, vertices[77], vertices[78]));
+
+		//Line 8
+		edges.push_back(graph.createEdge(e, vertices[82], vertices[83]));
+		edges.push_back(graph.createEdge(e, vertices[83], vertices[84]));
+
+		//Line 12
+		edges.push_back(graph.createEdge(e, vertices[117], vertices[118]));
+		edges.push_back(graph.createEdge(e, vertices[118], vertices[119]));
+		edges.push_back(graph.createEdge(e, vertices[119], vertices[120]));
+		edges.push_back(graph.createEdge(e, vertices[120], vertices[121]));
+		edges.push_back(graph.createEdge(e, vertices[121], vertices[122]));
+		edges.push_back(graph.createEdge(e, vertices[122], vertices[123]));
+
 
 		// 2  North - East  South - West
 		e.direction = 2;
 
-		edges.push_back(graph.createEdge(e, vertices[12], vertices[17]));
-		edges.push_back(graph.createEdge(e, vertices[17], vertices[22]));
-		edges.push_back(graph.createEdge(e, vertices[22], vertices[27]));
-		edges.push_back(graph.createEdge(e, vertices[27], vertices[32]));
-		
+
+
 		// 3 North South
 		e.direction = 3;
 
-		edges.push_back(graph.createEdge(e, vertices[0], vertices[7]));
-		edges.push_back(graph.createEdge(e, vertices[2], vertices[9]));
-		edges.push_back(graph.createEdge(e, vertices[4], vertices[11]));
-		edges.push_back(graph.createEdge(e, vertices[6], vertices[13]));
+		edges.push_back(graph.createEdge(e, vertices[0], vertices[11]));
+		edges.push_back(graph.createEdge(e, vertices[3], vertices[14]));
+		edges.push_back(graph.createEdge(e, vertices[4], vertices[16]));
+		edges.push_back(graph.createEdge(e, vertices[6], vertices[17]));
+		edges.push_back(graph.createEdge(e, vertices[7], vertices[19]));
+		edges.push_back(graph.createEdge(e, vertices[10], vertices[22]));
 
-		edges.push_back(graph.createEdge(e, vertices[7], vertices[14]));
-		edges.push_back(graph.createEdge(e, vertices[10], vertices[16]));
-		edges.push_back(graph.createEdge(e, vertices[13], vertices[18]));
+		edges.push_back(graph.createEdge(e, vertices[11], vertices[23]));
+		edges.push_back(graph.createEdge(e, vertices[12], vertices[24]));
+		edges.push_back(graph.createEdge(e, vertices[14], vertices[25]));
+		edges.push_back(graph.createEdge(e, vertices[16], vertices[26]));
+		edges.push_back(graph.createEdge(e, vertices[17], vertices[27]));
+		edges.push_back(graph.createEdge(e, vertices[19], vertices[28]));
+		edges.push_back(graph.createEdge(e, vertices[21], vertices[29]));
+		edges.push_back(graph.createEdge(e, vertices[22], vertices[30]));
 
-		edges.push_back(graph.createEdge(e, vertices[14], vertices[19]));
-		edges.push_back(graph.createEdge(e, vertices[16], vertices[22]));
-		edges.push_back(graph.createEdge(e, vertices[18], vertices[25]));
+		edges.push_back(graph.createEdge(e, vertices[23], vertices[31]));
+		edges.push_back(graph.createEdge(e, vertices[24], vertices[32]));
+		edges.push_back(graph.createEdge(e, vertices[26], vertices[35]));
+		edges.push_back(graph.createEdge(e, vertices[27], vertices[36]));
+		edges.push_back(graph.createEdge(e, vertices[29], vertices[39]));
+		edges.push_back(graph.createEdge(e, vertices[30], vertices[40]));
 
-		edges.push_back(graph.createEdge(e, vertices[19], vertices[26]));
-		edges.push_back(graph.createEdge(e, vertices[22], vertices[28]));
-		edges.push_back(graph.createEdge(e, vertices[25], vertices[30]));
+		edges.push_back(graph.createEdge(e, vertices[32], vertices[41]));
+		edges.push_back(graph.createEdge(e, vertices[35], vertices[43]));
+		edges.push_back(graph.createEdge(e, vertices[36], vertices[45]));
+		edges.push_back(graph.createEdge(e, vertices[39], vertices[47]));
 
-		edges.push_back(graph.createEdge(e, vertices[26], vertices[31]));
-		edges.push_back(graph.createEdge(e, vertices[28], vertices[34]));
-		edges.push_back(graph.createEdge(e, vertices[30], vertices[37]));
+		edges.push_back(graph.createEdge(e, vertices[41], vertices[48]));
+		edges.push_back(graph.createEdge(e, vertices[44], vertices[53]));
+		edges.push_back(graph.createEdge(e, vertices[47], vertices[58]));
+		
+		edges.push_back(graph.createEdge(e, vertices[48], vertices[59]));
+		edges.push_back(graph.createEdge(e, vertices[51], vertices[60]));
+		edges.push_back(graph.createEdge(e, vertices[53], vertices[62]));
+		edges.push_back(graph.createEdge(e, vertices[55], vertices[64]));
+		edges.push_back(graph.createEdge(e, vertices[58], vertices[65]));
 
-		edges.push_back(graph.createEdge(e, vertices[31], vertices[38]));
-		edges.push_back(graph.createEdge(e, vertices[33], vertices[40]));
-		edges.push_back(graph.createEdge(e, vertices[35], vertices[42]));
-		edges.push_back(graph.createEdge(e, vertices[37], vertices[44]));
+		edges.push_back(graph.createEdge(e, vertices[60], vertices[70]));
+		edges.push_back(graph.createEdge(e, vertices[62], vertices[72]));
+		edges.push_back(graph.createEdge(e, vertices[64], vertices[74]));
+
+		edges.push_back(graph.createEdge(e, vertices[66], vertices[79]));
+		edges.push_back(graph.createEdge(e, vertices[68], vertices[80]));
+		edges.push_back(graph.createEdge(e, vertices[72], vertices[83]));
+		edges.push_back(graph.createEdge(e, vertices[76], vertices[86]));
+		edges.push_back(graph.createEdge(e, vertices[78], vertices[87]));
+
+		edges.push_back(graph.createEdge(e, vertices[79], vertices[88]));
+		edges.push_back(graph.createEdge(e, vertices[80], vertices[90]));
+		edges.push_back(graph.createEdge(e, vertices[82], vertices[92]));
+		edges.push_back(graph.createEdge(e, vertices[84], vertices[94]));
+		edges.push_back(graph.createEdge(e, vertices[86], vertices[96]));
+		edges.push_back(graph.createEdge(e, vertices[87], vertices[98]));
+
+		edges.push_back(graph.createEdge(e, vertices[80], vertices[99]));
+		edges.push_back(graph.createEdge(e, vertices[92], vertices[102]));
+		edges.push_back(graph.createEdge(e, vertices[94], vertices[104]));
+		edges.push_back(graph.createEdge(e, vertices[98], vertices[107]));
+
+		edges.push_back(graph.createEdge(e, vertices[99], vertices[108]));
+		edges.push_back(graph.createEdge(e, vertices[102], vertices[111]));
+		edges.push_back(graph.createEdge(e, vertices[104], vertices[112]));
+		edges.push_back(graph.createEdge(e, vertices[107], vertices[115]));
+
+		edges.push_back(graph.createEdge(e, vertices[111], vertices[119]));
+		edges.push_back(graph.createEdge(e, vertices[112], vertices[121]));
+
+		edges.push_back(graph.createEdge(e, vertices[117], vertices[126]));
+		edges.push_back(graph.createEdge(e, vertices[123], vertices[130]));
+
+		edges.push_back(graph.createEdge(e, vertices[126], vertices[132]));
+		edges.push_back(graph.createEdge(e, vertices[130], vertices[135]));
+
 
 		// 4 North - West South - East
 		e.direction = 4;
 		
-		edges.push_back(graph.createEdge(e, vertices[8], vertices[15]));
-		edges.push_back(graph.createEdge(e, vertices[15], vertices[22]));
-		edges.push_back(graph.createEdge(e, vertices[22], vertices[29]));
-		edges.push_back(graph.createEdge(e, vertices[29], vertices[36]));
-				
 		sf::Texture graphTexture;
 		if (!graphTexture.loadFromFile("sprites\\tileset.png")) {
 			throw Error("can't load tileset.png");
@@ -463,9 +662,10 @@ int main(){
 				fantom.drawCharacter(drawCharFantom);
 				pacman.drawCharacter(drawCharPacman);		
 				
+				/*
 				if (pacman.position == fantom.position) {
 					window.close();
-				}
+				}*/
 
 				window.display();
 				clock->restart();
