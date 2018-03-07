@@ -590,6 +590,16 @@ int main(){
 		pacmanStandStill.addFrame(sf::IntRect(0, 0, 32, 32));
 		pacmanStandStill.addFrame(sf::IntRect(64, 0, 32, 32));
 
+		Animation pacmanExplode(0.1, false);
+		pacmanExplode.addFrame(sf::IntRect(0, 64, 32, 32));
+		pacmanExplode.addFrame(sf::IntRect(32, 64, 32, 32));
+		pacmanExplode.addFrame(sf::IntRect(64, 64, 32, 32));
+		pacmanExplode.addFrame(sf::IntRect(96, 64, 32, 32));
+		pacmanExplode.addFrame(sf::IntRect(128, 64, 32, 32));
+		pacmanExplode.addFrame(sf::IntRect(160, 64, 32, 32));
+		pacmanExplode.addFrame(sf::IntRect(192, 64, 32, 32));
+		pacmanExplode.addFrame(sf::IntRect(224, 64, 32, 32));
+
 		Animator pacManAnimator(&pacmanSprite);
 
 		pacManAnimator.addAnimation("walkLeft", &pacmanWalkLeft);
@@ -601,6 +611,7 @@ int main(){
 		pacManAnimator.addAnimation("walkUpLeft", &pacmanWalkUpLeft);
 		pacManAnimator.addAnimation("walkUpRight", &pacmanWalkUpRight);
 		pacManAnimator.addAnimation("standStill", &pacmanStandStill);
+		pacManAnimator.addAnimation("explode", &pacmanExplode);
 
 		pacManAnimator.setCurentAnimation("standStill");
 
@@ -691,8 +702,9 @@ int main(){
 
 		//main loop
 		GameClock*clock = GameClock::getInstance();
+		bool end = false;
 
-		while (window.isOpen()) {
+		while (window.isOpen() && !end) {
 			while (window.pollEvent(event)) {
 				switch (event.type) {
 				case sf::Event::Closed:
@@ -715,7 +727,6 @@ int main(){
 					break;
 				default:
 					break;
-
 				}
 			}
 
@@ -734,15 +745,45 @@ int main(){
 				fantom.drawCharacter(drawCharFantom);
 				pacman.drawCharacter(drawCharPacman);		
 				
-				/*
+				window.display();
+				clock->restart();
+				
 				if (pacman.position == fantom.position) {
+					end = true;
+					pacman.info.alive = false;
+					pacmanExplode.reset();
+				}
+			}
+		}
+
+		//game over
+		while (window.isOpen()) {
+			while (window.pollEvent(event)) {
+				switch (event.type) {
+				case sf::Event::Closed:
 					window.close();
-				}*/
+					break;
+				default:
+					break;
+				}
+			}
+
+			if (clock->getElapsedTime() >= 0.016666666f) {
+				window.clear();
+
+				drawGraph.update();
+				drawCharFantom.update();
+				drawCharPacman.update();
+
+				graph.draw(drawGraph);
+				fantom.drawCharacter(drawCharFantom);
+				pacman.drawCharacter(drawCharPacman);
 
 				window.display();
 				clock->restart();
 			}
 		}
+
 	}
 	catch (Error e) {
 		cout << e << endl;

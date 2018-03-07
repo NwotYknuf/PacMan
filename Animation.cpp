@@ -1,7 +1,8 @@
 #include "Animation.h"
 #include "GameClock.h"
 
-Animation::Animation(float timeBetweenFrames){
+Animation::Animation(float timeBetweenFrames, bool loop){
+	_loop = loop;
 	_currentFrame = 0;
 	_timeBetweenFrames = timeBetweenFrames;
 }
@@ -13,9 +14,16 @@ void Animation::addFrame(const sf::IntRect &rect){
 }
 
 void Animation::nextFrame() {
+
 	_currentFrame++;
-	if (_currentFrame > _frames.size() - 1)
-		_currentFrame = 0;
+
+	if (_currentFrame > _frames.size() - 1) {
+		if (_loop)
+			_currentFrame = 0;
+		else
+			_currentFrame = _frames.size() - 1;
+	}
+
 }
 
 void Animation::update() {
@@ -26,4 +34,8 @@ void Animation::update() {
 		_timeElapsed -= _timeBetweenFrames;
 	}
 	
+}
+
+void Animation::reset() {
+	_currentFrame = 0;
 }

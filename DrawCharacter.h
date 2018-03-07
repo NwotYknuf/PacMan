@@ -44,21 +44,26 @@ template<>
 bool DrawCharacter < VerticeInfo, EdgeInfo, PacmanInfo>
 ::draw(const GCharacter<VerticeInfo, EdgeInfo, PacmanInfo>* character) {
 	//animation
-	string str = character->info.direction == sf::Vector2<int>(0, 0) ? "standStill" : "walk";
 
-	switch (character->info.direction.y) {
+	string str = "explode";
+
+	if (character->info.alive) {
+		str = character->info.direction == sf::Vector2<int>(0, 0) ? "standStill" : "walk";
+
+		switch (character->info.direction.y) {
 		case -1:
 			str += "Down";
 			break;
 		case 1:
 			str += "Up";
-	}
-	switch (character->info.direction.x) {
-	case 1:
-		str += "Right";
-		break;
-	case -1:
-		str += "Left";
+		}
+		switch (character->info.direction.x) {
+		case 1:
+			str += "Right";
+			break;
+		case -1:
+			str += "Left";
+		}
 	}
 
 	_animator->setCurentAnimation(str);
