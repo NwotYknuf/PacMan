@@ -30,6 +30,11 @@ int main(){
 
 		WorldToScreen transform(sf::Vector2<float>(-1.0f, 15.0f), sf::Vector2<float>(13.0f, -1.0f), sf::Vector2<float>(0.0f, 0.0f), sf::Vector2<float>(768.0f, 768.0f));
 
+		sf::Font font;
+		if (font.loadFromFile("arial.ttf") == -1) {
+			throw Error("Can't load arial.ttf");
+		}
+
 #pragma region Graph
 
 		Graph<EdgeInfo, VerticeInfo> graph;
@@ -606,7 +611,7 @@ int main(){
 		pacman.position = vertices[44];
 		vertices[44]->value.info.pacmanIsHere = true;
 
-		DrawCharacter<VerticeInfo, EdgeInfo, PacmanInfo>  drawCharPacman(&window, &pacmanSprite, &pacManAnimator, transform);
+		DrawCharacter<VerticeInfo, EdgeInfo, PacmanInfo>  drawCharPacman(&window, &pacmanSprite, &pacManAnimator, transform, &font);
 
 		PacmanBehavior<VerticeInfo, EdgeInfo, PacmanInfo> pacmanBehavior;
 
@@ -671,13 +676,14 @@ int main(){
 
 		fantomAnimator.setCurentAnimation("standStill");
 
+
 		FantomInfo fantomInfo;
 
 		GCharacter<VerticeInfo, EdgeInfo, FantomInfo> fantom(fantomInfo, &graph);
 
 		fantom.position = vertices[0];
 
-		DrawCharacter<VerticeInfo, EdgeInfo, FantomInfo>  drawCharFantom(&window, &fantomSprite, &fantomAnimator, transform);
+		DrawCharacter<VerticeInfo, EdgeInfo, FantomInfo>  drawCharFantom(&window, &fantomSprite, &fantomAnimator, transform, &font);
 
 		FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo> fantomBehavior(FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::aStar);
 

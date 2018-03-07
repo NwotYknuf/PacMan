@@ -15,10 +15,11 @@ private:
 
 	sf::Sprite * _charSprite;
 	Animator * _animator;
+	sf::Font * _font;
 	
 public :
 
-	DrawCharacter(sf::RenderWindow *window, sf::Sprite * charSprite, Animator * animator, WorldToScreen worldToScreenTransform);
+	DrawCharacter(sf::RenderWindow *window, sf::Sprite * charSprite, Animator * animator, WorldToScreen worldToScreenTransform, sf::Font * font);
 
 	bool draw(const GCharacter<Vinfo, Einfo, Cinfo>* character);
 
@@ -28,9 +29,13 @@ public :
 
 template<class Vinfo, class Einfo, class Cinfo>
 DrawCharacter<Vinfo, Einfo, Cinfo>::DrawCharacter(
-	sf::RenderWindow * window, 	sf::Sprite * charSprite, 
-	Animator * animator, 	WorldToScreen worldToScreenTransform)
+	sf::RenderWindow * window, 	
+	sf::Sprite * charSprite, 
+	Animator * animator, 	
+	WorldToScreen worldToScreenTransform, 
+	sf::Font * font)
 		: Window(window, worldToScreenTransform){
+	_font = font;
 	_charSprite = charSprite;
 	_animator = animator;
 }
@@ -74,6 +79,16 @@ bool DrawCharacter < VerticeInfo, EdgeInfo, PacmanInfo>
 
 	_window->draw(*_charSprite);
 
+	//score
+	sf::Text text;
+	char string[30];
+	sprintf_s(string, "Score : %d", character->info.score);
+	text.setString(string);
+	text.setFillColor(sf::Color::Cyan);
+	text.setFont(*_font);
+	text.setPosition(_worldToScreenTransform(sf::Vector2<float>(-1, 0)));
+	_window->draw(text);
+
 	return true;
 }
 
@@ -114,7 +129,7 @@ bool DrawCharacter < VerticeInfo, EdgeInfo, FantomInfo>
 	_charSprite->setScale(sf::Vector2<float>(zoomX, zoomY));
 	
 	_window->draw(*_charSprite);
-
+	
 	return true;
 }
 
