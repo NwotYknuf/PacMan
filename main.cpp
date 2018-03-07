@@ -248,8 +248,6 @@ int main(){
 		// without pacgomme : EdgeInfo e(0,1,1.0f, false);
 
 		//1 East West
-
-		//Line 0
 		edges.push_back(graph.createEdge(e, vertices[0], vertices[1]));
 		edges.push_back(graph.createEdge(e, vertices[1], vertices[2]));
 		edges.push_back(graph.createEdge(e, vertices[2], vertices[3]));
@@ -261,7 +259,6 @@ int main(){
 		edges.push_back(graph.createEdge(e, vertices[8], vertices[9]));
 		edges.push_back(graph.createEdge(e, vertices[9], vertices[10]));
 
-		//Line 1
 		edges.push_back(graph.createEdge(e, vertices[12], vertices[13]));
 		edges.push_back(graph.createEdge(e, vertices[13], vertices[14]));
 		edges.push_back(graph.createEdge(e, vertices[14], vertices[15]));
@@ -272,19 +269,15 @@ int main(){
 		edges.push_back(graph.createEdge(e, vertices[19], vertices[20]));
 		edges.push_back(graph.createEdge(e, vertices[20], vertices[21]));
 
-		//Line 3
 		edges.push_back(graph.createEdge(e, vertices[31], vertices[32]));
 		edges.push_back(graph.createEdge(e, vertices[32], vertices[33]));
 
 		edges.push_back(graph.createEdge(e, vertices[38], vertices[39]));
 		edges.push_back(graph.createEdge(e, vertices[39], vertices[40]));
 
-		//Line 4
 		edges.push_back(graph.createEdge(e, vertices[43], vertices[44]));
 		edges.push_back(graph.createEdge(e, vertices[44], vertices[45]));
-
-
-		//Line 5
+		
 		edges.push_back(graph.createEdge(e, vertices[48], vertices[49]));
 		edges.push_back(graph.createEdge(e, vertices[49], vertices[50]));
 		edges.push_back(graph.createEdge(e, vertices[50], vertices[51]));
@@ -293,13 +286,11 @@ int main(){
 		edges.push_back(graph.createEdge(e, vertices[56], vertices[57]));
 		edges.push_back(graph.createEdge(e, vertices[57], vertices[58]));
 
-		//Line 6
 		edges.push_back(graph.createEdge(e, vertices[60], vertices[61]));
 		edges.push_back(graph.createEdge(e, vertices[61], vertices[62]));
 		edges.push_back(graph.createEdge(e, vertices[62], vertices[63]));
 		edges.push_back(graph.createEdge(e, vertices[63], vertices[64]));
 
-		//Line 7
 		edges.push_back(graph.createEdge(e, vertices[66], vertices[67]));
 		edges.push_back(graph.createEdge(e, vertices[67], vertices[68]));
 		edges.push_back(graph.createEdge(e, vertices[68], vertices[69]));
@@ -310,11 +301,18 @@ int main(){
 		edges.push_back(graph.createEdge(e, vertices[76], vertices[77]));
 		edges.push_back(graph.createEdge(e, vertices[77], vertices[78]));
 
-		//Line 8
 		edges.push_back(graph.createEdge(e, vertices[82], vertices[83]));
 		edges.push_back(graph.createEdge(e, vertices[83], vertices[84]));
 
-		//Line 12
+		edges.push_back(graph.createEdge(e, vertices[88], vertices[89]));
+		edges.push_back(graph.createEdge(e, vertices[89], vertices[90]));
+
+		edges.push_back(graph.createEdge(e, vertices[96], vertices[97]));
+		edges.push_back(graph.createEdge(e, vertices[97], vertices[98]));
+
+		edges.push_back(graph.createEdge(e, vertices[102], vertices[103]));
+		edges.push_back(graph.createEdge(e, vertices[103], vertices[104]));
+
 		edges.push_back(graph.createEdge(e, vertices[117], vertices[118]));
 		edges.push_back(graph.createEdge(e, vertices[118], vertices[119]));
 		edges.push_back(graph.createEdge(e, vertices[119], vertices[120]));
@@ -325,9 +323,40 @@ int main(){
 
 		// 2  North - East  South - West
 		e.direction = 2;
-
-
-
+		
+		edges.push_back(graph.createEdge(e, vertices[0], vertices[12]));
+		edges.push_back(graph.createEdge(e, vertices[25], vertices[34]));
+		edges.push_back(graph.createEdge(e, vertices[28], vertices[38]));
+		edges.push_back(graph.createEdge(e, vertices[33], vertices[42]));
+		edges.push_back(graph.createEdge(e, vertices[34], vertices[43]));
+		edges.push_back(graph.createEdge(e, vertices[42], vertices[51]));
+		edges.push_back(graph.createEdge(e, vertices[44], vertices[54]));
+		edges.push_back(graph.createEdge(e, vertices[45], vertices[55]));
+		edges.push_back(graph.createEdge(e, vertices[52], vertices[62]));
+		edges.push_back(graph.createEdge(e, vertices[54], vertices[64]));
+		edges.push_back(graph.createEdge(e, vertices[60], vertices[71]));
+		edges.push_back(graph.createEdge(e, vertices[62], vertices[73]));
+		edges.push_back(graph.createEdge(e, vertices[65], vertices[78]));
+		edges.push_back(graph.createEdge(e, vertices[68], vertices[81]));
+		edges.push_back(graph.createEdge(e, vertices[70], vertices[82]));
+		edges.push_back(graph.createEdge(e, vertices[71], vertices[83]));
+		edges.push_back(graph.createEdge(e, vertices[81], vertices[91]));
+		edges.push_back(graph.createEdge(e, vertices[82], vertices[93]));
+		edges.push_back(graph.createEdge(e, vertices[88], vertices[100]));
+		edges.push_back(graph.createEdge(e, vertices[90], vertices[101]));
+		edges.push_back(graph.createEdge(e, vertices[91], vertices[102]));
+		edges.push_back(graph.createEdge(e, vertices[93], vertices[104]));
+		edges.push_back(graph.createEdge(e, vertices[100], vertices[109]));
+		edges.push_back(graph.createEdge(e, vertices[101], vertices[110]));
+		edges.push_back(graph.createEdge(e, vertices[108], vertices[116]));
+		edges.push_back(graph.createEdge(e, vertices[109], vertices[117]));
+		edges.push_back(graph.createEdge(e, vertices[110], vertices[119]));
+		edges.push_back(graph.createEdge(e, vertices[116], vertices[125]));
+		edges.push_back(graph.createEdge(e, vertices[125], vertices[132]));
+		edges.push_back(graph.createEdge(e, vertices[127], vertices[133]));
+		edges.push_back(graph.createEdge(e, vertices[128], vertices[134]));
+		edges.push_back(graph.createEdge(e, vertices[129], vertices[135]));
+		
 		// 3 North South
 		e.direction = 3;
 
@@ -386,7 +415,7 @@ int main(){
 		edges.push_back(graph.createEdge(e, vertices[86], vertices[96]));
 		edges.push_back(graph.createEdge(e, vertices[87], vertices[98]));
 
-		edges.push_back(graph.createEdge(e, vertices[80], vertices[99]));
+		edges.push_back(graph.createEdge(e, vertices[88], vertices[99]));
 		edges.push_back(graph.createEdge(e, vertices[92], vertices[102]));
 		edges.push_back(graph.createEdge(e, vertices[94], vertices[104]));
 		edges.push_back(graph.createEdge(e, vertices[98], vertices[107]));
@@ -404,10 +433,47 @@ int main(){
 
 		edges.push_back(graph.createEdge(e, vertices[126], vertices[132]));
 		edges.push_back(graph.createEdge(e, vertices[130], vertices[135]));
-
-
+		
 		// 4 North - West South - East
 		e.direction = 4;
+
+		edges.push_back(graph.createEdge(e, vertices[10], vertices[21]));
+		edges.push_back(graph.createEdge(e, vertices[25], vertices[33]));
+		edges.push_back(graph.createEdge(e, vertices[28], vertices[37]));
+		edges.push_back(graph.createEdge(e, vertices[37], vertices[45]));
+		edges.push_back(graph.createEdge(e, vertices[38], vertices[46]));
+		edges.push_back(graph.createEdge(e, vertices[43], vertices[51]));
+		edges.push_back(graph.createEdge(e, vertices[44], vertices[52]));
+		edges.push_back(graph.createEdge(e, vertices[46], vertices[55]));
+		edges.push_back(graph.createEdge(e, vertices[52], vertices[60]));
+		edges.push_back(graph.createEdge(e, vertices[54], vertices[62]));
+		edges.push_back(graph.createEdge(e, vertices[59], vertices[66]));
+		edges.push_back(graph.createEdge(e, vertices[62], vertices[71]));
+		edges.push_back(graph.createEdge(e, vertices[64], vertices[73]));
+		edges.push_back(graph.createEdge(e, vertices[73], vertices[83]));
+		edges.push_back(graph.createEdge(e, vertices[74], vertices[84]));
+		edges.push_back(graph.createEdge(e, vertices[76], vertices[85]));
+		edges.push_back(graph.createEdge(e, vertices[84], vertices[93]));
+		edges.push_back(graph.createEdge(e, vertices[85], vertices[95]));
+		edges.push_back(graph.createEdge(e, vertices[93], vertices[102]));
+		edges.push_back(graph.createEdge(e, vertices[95], vertices[104]));
+		edges.push_back(graph.createEdge(e, vertices[96], vertices[105]));
+		edges.push_back(graph.createEdge(e, vertices[98], vertices[106]));
+		edges.push_back(graph.createEdge(e, vertices[105], vertices[113]));
+		edges.push_back(graph.createEdge(e, vertices[106], vertices[114]));
+		edges.push_back(graph.createEdge(e, vertices[113], vertices[121]));
+		edges.push_back(graph.createEdge(e, vertices[114], vertices[123]));
+		edges.push_back(graph.createEdge(e, vertices[115], vertices[124]));
+		edges.push_back(graph.createEdge(e, vertices[124], vertices[131]));
+		edges.push_back(graph.createEdge(e, vertices[127], vertices[132]));
+		edges.push_back(graph.createEdge(e, vertices[128], vertices[133]));
+		edges.push_back(graph.createEdge(e, vertices[129], vertices[134]));
+		edges.push_back(graph.createEdge(e, vertices[131], vertices[135]));
+
+
+
+
+
 		
 		sf::Texture graphTexture;
 		if (!graphTexture.loadFromFile("sprites\\tileset.png")) {

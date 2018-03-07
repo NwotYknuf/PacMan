@@ -42,10 +42,10 @@ bool DrawCharacter < VerticeInfo, EdgeInfo, PacmanInfo>
 	string str = character->info.direction == sf::Vector2<int>(0, 0) ? "standStill" : "walk";
 
 	switch (character->info.direction.y) {
-		case 1:
+		case -1:
 			str += "Down";
 			break;
-		case -1:
+		case 1:
 			str += "Up";
 	}
 	switch (character->info.direction.x) {
@@ -84,10 +84,10 @@ bool DrawCharacter < VerticeInfo, EdgeInfo, FantomInfo>
 	string str = character->info.direction == sf::Vector2<int>(0, 0) ? "standStill" : "walk";
 
 	switch (character->info.direction.y) {
-	case 1:
+	case -1:
 		str += "Down";
 		break;
-	case -1:
+	case 1:
 		str += "Up";
 	}
 	switch (character->info.direction.x) {

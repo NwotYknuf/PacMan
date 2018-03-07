@@ -66,22 +66,22 @@ void PacmanBehavior<Vinfo, Einfo, Cinfo>::update(GCharacter<Vinfo, Einfo, Cinfo>
 			v = sf::Vector2<int>(1, 0);
 			break;
 		case sf::Keyboard::Numpad8:
-			v = sf::Vector2<int>(0, -1);
-			break;
-		case sf::Keyboard::Numpad2:
 			v = sf::Vector2<int>(0, 1);
 			break;
+		case sf::Keyboard::Numpad2:
+			v = sf::Vector2<int>(0, -1);
+			break;
 		case sf::Keyboard::Numpad1:
-			v = sf::Vector2<int>(-1, 1);
-			break;
-		case sf::Keyboard::Numpad3:
-			v = sf::Vector2<int>(1, 1);
-			break;
-		case sf::Keyboard::Numpad7:
 			v = sf::Vector2<int>(-1, -1);
 			break;
-		case sf::Keyboard::Numpad9:
+		case sf::Keyboard::Numpad3:
 			v = sf::Vector2<int>(1, -1);
+			break;
+		case sf::Keyboard::Numpad7:
+			v = sf::Vector2<int>(-1, 1);
+			break;
+		case sf::Keyboard::Numpad9:
+			v = sf::Vector2<int>(1, 1);
 			break;
 		case sf::Keyboard::Numpad5:
 			v = sf::Vector2<int>(0, 0);
