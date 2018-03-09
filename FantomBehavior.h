@@ -66,52 +66,62 @@ Vertice<VerticeInfo> * FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::random
 	return neighbors->value;
 }
 
-/*
+template<>
 Vertice<VerticeInfo> * FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::vue(
 	GCharacter<VerticeInfo, EdgeInfo, FantomInfo> * fantom) {
-	PElement<Vertice<VerticeInfo>> * voisins = new PElement<Vertice<VerticeInfo>>(0, 0);
-	voisins->copy(fantom->graph->neighbors(fantom->position));
-	sf::Vector2<int> v;
-	sf::Vector2<int> v2;
 
-	for (int i = 0; i < voisins->size; i++) {
-		v = sf::Vector2<int>(voisins->value->value.info.pos.x - fantom->position->value.info.pos.x, voisins->value->value.info.pos.y - fantom->position->value.info.pos.y);
-		Vertice<VerticeInfo> * parcours = voisins->value;
+	PElement<Vertice<VerticeInfo>> * voisins = fantom->graph->neighbors(fantom->position);
+	Vertice<VerticeInfo> * parcours;
+	sf::Vector2<int> direction;
+	sf::Vector2<int> diff;
+	
+	while(voisins != NULL) {
+		Vertice<VerticeInfo> * v = voisins->value;
+		parcours = v;
+
+		direction = sf::Vector2<int>(
+			parcours->value.info.pos.x - fantom->position->value.info.pos.x,
+			parcours->value.info.pos.y - fantom->position->value.info.pos.y);
 
 		while (parcours != NULL) {
-			if (parcours->value.info.pacmanIsHere)
-				return voisins->value;
-			else
-				PElement<Vertice<VerticeInfo>> * voisinsParcours = new PElement<Vertice<VerticeInfo>>(0, 0);
-				voisinsParcours->copy(fantom->graph->neighbors(parcours));
+			if (parcours->value.info.pacmanIsHere) {
+				return v;
+			}
+			else {
+				PElement<Vertice<VerticeInfo>> * voisinsParcours = fantom->graph->neighbors(parcours);
 				bool trouve = false;
-				for (int j = 0; i < voisinsParcours->size; j++) {
-					v2 = sf::Vector2<int>(voisinsParcours->value->value.info.pos.x - voisins->value->value.info.pos.x, voisinsParcours->value->value.info.pos.y - voisins->value->value.info.pos.y);
-					if (v == v2) {
+
+				while(voisinsParcours != NULL) {
+					diff = sf::Vector2<int>(
+						voisinsParcours->value->value.info.pos.x - parcours->value.info.pos.x,
+						voisinsParcours->value->value.info.pos.y - parcours->value.info.pos.y);
+
+					if (direction == diff) {
 						trouve = true;
 						parcours = voisinsParcours->value;
-						break;
 					}
 					else {
-						voisinsParcours->next;
+						voisinsParcours = voisinsParcours->next;
 					}
 				}
 				if (!trouve)
 					parcours = NULL;
+			}
 		}
-		voisins->next;
+		voisins = voisins->next;
 	}
+	
 	return flair(fantom);
 }
-*/
 
-/*
+
+template<>
 Vertice<VerticeInfo> * FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::flair(
 	GCharacter<VerticeInfo, EdgeInfo, FantomInfo> * fantom) {
 
-
+	return NULL;
 }
-*/
+
 template<class Vinfo, class Einfo, class Cinfo>
 const float FantomBehavior<Vinfo, Einfo, Cinfo>::UPDATE_RATE = 0.25f;
 

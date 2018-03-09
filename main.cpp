@@ -693,7 +693,7 @@ int main(){
 
 		DrawCharacter<VerticeInfo, EdgeInfo, FantomInfo>  drawCharFantom(&window, &fantomSprite, &fantomAnimator, transform, &font);
 
-		FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo> fantomBehavior(FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::aStar);
+		FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo> fantomBehavior(FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::vue);
 
 #pragma endregion
 
@@ -757,7 +757,7 @@ int main(){
 
 		DrawCharacter<VerticeInfo, EdgeInfo, FantomInfo>  drawCharFantom2(&window, &fantom2Sprite, &fantom2Animator, transform, &font);
 
-		FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo> fantom2Behavior(FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::aStar);
+		FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo> fantom2Behavior(FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::vue);
 
 #pragma endregion
 
@@ -798,12 +798,12 @@ int main(){
 				AStarTools::target = pacman.position;
 				fantom.update(fantomBehavior);
 				fantom2.update(fantom2Behavior);
-
+				
 				drawGraph.update();
 				drawCharFantom.update();
 				drawCharFantom2.update();
 				drawCharPacman.update();
-
+				
 				graph.draw(drawGraph);
 				fantom.drawCharacter(drawCharFantom);
 				fantom2.drawCharacter(drawCharFantom2);
