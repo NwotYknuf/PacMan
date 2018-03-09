@@ -628,7 +628,7 @@ int main(){
 
 #pragma endregion
 
-#pragma region fantom
+#pragma region fantom1
 		sf::Texture fantomTexture;
 
 		if (!fantomTexture.loadFromFile("sprites\\fantom.png")) {
@@ -700,6 +700,70 @@ int main(){
 
 #pragma endregion
 
+#pragma region fantom2
+
+		sf::Sprite fantom2Sprite;
+		fantom2Sprite.setTexture(fantomTexture);
+
+		Animation fantom2WalkLeft(0.166666667);
+		fantom2WalkLeft.addFrame(sf::IntRect(0, 64, 32, 32));
+		fantom2WalkLeft.addFrame(sf::IntRect(32, 64, 32, 32));
+
+		Animation fantom2WalkRight(0.166666667);
+		fantom2WalkRight.addFrame(sf::IntRect(64, 64, 32, 32));
+		fantom2WalkRight.addFrame(sf::IntRect(96, 64, 32, 32));
+
+		Animation fantom2WalkUp(0.166666667);
+		fantom2WalkUp.addFrame(sf::IntRect(128, 64, 32, 32));
+		fantom2WalkUp.addFrame(sf::IntRect(160, 64, 32, 32));
+
+		Animation fantom2WalkDown(0.166666667);
+		fantom2WalkDown.addFrame(sf::IntRect(192, 64, 32, 32));
+		fantom2WalkDown.addFrame(sf::IntRect(224, 64, 32, 32));
+
+		Animation fantom2WalkUpLeft(0.166666667);
+		fantom2WalkUpLeft.addFrame(sf::IntRect(0, 96, 32, 32));
+		fantom2WalkUpLeft.addFrame(sf::IntRect(32, 96, 32, 32));
+
+		Animation fantom2WalkUpRight(0.166666667);
+		fantom2WalkUpRight.addFrame(sf::IntRect(64, 96, 32, 32));
+		fantom2WalkUpRight.addFrame(sf::IntRect(96, 96, 32, 32));
+
+		Animation fantom2WalkDownRight(0.166666667);
+		fantom2WalkDownRight.addFrame(sf::IntRect(128, 96, 32, 32));
+		fantom2WalkDownRight.addFrame(sf::IntRect(160, 96, 32, 32));
+
+		Animation fantom2WalkDownLeft(0.166666667);
+		fantom2WalkDownLeft.addFrame(sf::IntRect(192, 96, 32, 32));
+		fantom2WalkDownLeft.addFrame(sf::IntRect(224, 96, 32, 32));
+
+		Animation fantom2StandStill(0.45);
+		fantom2StandStill.addFrame(sf::IntRect(0, 64, 32, 32));
+		fantom2StandStill.addFrame(sf::IntRect(64, 64, 32, 32));
+
+		Animator fantom2Animator(&fantom2Sprite);
+		fantom2Animator.addAnimation("walkLeft", &fantom2WalkLeft);
+		fantom2Animator.addAnimation("walkRight", &fantom2WalkRight);
+		fantom2Animator.addAnimation("walkUp", &fantom2WalkUp);
+		fantom2Animator.addAnimation("walkDown", &fantom2WalkDown);
+		fantom2Animator.addAnimation("walkDownLeft", &fantom2WalkDownLeft);
+		fantom2Animator.addAnimation("walkDownRight", &fantom2WalkDownRight);
+		fantom2Animator.addAnimation("walkUpLeft", &fantom2WalkUpLeft);
+		fantom2Animator.addAnimation("walkUpRight", &fantom2WalkUpRight);
+		fantom2Animator.addAnimation("standStill", &fantom2StandStill);
+
+		fantom2Animator.setCurentAnimation("standStill");
+		
+		GCharacter<VerticeInfo, EdgeInfo, FantomInfo> fantom2(fantomInfo, &graph);
+
+		fantom2.position = vertices[128];
+
+		DrawCharacter<VerticeInfo, EdgeInfo, FantomInfo>  drawCharFantom2(&window, &fantom2Sprite, &fantom2Animator, transform, &font);
+
+		FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo> fantom2Behavior(FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::aStar);
+
+#pragma endregion
+
 		//main loop
 		GameClock*clock = GameClock::getInstance();
 		bool end = false;
@@ -736,28 +800,37 @@ int main(){
 				pacman.update(pacmanBehavior);
 				AStarTools::target = pacman.position;
 				fantom.update(fantomBehavior);
+				fantom2.update(fantom2Behavior);
 
 				drawGraph.update();
 				drawCharFantom.update();
+				drawCharFantom2.update();
 				drawCharPacman.update();
 
 				graph.draw(drawGraph);
 				fantom.drawCharacter(drawCharFantom);
+				fantom2.drawCharacter(drawCharFantom2);
 				pacman.drawCharacter(drawCharPacman);		
 				
 				window.display();
-				clock->restart();
 				
-				if (pacman.position == fantom.position) {
+				if (pacman.position == fantom.position || pacman.position == fantom2.position) {
 					end = true;
 					pacman.info.alive = false;
 					pacmanExplode.reset();
 				}
+								
+				cout << "framerate : " << 1 / clock->getElapsedTime() << endl;
+				clock->restart();
+
 			}
 		}
 
 		//game over
-		while (window.isOpen()) {
+
+		float elapsedTime = 0.0f;
+
+		while (window.isOpen() && elapsedTime < 4.0f) {
 			while (window.pollEvent(event)) {
 				switch (event.type) {
 				case sf::Event::Closed:
@@ -767,19 +840,23 @@ int main(){
 					break;
 				}
 			}
-
-			if (clock->getElapsedTime() >= 0.016666666f) {
+			
+			if (clock->getElapsedTime() >= 0.016666666f ) {
 				window.clear();
 
 				drawGraph.update();
 				drawCharFantom.update();
 				drawCharPacman.update();
+				drawCharFantom2.update();
 
 				graph.draw(drawGraph);
 				fantom.drawCharacter(drawCharFantom);
+				fantom2.drawCharacter(drawCharFantom2);
 				pacman.drawCharacter(drawCharPacman);
 
 				window.display();
+
+				elapsedTime += clock->getElapsedTime();
 				clock->restart();
 			}
 		}
