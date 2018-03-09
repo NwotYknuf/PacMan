@@ -3,7 +3,7 @@
 Random * Random::_instance = NULL;
 
 Random::Random() {
-	_generator = &std::default_random_engine(165516);
+	_generator = &std::default_random_engine(0);
 }
 
 Random * Random::getInstance(){

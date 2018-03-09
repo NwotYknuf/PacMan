@@ -19,6 +19,16 @@
 #include "WorldToScreen.h"
 
 using namespace std;
+const float HEAT_DECAY = 0.001;
+
+void updateGraph(Graph<EdgeInfo, VerticeInfo> * graph) {
+	PElement<Edge<EdgeInfo, VerticeInfo>> * copy = graph->lEdges;
+
+	while (copy != NULL) {
+		copy->value->value.heat -= HEAT_DECAY;
+		copy = copy->next;
+	}
+}
 
 int main(){
 	try {
@@ -794,6 +804,7 @@ int main(){
 			if (clock->getElapsedTime() >= 0.016666666f) {
 				window.clear();
 				
+				updateGraph(&graph);
 				pacman.update(pacmanBehavior);
 				AStarTools::target = pacman.position;
 				fantom.update(fantomBehavior);

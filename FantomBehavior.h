@@ -127,6 +127,7 @@ Vertice<VerticeInfo> * FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::scent(
 
 	while (neighbors != NULL) {
 		if (neighbors->value->value.heat > highestHeatYet) {
+			highestHeatYet = neighbors->value->value.heat;
 			target = fantom->position == neighbors->value->begin ? neighbors->value->end : neighbors->value->begin;
 		}
 		neighbors = neighbors->next;
