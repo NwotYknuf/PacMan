@@ -1,4 +1,6 @@
-#pragma once
+#ifndef FANTOMINFO_H
+#define FANTOMINFO_H
+
 #include<SFML\Graphics.hpp>
 
 class FantomInfo{
@@ -8,3 +10,5 @@ public:
 	FantomInfo() { direction = sf::Vector2<int>(0, 0); }
 	~FantomInfo() { }
 };
+
+#endif

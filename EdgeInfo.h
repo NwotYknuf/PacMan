@@ -1,4 +1,6 @@
-#pragma once
+#ifndef EDGEINFO_H
+#define EDGEINFO_H
+
 #include<iostream>
 
 using namespace std;
@@ -46,3 +48,5 @@ public:
 	}
 	
 };
+
+#endif

@@ -1,4 +1,6 @@
-#pragma once
+#ifndef PACMANINFO_H
+#define PACMANINFO_H
+
 #include<SFML\Graphics.hpp>
 
 class PacmanInfo{
@@ -12,3 +14,4 @@ public:
 	~PacmanInfo() { }
 };
 
+#endif

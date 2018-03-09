@@ -1,5 +1,5 @@
-#ifndef CHARACTER_H
-#define CHARACTER_H
+#ifndef GCHARACTER_H
+#define GCHARACTER_H
 
 #include "Graph.h"
 #include "PElement.h"

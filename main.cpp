@@ -16,9 +16,7 @@
 #include "Informations.h"
 #include "PacmanBehavior.h"
 #include "FantomBehavior.h"
-#include "Window.h"
-
-const float sqrt2 = 1.41421356237f;
+#include "WorldToScreen.h"
 
 using namespace std;
 
@@ -688,13 +686,10 @@ int main(){
 
 
 		FantomInfo fantomInfo;
-		FantomInfo fantomInfo2;
 
 		GCharacter<VerticeInfo, EdgeInfo, FantomInfo> fantom(fantomInfo, &graph);
-		GCharacter<VerticeInfo, EdgeInfo, FantomInfo> fantom2(fantomInfo2, &graph);
 
 		fantom.position = vertices[0];
-		fantom2.position = vertices[5];
 
 		DrawCharacter<VerticeInfo, EdgeInfo, FantomInfo>  drawCharFantom(&window, &fantomSprite, &fantomAnimator, transform, &font);
 
@@ -796,7 +791,7 @@ int main(){
 				}
 			}
 
-			if (clock->getElapsedTime() >= 0.45f) {
+			if (clock->getElapsedTime() >= 0.016666666f) {
 				window.clear();
 				
 				pacman.update(pacmanBehavior);
@@ -831,6 +826,13 @@ int main(){
 		//game over
 
 		float elapsedTime = 0.0f;
+		sf::Text gameOverText;
+		gameOverText.setString("GAME OVER");
+		gameOverText.setFont(font);
+		gameOverText.setFillColor(sf::Color::White);
+		gameOverText.setOrigin(gameOverText.getGlobalBounds().width / 2, gameOverText.getGlobalBounds().height / 2);
+		gameOverText.setScale(sf::Vector2f(2, 2));
+		gameOverText.setPosition(transform(sf::Vector2<float>(6.0f, 7.0f)));
 
 		while (window.isOpen() && elapsedTime < 4.0f) {
 			while (window.pollEvent(event)) {
@@ -855,6 +857,9 @@ int main(){
 				fantom.drawCharacter(drawCharFantom);
 				fantom2.drawCharacter(drawCharFantom2);
 				pacman.drawCharacter(drawCharPacman);
+
+				if (elapsedTime > 2.0f)
+					window.draw(gameOverText);
 
 				window.display();
 

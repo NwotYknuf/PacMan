@@ -1,4 +1,6 @@
-#pragma once
+#ifndef FANTOMBEHAVIOR_H
+#define FANTOMBEHAVIOR_H
+
 #include <SFML\Graphics.hpp>
 #include <random>
 #include "GCharacter.h"
@@ -111,7 +113,7 @@ Vertice<VerticeInfo> * FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::flair(
 }
 */
 template<class Vinfo, class Einfo, class Cinfo>
-const float FantomBehavior<Vinfo, Einfo, Cinfo>::UPDATE_RATE = 0.2f;
+const float FantomBehavior<Vinfo, Einfo, Cinfo>::UPDATE_RATE = 0.25f;
 
 template<class Vinfo, class Einfo, class Cinfo>
 void FantomBehavior<Vinfo, Einfo, Cinfo>::update(
@@ -129,3 +131,5 @@ void FantomBehavior<Vinfo, Einfo, Cinfo>::update(
 		_timeElapsed -= UPDATE_RATE;
 	}
 }
+
+#endif

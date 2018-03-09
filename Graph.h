@@ -1,4 +1,5 @@
-#pragma once
+#ifndef GRAPH_H
+#define GRAPH_H
 
 #include <utility>
 #include "PElement.h"
@@ -275,3 +276,5 @@ template<class I>
 const I & max(const I &t1, const I &t2) {
 	return t1 > t2 ? t1 : t2;
 }
+
+#endif

@@ -1,4 +1,6 @@
-#pragma once
+#ifndef PACMANBEHAVIOR_H
+#define PACMANBEHAVIOR_H
+
 #include <SFML\Graphics.hpp>
 #include "GCharacter.h"
 #include "Graph.h"
@@ -94,3 +96,5 @@ void PacmanBehavior<Vinfo, Einfo, Cinfo>::update(GCharacter<Vinfo, Einfo, Cinfo>
 	}
 
 }
+
+#endif

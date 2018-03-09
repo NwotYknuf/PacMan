@@ -1,4 +1,6 @@
-#pragma once
+#ifndef PELEMENT_H
+#define PELEMENT_H
+
 #include<iostream>
 #include<sstream>
 #include<string>
@@ -141,3 +143,4 @@ public:
 
 };
 
+#endif

@@ -1,4 +1,6 @@
-#pragma once
+#ifndef INFORMATIONS_H
+#define INFORMATIONS_H
+
 #include <iostream>
 #include <SFML\Graphics.hpp>
 
@@ -35,3 +37,5 @@ public :
 	}
 
 };
+
+#endif
