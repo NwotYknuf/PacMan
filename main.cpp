@@ -250,7 +250,6 @@ int main(){
 		vector<Edge<EdgeInfo, VerticeInfo>*> edges;
 		
 		EdgeInfo e(0, 1, 1.0f);
-		// without pacgomme : EdgeInfo e(0,1,1.0f, false);
 
 		//1 East West
 		edges.push_back(graph.createEdge(e, vertices[0], vertices[1]));
@@ -689,10 +688,13 @@ int main(){
 
 
 		FantomInfo fantomInfo;
+		FantomInfo fantomInfo2;
 
 		GCharacter<VerticeInfo, EdgeInfo, FantomInfo> fantom(fantomInfo, &graph);
+		GCharacter<VerticeInfo, EdgeInfo, FantomInfo> fantom2(fantomInfo2, &graph);
 
 		fantom.position = vertices[0];
+		fantom2.position = vertices[5];
 
 		DrawCharacter<VerticeInfo, EdgeInfo, FantomInfo>  drawCharFantom(&window, &fantomSprite, &fantomAnimator, transform, &font);
 
@@ -730,7 +732,7 @@ int main(){
 				}
 			}
 
-			if (clock->getElapsedTime() >= 0.016666666f) {
+			if (clock->getElapsedTime() >= 0.45f) {
 				window.clear();
 				
 				pacman.update(pacmanBehavior);
