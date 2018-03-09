@@ -34,9 +34,9 @@ public:
 
 	static Vertice<Vinfo> * random(GCharacter<Vinfo, Einfo, Cinfo> * fantom);
 
-	static Vertice<Vinfo> * vue(GCharacter<Vinfo, Einfo, Cinfo> * fantom);
+	static Vertice<Vinfo> * sight(GCharacter<Vinfo, Einfo, Cinfo> * fantom);
 
-	static Vertice<Vinfo> * flair(GCharacter<Vinfo, Einfo, Cinfo> * fantom);
+	static Vertice<Vinfo> * scent(GCharacter<Vinfo, Einfo, Cinfo> * fantom);
 
 };
 
@@ -67,8 +67,9 @@ Vertice<VerticeInfo> * FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::random
 }
 
 template<>
-Vertice<VerticeInfo> * FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::vue(
+Vertice<VerticeInfo> * FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::sight(
 	GCharacter<VerticeInfo, EdgeInfo, FantomInfo> * fantom) {
+	//TODO delete lists properly
 
 	PElement<Vertice<VerticeInfo>> * voisins = fantom->graph->neighbors(fantom->position);
 	Vertice<VerticeInfo> * parcours;
@@ -111,15 +112,27 @@ Vertice<VerticeInfo> * FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::vue(
 		voisins = voisins->next;
 	}
 	
-	return flair(fantom);
+	return scent(fantom);
 }
 
 
 template<>
-Vertice<VerticeInfo> * FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::flair(
+Vertice<VerticeInfo> * FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::scent(
 	GCharacter<VerticeInfo, EdgeInfo, FantomInfo> * fantom) {
+	//TODO delete lists properly
+	PElement<Edge<EdgeInfo, VerticeInfo>>* neighbors = fantom->graph->adjacentEdges(fantom->position);
 
-	return NULL;
+	Vertice<VerticeInfo> * target = NULL;
+	float highestHeatYet = 0.0f;
+
+	while (neighbors != NULL) {
+		if (neighbors->value->value.heat > highestHeatYet) {
+			target = fantom->position == neighbors->value->begin ? neighbors->value->end : neighbors->value->begin;
+		}
+		neighbors = neighbors->next;
+	}
+
+	return target==NULL ? random(fantom) : target;
 }
 
 template<class Vinfo, class Einfo, class Cinfo>

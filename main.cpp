@@ -693,7 +693,7 @@ int main(){
 
 		DrawCharacter<VerticeInfo, EdgeInfo, FantomInfo>  drawCharFantom(&window, &fantomSprite, &fantomAnimator, transform, &font);
 
-		FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo> fantomBehavior(FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::vue);
+		FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo> fantomBehavior(FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::sight);
 
 #pragma endregion
 
@@ -757,7 +757,7 @@ int main(){
 
 		DrawCharacter<VerticeInfo, EdgeInfo, FantomInfo>  drawCharFantom2(&window, &fantom2Sprite, &fantom2Animator, transform, &font);
 
-		FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo> fantom2Behavior(FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::vue);
+		FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo> fantom2Behavior(FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::sight);
 
 #pragma endregion
 
