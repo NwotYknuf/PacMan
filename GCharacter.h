@@ -11,13 +11,17 @@
 
 template<class Vinfo, class Einfo, class Cinfo>
 class GCharacter {
+private :
+	Vertice<Vinfo> * _initialPosition;
 
 public:
 	Cinfo info;
 	Vertice<Vinfo> * position;
 	Graph<Einfo, Vinfo> * graph;
 
-	GCharacter(Cinfo _info, Graph<Einfo, Vinfo>* _graph) {
+	GCharacter(Cinfo _info, Graph<Einfo, Vinfo>* _graph, Vertice<Vinfo> * initialPosition) {
+		position = initialPosition;
+		_initialPosition = initialPosition;
 		info = _info;
 		graph = _graph;
 	}
@@ -33,6 +37,8 @@ public:
 	void updateInfos(Vertice<Vinfo>* vertice);
 
 	void updateInfosFailure();
+
+	void reset();
 	
 };
 
@@ -61,10 +67,12 @@ bool GCharacter<Vinfo, Einfo, Cinfo>
 
 	if (PElement < Vertice<Vinfo>>::inList(vertice, voisin)) {
 		this->updateInfos(vertice);
+		PElement < Vertice<Vinfo>>::erasePointer(voisin);
 		return true;
 	}
 	else {
 		this->updateInfosFailure();
+		PElement < Vertice<Vinfo>>::erasePointer(voisin);
 		return false;
 	}
 }
@@ -125,6 +133,12 @@ void GCharacter<VerticeInfo, EdgeInfo, FantomInfo>::updateInfosFailure() {
 	//Update direction vector
 	this->info.direction = sf::Vector2<int>(0, 0);
 
+}
+
+template<class Vinfo, class Einfo, class Cinfo>
+void GCharacter<Vinfo, Einfo, Cinfo>::reset(){
+	info.reset();
+	position = _initialPosition;
 }
 
 #endif 

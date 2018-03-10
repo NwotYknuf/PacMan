@@ -17,17 +17,46 @@
 #include "PacmanBehavior.h"
 #include "FantomBehavior.h"
 #include "WorldToScreen.h"
+#include "Actor.h"
 
 using namespace std;
 const float HEAT_DECAY = 0.001;
 
 void updateGraph(Graph<EdgeInfo, VerticeInfo> * graph) {
-	PElement<Edge<EdgeInfo, VerticeInfo>> * copy = graph->lEdges;
+	PElement<Edge<EdgeInfo, VerticeInfo>> * neighbors = graph->lEdges;
+	PElement<Edge<EdgeInfo, VerticeInfo>> * temp = neighbors;
 
-	while (copy != NULL) {
-		copy->value->value.heat -= HEAT_DECAY;
-		copy = copy->next;
+	while (temp != NULL) {
+		if(temp->value->value.heat > 0)
+			temp->value->value.heat -= HEAT_DECAY;
+		temp = temp->next;
 	}
+
+	PElement<Edge<EdgeInfo, VerticeInfo>>::erasePointer(neighbors);
+
+}
+
+void resetGraph(Graph<EdgeInfo, VerticeInfo> * graph) {
+	PElement<Edge<EdgeInfo, VerticeInfo>> * edges = graph->lEdges;
+	PElement<Edge<EdgeInfo, VerticeInfo>> * temp = edges;
+
+	while (temp != NULL) {
+		temp->value->value.reset();
+		temp = temp->next;
+	}
+
+	PElement<Edge<EdgeInfo, VerticeInfo>>::erasePointer(edges);
+	
+	PElement<Vertice<VerticeInfo>> * vertices = graph->lVertices;
+	PElement<Vertice<VerticeInfo>> * temp2 = vertices;
+
+	while (temp2 != NULL) {
+		temp2->value->value.info.reset();
+		temp2 = temp2->next;
+	}
+
+	PElement<Vertice<VerticeInfo>>::erasePointer(vertices);
+
 }
 
 int main(){
@@ -624,14 +653,18 @@ int main(){
 
 		PacmanInfo pacmanInfo;
 
-		GCharacter<VerticeInfo, EdgeInfo, PacmanInfo> pacman(pacmanInfo, &graph);
-
-		pacman.position = vertices[44];
+		GCharacter<VerticeInfo, EdgeInfo, PacmanInfo> pacmanGChar(pacmanInfo, &graph, vertices[44]);
 		vertices[44]->value.info.pacmanIsHere = true;
 
 		DrawCharacter<VerticeInfo, EdgeInfo, PacmanInfo>  drawCharPacman(&window, &pacmanSprite, &pacManAnimator, transform, &font);
 
 		PacmanBehavior<VerticeInfo, EdgeInfo, PacmanInfo> pacmanBehavior;
+
+		Actor<
+			GCharacter<VerticeInfo, EdgeInfo, PacmanInfo>,
+			PacmanBehavior<VerticeInfo, EdgeInfo, PacmanInfo>,
+			DrawCharacter<VerticeInfo, EdgeInfo, PacmanInfo>
+		> pacman(&pacmanGChar, &pacmanBehavior, &drawCharPacman);
 
 #pragma endregion
 
@@ -697,13 +730,17 @@ int main(){
 
 		FantomInfo fantomInfo;
 
-		GCharacter<VerticeInfo, EdgeInfo, FantomInfo> fantom(fantomInfo, &graph);
-
-		fantom.position = vertices[0];
-
+		GCharacter<VerticeInfo, EdgeInfo, FantomInfo> fantomGchar(fantomInfo, &graph, vertices[0]);
+		
 		DrawCharacter<VerticeInfo, EdgeInfo, FantomInfo>  drawCharFantom(&window, &fantomSprite, &fantomAnimator, transform, &font);
 
 		FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo> fantomBehavior(FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::sight);
+
+		Actor<
+			GCharacter<VerticeInfo, EdgeInfo, FantomInfo>,
+			FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>,
+			DrawCharacter<VerticeInfo, EdgeInfo, FantomInfo>
+		> fantom(&fantomGchar, &fantomBehavior, &drawCharFantom);
 
 #pragma endregion
 
@@ -761,13 +798,17 @@ int main(){
 
 		fantom2Animator.setCurentAnimation("standStill");
 		
-		GCharacter<VerticeInfo, EdgeInfo, FantomInfo> fantom2(fantomInfo, &graph);
-
-		fantom2.position = vertices[128];
-
+		GCharacter<VerticeInfo, EdgeInfo, FantomInfo> fantom2Gchar(fantomInfo, &graph, vertices[128]);
+		
 		DrawCharacter<VerticeInfo, EdgeInfo, FantomInfo>  drawCharFantom2(&window, &fantom2Sprite, &fantom2Animator, transform, &font);
 
 		FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo> fantom2Behavior(FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::sight);
+
+		Actor<
+			GCharacter<VerticeInfo, EdgeInfo, FantomInfo>,
+			FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>,
+			DrawCharacter<VerticeInfo, EdgeInfo, FantomInfo>
+		> fantom2(&fantom2Gchar, &fantom2Behavior, &drawCharFantom2);
 
 #pragma endregion
 
@@ -775,108 +816,111 @@ int main(){
 		GameClock*clock = GameClock::getInstance();
 		bool end = false;
 
-		while (window.isOpen() && !end) {
-			while (window.pollEvent(event)) {
-				switch (event.type) {
-				case sf::Event::Closed:
-					window.close();
-					break;
-				case sf::Event::KeyPressed:
-					switch (event.key.code) {
-						
-					case sf::Keyboard::Numpad4:
-					case sf::Keyboard::Numpad6:
-					case sf::Keyboard::Numpad8:
-					case sf::Keyboard::Numpad2:
-					case sf::Keyboard::Numpad1:
-					case sf::Keyboard::Numpad3:
-					case sf::Keyboard::Numpad7:
-					case sf::Keyboard::Numpad9:
-						pacmanBehavior.setLastInput(event.key.code);
+		while (window.isOpen()) {
+			while (!end) {
+				while (window.pollEvent(event)) {
+					switch (event.type) {
+					case sf::Event::Closed:
+						window.close();
+						break;
+					case sf::Event::KeyPressed:
+						switch (event.key.code) {
+
+						case sf::Keyboard::Numpad4:
+						case sf::Keyboard::Numpad6:
+						case sf::Keyboard::Numpad8:
+						case sf::Keyboard::Numpad2:
+						case sf::Keyboard::Numpad1:
+						case sf::Keyboard::Numpad3:
+						case sf::Keyboard::Numpad7:
+						case sf::Keyboard::Numpad9:
+							pacmanBehavior.setLastInput(event.key.code);
+							break;
+						}
+						break;
+					default:
 						break;
 					}
-					break;
-				default:
-					break;
+				}
+
+				if (clock->getElapsedTime() >= 0.016666666f) {
+					window.clear();
+
+					updateGraph(&graph);
+					AStarTools::target = pacmanGChar.position;
+					drawGraph.update();
+					graph.draw(drawGraph);
+
+					fantom.update();
+					fantom2.update();
+					pacman.update();
+
+					window.display();
+
+					if (pacmanGChar.position == fantomGchar.position || pacmanGChar.position == fantom2Gchar.position) {
+						end = true;
+						pacmanGChar.info.alive = false;
+						pacmanExplode.reset();
+					}
+
+					cout << "framerate : " << 1 / clock->getElapsedTime() << endl;
+					clock->restart();
+
 				}
 			}
 
-			if (clock->getElapsedTime() >= 0.016666666f) {
-				window.clear();
-				
-				updateGraph(&graph);
-				pacman.update(pacmanBehavior);
-				AStarTools::target = pacman.position;
-				fantom.update(fantomBehavior);
-				fantom2.update(fantom2Behavior);
-				
-				drawGraph.update();
-				drawCharFantom.update();
-				drawCharFantom2.update();
-				drawCharPacman.update();
-				
-				graph.draw(drawGraph);
-				fantom.drawCharacter(drawCharFantom);
-				fantom2.drawCharacter(drawCharFantom2);
-				pacman.drawCharacter(drawCharPacman);		
-				
-				window.display();
-				
-				if (pacman.position == fantom.position || pacman.position == fantom2.position) {
-					end = true;
-					pacman.info.alive = false;
-					pacmanExplode.reset();
+			//game over
+			float elapsedTime = 0.0f;
+			sf::Text gameOverText;
+			gameOverText.setString("GAME OVER");
+			gameOverText.setFont(font);
+			gameOverText.setFillColor(sf::Color::White);
+			gameOverText.setOrigin(gameOverText.getGlobalBounds().width / 2, gameOverText.getGlobalBounds().height / 2);
+			gameOverText.setScale(sf::Vector2f(2, 2));
+			gameOverText.setPosition(transform(sf::Vector2<float>(6.0f, 7.0f)));
+
+			while (elapsedTime < 4.0f) {
+				while (window.pollEvent(event)) {
+					switch (event.type) {
+					case sf::Event::Closed:
+						window.close();
+						break;
+					default:
+						break;
+					}
 				}
-								
-				cout << "framerate : " << 1 / clock->getElapsedTime() << endl;
-				clock->restart();
 
-			}
-		}
+				if (clock->getElapsedTime() >= 0.016666666f) {
+					window.clear();
 
-		//game over
+					drawGraph.update();
+					drawCharFantom.update();
+					drawCharPacman.update();
+					drawCharFantom2.update();
 
-		float elapsedTime = 0.0f;
-		sf::Text gameOverText;
-		gameOverText.setString("GAME OVER");
-		gameOverText.setFont(font);
-		gameOverText.setFillColor(sf::Color::White);
-		gameOverText.setOrigin(gameOverText.getGlobalBounds().width / 2, gameOverText.getGlobalBounds().height / 2);
-		gameOverText.setScale(sf::Vector2f(2, 2));
-		gameOverText.setPosition(transform(sf::Vector2<float>(6.0f, 7.0f)));
+					graph.draw(drawGraph);
+					fantomGchar.drawCharacter(drawCharFantom);
+					fantom2Gchar.drawCharacter(drawCharFantom2);
+					pacmanGChar.drawCharacter(drawCharPacman);
 
-		while (window.isOpen() && elapsedTime < 4.0f) {
-			while (window.pollEvent(event)) {
-				switch (event.type) {
-				case sf::Event::Closed:
-					window.close();
-					break;
-				default:
-					break;
+					if (elapsedTime > 2.0f)
+						window.draw(gameOverText);
+
+					window.display();
+
+					elapsedTime += clock->getElapsedTime();
+					clock->restart();
 				}
 			}
-			
-			if (clock->getElapsedTime() >= 0.016666666f ) {
-				window.clear();
 
-				drawGraph.update();
-				drawCharFantom.update();
-				drawCharPacman.update();
-				drawCharFantom2.update();
+			//reset everything
+			end = false;
 
-				graph.draw(drawGraph);
-				fantom.drawCharacter(drawCharFantom);
-				fantom2.drawCharacter(drawCharFantom2);
-				pacman.drawCharacter(drawCharPacman);
+			resetGraph(&graph);
 
-				if (elapsedTime > 2.0f)
-					window.draw(gameOverText);
-
-				window.display();
-
-				elapsedTime += clock->getElapsedTime();
-				clock->restart();
-			}
+			pacman.reset();
+			fantom.reset();
+			fantom2.reset();
 		}
 
 	}

@@ -46,6 +46,7 @@ Vertice<VerticeInfo> * FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::aStar(
 
 	Vertice<VerticeInfo> * result = NULL;
 	result = AStar<Graph<EdgeInfo, VerticeInfo>, Vertice<VerticeInfo>>::aStar(*fantom->graph, fantom->position, AStarTools::computeHeuristic);
+
 	result = penultimateElement(result);
 
 	return result;
@@ -56,82 +57,96 @@ Vertice<VerticeInfo> * FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::random
 	GCharacter<VerticeInfo, EdgeInfo, FantomInfo> * fantom) {
 
 	PElement<Vertice<VerticeInfo>> * neighbors = fantom->graph->neighbors(fantom->position);
-
-	int n = neighbors->size(neighbors);
+	PElement<Vertice<VerticeInfo>> * temp = neighbors;
+	
+	int n = temp->size(temp);
 	
 	for (int i = 0; i < Random::getInstance()->getNextRandom(0, n-1); i++){
-		neighbors = neighbors->next;
+		temp = temp->next;
 	}
 
-	return neighbors->value;
+	Vertice<VerticeInfo> * res = temp->value;
+
+	PElement<Vertice<VerticeInfo>>::erasePointer(neighbors);
+
+	return res;
 }
 
 template<>
 Vertice<VerticeInfo> * FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::sight(
 	GCharacter<VerticeInfo, EdgeInfo, FantomInfo> * fantom) {
-	//TODO delete lists properly
 
-	PElement<Vertice<VerticeInfo>> * voisins = fantom->graph->neighbors(fantom->position);
-	Vertice<VerticeInfo> * parcours;
+	PElement<Vertice<VerticeInfo>> * initialNeighbors = fantom->graph->neighbors(fantom->position);
+	PElement<Vertice<VerticeInfo>> * temp = initialNeighbors;
+
+	Vertice<VerticeInfo> * currentVertice;
 	sf::Vector2<int> direction;
 	sf::Vector2<int> diff;
 	
-	while(voisins != NULL) {
-		Vertice<VerticeInfo> * v = voisins->value;
-		parcours = v;
+	while(temp != NULL) {
+		Vertice<VerticeInfo> * v = temp->value;
+		currentVertice = v;
 
 		direction = sf::Vector2<int>(
-			parcours->value.info.pos.x - fantom->position->value.info.pos.x,
-			parcours->value.info.pos.y - fantom->position->value.info.pos.y);
+			currentVertice->value.info.pos.x - fantom->position->value.info.pos.x,
+			currentVertice->value.info.pos.y - fantom->position->value.info.pos.y);
 
-		while (parcours != NULL) {
-			if (parcours->value.info.pacmanIsHere) {
+		while (currentVertice != NULL) {
+			if (currentVertice->value.info.pacmanIsHere) {
+				PElement<Vertice<VerticeInfo>>::erasePointer(initialNeighbors);
 				return v;
 			}
 			else {
-				PElement<Vertice<VerticeInfo>> * voisinsParcours = fantom->graph->neighbors(parcours);
-				bool trouve = false;
+				PElement<Vertice<VerticeInfo>> * currentVerticeNeighbors = fantom->graph->neighbors(currentVertice);
+				PElement<Vertice<VerticeInfo>> * temp2 = currentVerticeNeighbors;
+				bool found = false;
 
-				while(voisinsParcours != NULL) {
+				while(temp2 != NULL) {
 					diff = sf::Vector2<int>(
-						voisinsParcours->value->value.info.pos.x - parcours->value.info.pos.x,
-						voisinsParcours->value->value.info.pos.y - parcours->value.info.pos.y);
+						temp2->value->value.info.pos.x - currentVertice->value.info.pos.x,
+						temp2->value->value.info.pos.y - currentVertice->value.info.pos.y);
 
 					if (direction == diff) {
-						trouve = true;
-						parcours = voisinsParcours->value;
+						found = true;
+						currentVertice = temp2->value;
 					}
 					else {
-						voisinsParcours = voisinsParcours->next;
+						temp2 = temp2->next;
 					}
 				}
-				if (!trouve)
-					parcours = NULL;
+				if (!found)
+					currentVertice = NULL;
+
+				PElement<Vertice<VerticeInfo>>::erasePointer(currentVerticeNeighbors);
 			}
 		}
-		voisins = voisins->next;
+		temp = temp->next;
 	}
-	
+
+	PElement<Vertice<VerticeInfo>>::erasePointer(initialNeighbors);
+
 	return scent(fantom);
 }
-
 
 template<>
 Vertice<VerticeInfo> * FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::scent(
 	GCharacter<VerticeInfo, EdgeInfo, FantomInfo> * fantom) {
-	//TODO delete lists properly
+	
 	PElement<Edge<EdgeInfo, VerticeInfo>>* neighbors = fantom->graph->adjacentEdges(fantom->position);
+	PElement<Edge<EdgeInfo, VerticeInfo>> * temp = neighbors;
 
 	Vertice<VerticeInfo> * target = NULL;
 	float highestHeatYet = 0.0f;
 
-	while (neighbors != NULL) {
-		if (neighbors->value->value.heat > highestHeatYet) {
-			highestHeatYet = neighbors->value->value.heat;
-			target = fantom->position == neighbors->value->begin ? neighbors->value->end : neighbors->value->begin;
+	while (temp != NULL) {
+		if (temp->value->value.heat > highestHeatYet) {
+			highestHeatYet = temp->value->value.heat;
+			target = fantom->position == temp->value->begin ? temp->value->end : temp->value->begin;
 		}
-		neighbors = neighbors->next;
+		temp = temp->next;
 	}
+
+	PElement<Edge<EdgeInfo, VerticeInfo>>::erasePointer(neighbors);
 
 	return target==NULL ? random(fantom) : target;
 }

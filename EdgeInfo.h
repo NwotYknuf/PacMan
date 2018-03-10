@@ -25,6 +25,8 @@ public:
 	EdgeInfo(const EdgeInfo &e)
 		: heat(e.heat), direction(e.direction), distance(e.distance), pacGom(e.pacGom) { }
 	
+	void reset() { heat = 0; pacGom = true; }
+
 	friend ostream& operator << (ostream& os, const EdgeInfo &e) {
 		os << "heat : " << e.heat << " direction : ";
 

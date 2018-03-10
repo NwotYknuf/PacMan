@@ -19,6 +19,8 @@ public :
 		pacmanIsHere = false;
 	}
 
+	void reset() { pacmanIsHere = false; pacGom = true; }
+
 	friend ostream& operator <<(ostream &os, const Informations &info) {
 
 		os << "{ position : (" << info.pos.x << ", " << info.pos.y << ") Pacman is here :";

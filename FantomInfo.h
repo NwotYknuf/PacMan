@@ -9,6 +9,8 @@ public:
 
 	FantomInfo() { direction = sf::Vector2<int>(0, 0); }
 	~FantomInfo() { }
+
+	void reset() { direction = sf::Vector2<int>(0, 0);}
 };
 
 #endif
