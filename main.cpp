@@ -3,7 +3,7 @@
 #include "World.h"
 
 using namespace std;
-const float HEAT_DECAY = 0.001;
+const float HEAT_DECAY = 0.001f;
 
 int main(){
 	try {
@@ -11,7 +11,7 @@ int main(){
 		sf::RenderWindow  window(sf::VideoMode(768, 768), "PacMan");
 		WorldToScreen transform(sf::Vector2<float>(-1.0f, 15.0f), sf::Vector2<float>(13.0f, -1.0f), sf::Vector2<float>(0.0f, 0.0f), sf::Vector2<float>(768.0f, 768.0f));
 		sf::Font font;
-		if (font.loadFromFile("arial.ttf") == -1) {
+		if (!font.loadFromFile("arial.ttf")) {
 			throw Error("Can't load arial.ttf");
 		}
 
@@ -533,43 +533,43 @@ int main(){
 		pacmanSprite.setTexture(texturePackman);
 		pacmanSprite.setTextureRect(sf::IntRect(0, 0, 32, 32));
 
-		Animation pacmanWalkLeft(0.166666667);
+		Animation pacmanWalkLeft(0.166666667f);
 		pacmanWalkLeft.addFrame(sf::IntRect(0, 0, 32, 32));
 		pacmanWalkLeft.addFrame(sf::IntRect(32, 0, 32, 32));
 
-		Animation pacmanWalkRight(0.166666667);
+		Animation pacmanWalkRight(0.166666667f);
 		pacmanWalkRight.addFrame(sf::IntRect(64, 0, 32, 32));
 		pacmanWalkRight.addFrame(sf::IntRect(96, 0, 32, 32));
 
-		Animation pacmanWalkUp(0.166666667);
+		Animation pacmanWalkUp(0.166666667f);
 		pacmanWalkUp.addFrame(sf::IntRect(128, 0, 32, 32));
 		pacmanWalkUp.addFrame(sf::IntRect(160, 0, 32, 32));
 
-		Animation pacmanWalkDown(0.166666667);
+		Animation pacmanWalkDown(0.166666667f);
 		pacmanWalkDown.addFrame(sf::IntRect(192, 0, 32, 32));
 		pacmanWalkDown.addFrame(sf::IntRect(224, 0, 32, 32));
 
-		Animation pacmanWalkUpLeft(0.166666667);
+		Animation pacmanWalkUpLeft(0.166666667f);
 		pacmanWalkUpLeft.addFrame(sf::IntRect(0, 32, 32, 32));
 		pacmanWalkUpLeft.addFrame(sf::IntRect(32, 32, 32, 32));
 
-		Animation pacmanWalkUpRight(0.166666667);
+		Animation pacmanWalkUpRight(0.166666667f);
 		pacmanWalkUpRight.addFrame(sf::IntRect(64, 32, 32, 32));
 		pacmanWalkUpRight.addFrame(sf::IntRect(96, 32, 32, 32));
 
-		Animation pacmanWalkDownRight(0.166666667);
+		Animation pacmanWalkDownRight(0.166666667f);
 		pacmanWalkDownRight.addFrame(sf::IntRect(128, 32, 32, 32));
 		pacmanWalkDownRight.addFrame(sf::IntRect(160, 32, 32, 32));
 
-		Animation pacmanWalkDownLeft(0.166666667);
+		Animation pacmanWalkDownLeft(0.166666667f);
 		pacmanWalkDownLeft.addFrame(sf::IntRect(192, 32, 32, 32));
 		pacmanWalkDownLeft.addFrame(sf::IntRect(224, 32, 32, 32));
 
-		Animation pacmanStandStill(0.45);
+		Animation pacmanStandStill(0.45f);
 		pacmanStandStill.addFrame(sf::IntRect(0, 0, 32, 32));
 		pacmanStandStill.addFrame(sf::IntRect(64, 0, 32, 32));
 
-		Animation pacmanExplode(0.1, false);
+		Animation pacmanExplode(0.1f, false);
 		pacmanExplode.addFrame(sf::IntRect(0, 64, 32, 32));
 		pacmanExplode.addFrame(sf::IntRect(32, 64, 32, 32));
 		pacmanExplode.addFrame(sf::IntRect(64, 64, 32, 32));
@@ -621,39 +621,39 @@ int main(){
 		sf::Sprite fantomSprite;
 		fantomSprite.setTexture(fantomTexture);
 
-		Animation fantomWalkLeft(0.166666667);
+		Animation fantomWalkLeft(0.166666667f);
 		fantomWalkLeft.addFrame(sf::IntRect(0, 0, 32, 32));
 		fantomWalkLeft.addFrame(sf::IntRect(32, 0, 32, 32));
 
-		Animation fantomWalkRight(0.166666667);
+		Animation fantomWalkRight(0.166666667f);
 		fantomWalkRight.addFrame(sf::IntRect(64, 0, 32, 32));
 		fantomWalkRight.addFrame(sf::IntRect(96, 0, 32, 32));
 
-		Animation fantomWalkUp(0.166666667);
+		Animation fantomWalkUp(0.166666667f);
 		fantomWalkUp.addFrame(sf::IntRect(128, 0, 32, 32));
 		fantomWalkUp.addFrame(sf::IntRect(160, 0, 32, 32));
 
-		Animation fantomWalkDown(0.166666667);
+		Animation fantomWalkDown(0.166666667f);
 		fantomWalkDown.addFrame(sf::IntRect(192, 0, 32, 32));
 		fantomWalkDown.addFrame(sf::IntRect(224, 0, 32, 32));
 
-		Animation fantomWalkUpLeft(0.166666667);
+		Animation fantomWalkUpLeft(0.166666667f);
 		fantomWalkUpLeft.addFrame(sf::IntRect(0, 32, 32, 32));
 		fantomWalkUpLeft.addFrame(sf::IntRect(32, 32, 32, 32));
 
-		Animation fantomWalkUpRight(0.166666667);
+		Animation fantomWalkUpRight(0.166666667f);
 		fantomWalkUpRight.addFrame(sf::IntRect(64, 32, 32, 32));
 		fantomWalkUpRight.addFrame(sf::IntRect(96, 32, 32, 32));
 
-		Animation fantomWalkDownRight(0.166666667);
+		Animation fantomWalkDownRight(0.166666667f);
 		fantomWalkDownRight.addFrame(sf::IntRect(128, 32, 32, 32));
 		fantomWalkDownRight.addFrame(sf::IntRect(160, 32, 32, 32));
 
-		Animation fantomWalkDownLeft(0.166666667);
+		Animation fantomWalkDownLeft(0.166666667f);
 		fantomWalkDownLeft.addFrame(sf::IntRect(192, 32, 32, 32));
 		fantomWalkDownLeft.addFrame(sf::IntRect(224, 32, 32, 32));
 
-		Animation fantomStandStill(0.45);
+		Animation fantomStandStill(0.45f);
 		fantomStandStill.addFrame(sf::IntRect(0, 0, 32, 32));
 		fantomStandStill.addFrame(sf::IntRect(64, 0, 32, 32));
 
@@ -692,39 +692,39 @@ int main(){
 		sf::Sprite fantom2Sprite;
 		fantom2Sprite.setTexture(fantomTexture);
 
-		Animation fantom2WalkLeft(0.333333334);
+		Animation fantom2WalkLeft(0.333333334f);
 		fantom2WalkLeft.addFrame(sf::IntRect(0, 64, 32, 32));
 		fantom2WalkLeft.addFrame(sf::IntRect(32, 64, 32, 32));
 
-		Animation fantom2WalkRight(0.333333334);
+		Animation fantom2WalkRight(0.333333334f);
 		fantom2WalkRight.addFrame(sf::IntRect(64, 64, 32, 32));
 		fantom2WalkRight.addFrame(sf::IntRect(96, 64, 32, 32));
 
-		Animation fantom2WalkUp(0.333333334);
+		Animation fantom2WalkUp(0.333333334f);
 		fantom2WalkUp.addFrame(sf::IntRect(128, 64, 32, 32));
 		fantom2WalkUp.addFrame(sf::IntRect(160, 64, 32, 32));
 
-		Animation fantom2WalkDown(0.333333334);
+		Animation fantom2WalkDown(0.333333334f);
 		fantom2WalkDown.addFrame(sf::IntRect(192, 64, 32, 32));
 		fantom2WalkDown.addFrame(sf::IntRect(224, 64, 32, 32));
 
-		Animation fantom2WalkUpLeft(0.333333334);
+		Animation fantom2WalkUpLeft(0.333333334f);
 		fantom2WalkUpLeft.addFrame(sf::IntRect(0, 96, 32, 32));
 		fantom2WalkUpLeft.addFrame(sf::IntRect(32, 96, 32, 32));
 
-		Animation fantom2WalkUpRight(0.333333334);
+		Animation fantom2WalkUpRight(0.333333334f);
 		fantom2WalkUpRight.addFrame(sf::IntRect(64, 96, 32, 32));
 		fantom2WalkUpRight.addFrame(sf::IntRect(96, 96, 32, 32));
 
-		Animation fantom2WalkDownRight(0.333333334);
+		Animation fantom2WalkDownRight(0.333333334f);
 		fantom2WalkDownRight.addFrame(sf::IntRect(128, 96, 32, 32));
 		fantom2WalkDownRight.addFrame(sf::IntRect(160, 96, 32, 32));
 
-		Animation fantom2WalkDownLeft(0.333333334);
+		Animation fantom2WalkDownLeft(0.333333334f);
 		fantom2WalkDownLeft.addFrame(sf::IntRect(192, 96, 32, 32));
 		fantom2WalkDownLeft.addFrame(sf::IntRect(224, 96, 32, 32));
 
-		Animation fantom2StandStill(0.45);
+		Animation fantom2StandStill(0.45f);
 		fantom2StandStill.addFrame(sf::IntRect(0, 64, 32, 32));
 		fantom2StandStill.addFrame(sf::IntRect(64, 64, 32, 32));
 

@@ -1,7 +1,7 @@
 #include "World.h"
 #include "FantomBehavior.h"
 
-const float World::HEAT_DECAY = 0.001;
+const float World::HEAT_DECAY = 0.001f;
 
 World::World(
 	sf::RenderWindow * window, 

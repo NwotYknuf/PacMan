@@ -68,7 +68,7 @@ inline bool DrawCharacter < VerticeInfo, EdgeInfo, PacmanInfo>
 
 	//placement
 	sf::Vector2<float> screenCoord = _worldToScreenTransform(
-		sf::Vector2<float>(character->position->value.info.pos.x, character->position->value.info.pos.y));
+		sf::Vector2<float>((float)(character->position->value.info.pos.x), (float)(character->position->value.info.pos.y)));
 
 	_charSprite->setPosition(screenCoord.x, screenCoord.y);
 
@@ -119,7 +119,7 @@ inline bool DrawCharacter < VerticeInfo, EdgeInfo, FantomInfo>
 	_animator->setCurentAnimation(str);
 	
 	sf::Vector2<float> screenCoord = _worldToScreenTransform(
-		sf::Vector2<float>(character->position->value.info.pos.x, character->position->value.info.pos.y));
+		sf::Vector2<float>((float)(character->position->value.info.pos.x), (float)(character->position->value.info.pos.y)));
 
 	_charSprite->setPosition(screenCoord.x, screenCoord.y);
 

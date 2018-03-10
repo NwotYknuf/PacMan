@@ -32,7 +32,7 @@ bool DrawGraph<P,I>::draw(const Vertice<VerticeInfo> *vertice) {
 	sprite.setTexture(*_texture);
 	
 	sf::Vector2<float> screenCoord = _worldToScreenTransform(
-		sf::Vector2<float>(vertice->value.info.pos.x,vertice->value.info.pos.y));
+		sf::Vector2<float>((float)(vertice->value.info.pos.x),(float)(vertice->value.info.pos.y)));
 
 	sprite.setPosition(screenCoord.x, screenCoord.y);
 
@@ -65,8 +65,8 @@ bool DrawGraph<P, I>::draw(const Edge<EdgeInfo,VerticeInfo> * edge){
 	sprite.setTexture(*_texture);
 
 	//position
-	sf::Vector2<float> begin(edge->begin->value.info.pos.x, edge->begin->value.info.pos.y);
-	sf::Vector2<float> diff(edge->end->value.info.pos.x - edge->begin->value.info.pos.x, edge->end->value.info.pos.y - edge->begin->value.info.pos.y);
+	sf::Vector2<float> begin((float)(edge->begin->value.info.pos.x), (float)(edge->begin->value.info.pos.y));
+	sf::Vector2<float> diff((float)(edge->end->value.info.pos.x - edge->begin->value.info.pos.x), (float)(edge->end->value.info.pos.y - edge->begin->value.info.pos.y));
 	sf::Vector2<float> pos = begin + diff / 2.0f;
 
 	sf::Vector2<float> screenCoord = _worldToScreenTransform(pos);
