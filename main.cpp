@@ -762,7 +762,7 @@ int main(){
 		world.init();
 		//main loop
 		GameClock*clock = GameClock::getInstance();
-
+		
 		while (window.isOpen()) {
 			world.update();
 		}

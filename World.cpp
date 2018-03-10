@@ -1,6 +1,7 @@
 #include "World.h"
+#include "FantomBehavior.h"
 
-const int HEAT_DECAY = 0.001;
+const float World::HEAT_DECAY = 0.001;
 
 World::World(
 	sf::RenderWindow * window, 
@@ -47,7 +48,6 @@ int World::nbrOfPacgoms() {
 
 void World::init() {
 	clock = GameClock::getInstance();
-	maxScore = nbrOfPacgoms();
 
 	gameOverText.setString("GAME OVER");
 	gameOverText.setFont(*font);
@@ -55,6 +55,13 @@ void World::init() {
 	gameOverText.setOrigin(gameOverText.getGlobalBounds().width / 2, gameOverText.getGlobalBounds().height / 2);
 	gameOverText.setScale(sf::Vector2f(2, 2));
 	gameOverText.setPosition(_transform(sf::Vector2<float>(6.0f, 7.0f)));
+
+	victoryText.setString("VICTORY");
+	victoryText.setFont(*font);
+	victoryText.setFillColor(sf::Color::White);
+	victoryText.setOrigin(victoryText.getGlobalBounds().width / 2, victoryText.getGlobalBounds().height / 2);
+	victoryText.setScale(sf::Vector2f(2, 2));
+	victoryText.setPosition(_transform(sf::Vector2<float>(6.0f, 7.0f)));
 }
 
 void World::updateGraph() {		
@@ -62,8 +69,24 @@ void World::updateGraph() {
 
 	while (temp != NULL) {
 		if (temp->value->value.heat > 0)
-			temp->value->value.heat -= HEAT_DECAY;
+			temp->value->value.heat -= World::HEAT_DECAY;
 		temp = temp->next;
+	}
+}
+
+void World::resetGraph() {
+	PElement<Edge<EdgeInfo, VerticeInfo>> * temp = _graph->lEdges;
+
+	while (temp != NULL) {
+		temp->value->value.reset();
+		temp = temp->next;
+	}
+
+	PElement<Vertice<VerticeInfo>> * temp2 = _graph->lVertices;
+
+	while (temp2 != NULL) {
+		temp2->value->value.info.reset();
+		temp2 = temp2->next;
 	}
 }
 
@@ -86,6 +109,8 @@ void World::handleEvents() {
 			case sf::Keyboard::Numpad9:
 				_pacman->setLastInput(event.key.code);
 				break;
+			case sf::Keyboard::V:
+				end = true;
 			}
 			break;
 		default:
@@ -98,11 +123,13 @@ void World::updateMain() {
 	if (clock->getElapsedTime() >= 0.016666666f) {
 		_window->clear();
 
-		updateGraph();
 		AStarTools::target = _pacman->getPosition<VerticeInfo>();
+		updateGraph();
 		_drawGraph->update();
 		_graph->draw(*_drawGraph);
 
+	
+		_pacman->update();
 
 		bool check = false;
 		for (Actor<
@@ -115,7 +142,6 @@ void World::updateMain() {
 				check = true;
 			}
 		}
-		_pacman->update();
 
 		_window->display();
 		
@@ -127,7 +153,7 @@ void World::updateMain() {
 
 		int score = _pacman->getGchar()->info.score;
 
-		if (score % maxScore == 0 && score != 0) {
+		if (nbrOfPacgoms() == 0) {
 			end = true;
 		}
 
@@ -139,7 +165,6 @@ void World::updateGameOver() {
 	if (clock->getElapsedTime() >= 0.016666666f) {
 		_window->clear();
 
-		updateGraph();
 		AStarTools::target = _pacman->getPosition<VerticeInfo>();
 		_drawGraph->update();
 		_graph->draw(*_drawGraph);
@@ -165,29 +190,39 @@ void World::updateGameOver() {
 	}
 }
 
-void World::updateWin() { }
+void World::updateWin() { 
+	if (clock->getElapsedTime() >= 0.016666666f) {
+		_window->clear();
 
-void World::resetGraph(){
-	PElement<Edge<EdgeInfo, VerticeInfo>> * temp = _graph->lEdges;
+		AStarTools::target = _pacman->getPosition<VerticeInfo>();
+		_drawGraph->update();
+		_graph->draw(*_drawGraph);
 
-	while (temp != NULL) {
-		temp->value->value.reset();
-		temp = temp->next;
+		for (Actor<
+			GCharacter<VerticeInfo, EdgeInfo, FantomInfo>,
+			FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>,
+			DrawCharacter<VerticeInfo, EdgeInfo, FantomInfo>
+		> * fantom : _fantoms) {
+			fantom->updateEndGame();
+		}
+
+		_pacman->updateEndGame();
+
+		if (elapsedTime > 2.0f)
+			_window->draw(victoryText);
+
+		_window->display();
+
+		elapsedTime += clock->getElapsedTime();
+		clock->restart();
 	}
-
-	PElement<Vertice<VerticeInfo>> * temp2 = _graph->lVertices;
-
-	while (temp2 != NULL) {
-		temp2->value->value.info.reset();
-		temp2 = temp2->next;
-	}
-
 }
 
-void World::reset() {
+void World::resetGameOver() {
 	end = false;
 	resetGraph();
 	_pacman->reset();
+	_pacman->resetBehavior();
 
 	for (Actor<
 	GCharacter<VerticeInfo, EdgeInfo, FantomInfo>,
@@ -196,6 +231,22 @@ void World::reset() {
 	> * fantom : _fantoms) {
 	fantom->reset();
 	}
+}
+
+void World::resetVictory() {
+	end = false;
+	resetGraph();
+	_pacman->resetVictory();
+
+	for (Actor<
+	GCharacter<VerticeInfo, EdgeInfo, FantomInfo>,
+	FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>,
+	DrawCharacter<VerticeInfo, EdgeInfo, FantomInfo>
+	> * fantom : _fantoms) {
+		fantom->resetVictory();
+	}
+
+	setDifficulty(++difficulty);
 }
 
 void World::update() {
@@ -208,8 +259,10 @@ void World::update() {
 	else {
 
 		if (elapsedTime < 4.0f) {
-			if (_pacman->getGchar()->info.alive)
+			if (_pacman->getGchar()->info.alive) {
+				_pacman->setAnimation("standStill");
 				updateWin();
+			}
 			else {
 				_pacman->setAnimation("explode");
 				updateGameOver();
@@ -217,7 +270,36 @@ void World::update() {
 		}
 		else {
 			elapsedTime = 0.0f;
-			reset();
+			if (_pacman->getGchar()->info.alive)
+				resetVictory();
+			else
+				resetGameOver();
 		}
+	}
+}
+
+void World::setDifficulty(int diff) {
+
+	Vertice<VerticeInfo>* (*behavior)(GCharacter<VerticeInfo, EdgeInfo, FantomInfo> * fantom) = NULL;
+
+	switch (diff) {
+	default:
+	case 1:
+		behavior = FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::random;
+		break;
+	case 2:
+		behavior = FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::sight;
+		break;
+	case 3:
+		behavior = FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::aStar;
+		break;
+	}
+	
+	for (Actor<
+		GCharacter<VerticeInfo, EdgeInfo, FantomInfo>,
+		FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>,
+		DrawCharacter<VerticeInfo, EdgeInfo, FantomInfo>
+	> * fantom : _fantoms) {
+		fantom->setBehavior(behavior);
 	}
 }

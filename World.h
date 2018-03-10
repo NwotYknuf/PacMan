@@ -38,13 +38,14 @@ private:
 	WorldToScreen _transform;
 
 	//game state
+	static const float HEAT_DECAY;
 	sf::Event event;
 	bool end = false;
 	int difficulty = 1;
-	int maxScore;
 	GameClock * clock;
 	float elapsedTime = 0.0f;
 	sf::Text gameOverText;
+	sf::Text victoryText;
 
 public:
 	World(
@@ -75,8 +76,10 @@ public:
 	void updateGameOver();
 	void updateWin();
 	void resetGraph();
-	void reset();
+	void resetGameOver();
+	void resetVictory();
 	void update();
+	void setDifficulty(int diff);
 
 };
 

@@ -39,7 +39,9 @@ public:
 	void updateInfosFailure();
 
 	void reset();
-	
+
+	void resetVictory();
+		
 };
 
 template <class Vinfo, class Einfo, class Cinfo>
@@ -137,6 +139,12 @@ inline void GCharacter<VerticeInfo, EdgeInfo, FantomInfo>::updateInfosFailure() 
 template<class Vinfo, class Einfo, class Cinfo>
 inline void GCharacter<Vinfo, Einfo, Cinfo>::reset(){
 	info.reset();
+	position = _initialPosition;
+}
+
+template<class Vinfo, class Einfo, class Cinfo>
+inline void GCharacter<Vinfo, Einfo, Cinfo>::resetVictory() {
+	info.resetVictory();
 	position = _initialPosition;
 }
 

@@ -11,6 +11,8 @@ public:
 	~FantomInfo() { }
 
 	void reset() { direction = sf::Vector2<int>(0, 0);}
+
+	void resetVictory() { direction = sf::Vector2<int>(0, 0); }
 };
 
 #endif

@@ -13,6 +13,9 @@ public:
 	~PacmanInfo() { }
 
 	void reset() { score = 0; direction = sf::Vector2<int>(0, 0); alive = true; }
+
+	void resetVictory() { direction = sf::Vector2<int>(0, 0); }
+
 };
 
 #endif

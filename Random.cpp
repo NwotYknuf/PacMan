@@ -1,9 +1,10 @@
 #include "Random.h"
+#include <time.h>
 
 Random * Random::_instance = NULL;
 
 Random::Random() {
-	_generator = &std::default_random_engine(0);
+	_generator = &std::default_random_engine(time(NULL));
 }
 
 Random * Random::getInstance(){

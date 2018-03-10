@@ -16,6 +16,8 @@ public:
 
 	void setLastInput(sf::Keyboard::Key input) { _lastInput = input; }
 	void update(GCharacter<Vinfo, Einfo, Cinfo> * pacman);
+	void reset();
+
 };
 
 template<class Vinfo, class Einfo, class Cinfo>
@@ -90,6 +92,11 @@ void PacmanBehavior<Vinfo, Einfo, Cinfo>::update(GCharacter<Vinfo, Einfo, Cinfo>
 		_timeElapsed -= UPDATE_RATE;
 	}
 
+}
+
+template<class Vinfo, class Einfo, class Cinfo>
+inline void PacmanBehavior<Vinfo, Einfo, Cinfo>::reset(){
+	v = sf::Vector2<int>(0, 0);
 }
 
 #endif

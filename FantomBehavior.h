@@ -29,6 +29,8 @@ public:
 
 	void update(GCharacter<Vinfo, Einfo, Cinfo> * fantom);
 
+	void reset() { }
+
 	static Vertice<Vinfo> * aStar(GCharacter<Vinfo, Einfo, Cinfo> * fantom);
 
 	static Vertice<Vinfo> * random(GCharacter<Vinfo, Einfo, Cinfo> * fantom);
@@ -40,7 +42,7 @@ public:
 };
 
 template<class Vinfo, class Einfo, class Cinfo>
-const float FantomBehavior<Vinfo, Einfo, Cinfo>::UPDATE_RATE = 0.25f;
+const float FantomBehavior<Vinfo, Einfo, Cinfo>::UPDATE_RATE = 0.5f;
 
 template<>
 inline Vertice<VerticeInfo> * FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::aStar(	
@@ -64,7 +66,6 @@ inline Vertice<VerticeInfo> * FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>:
 	int n = temp->size(temp);
 	int rnd = Random::getInstance()->getNextRandom(0, n-1);
 
-	cout <<  n << ", " << rnd << endl;
 	for (int i = 0; i < rnd; i++){
 		temp = temp->next;
 	}

@@ -27,7 +27,9 @@ public:
 	void update();	
 	void updateEndGame();
 	void reset();
+	void resetVictory();
 	void resetAnimator();
+	void resetBehavior();
 };
 
 template<class Character, class Behavior, class Draw>
@@ -65,8 +67,18 @@ void Actor<Character, Behavior, Draw>::reset(){
 }
 
 template<class Character, class Behavior, class Draw>
+void Actor<Character, Behavior, Draw>::resetVictory() {
+	_character->resetVictory();
+}
+
+template<class Character, class Behavior, class Draw>
 void Actor<Character, Behavior, Draw>::resetAnimator() {
 	_draw->reset();
+}
+
+template<class Character, class Behavior, class Draw>
+inline void Actor<Character, Behavior, Draw>::resetBehavior(){
+	_behavior->reset();
 }
 
 #endif
