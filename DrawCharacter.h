@@ -1,13 +1,8 @@
 #ifndef DRAWCHARACTER_H
 #define DRAWCHARACTER_H
 
-#include "Vertice.h"
-#include "GCharacter.h"
-#include "Animator.h"
-#include "VerticeInfo.h"
-#include "PacmanInfo.h"
-#include "FantomInfo.h"
 #include "Window.h"
+#include "Animator.h"
 
 template<class Vinfo, class Einfo, class Cinfo>
 class DrawCharacter : public Window{
@@ -21,14 +16,17 @@ public :
 
 	DrawCharacter(sf::RenderWindow *window, sf::Sprite * charSprite, Animator * animator, WorldToScreen worldToScreenTransform, sf::Font * font);
 
+	void setAnimation(string name) { _animator->setCurentAnimation(name); }
+
 	bool draw(const GCharacter<Vinfo, Einfo, Cinfo>* character);
 
 	void update();
 
+	void reset();
 };
 
 template<class Vinfo, class Einfo, class Cinfo>
-DrawCharacter<Vinfo, Einfo, Cinfo>::DrawCharacter(
+inline DrawCharacter<Vinfo, Einfo, Cinfo>::DrawCharacter(
 	sf::RenderWindow * window, 	
 	sf::Sprite * charSprite, 
 	Animator * animator, 	
@@ -41,7 +39,7 @@ DrawCharacter<Vinfo, Einfo, Cinfo>::DrawCharacter(
 }
 
 template<>
-bool DrawCharacter < VerticeInfo, EdgeInfo, PacmanInfo>
+inline bool DrawCharacter < VerticeInfo, EdgeInfo, PacmanInfo>
 ::draw(const GCharacter<VerticeInfo, EdgeInfo, PacmanInfo>* character) {
 	//animation
 
@@ -98,7 +96,7 @@ bool DrawCharacter < VerticeInfo, EdgeInfo, PacmanInfo>
 }
 
 template<>
-bool DrawCharacter < VerticeInfo, EdgeInfo, FantomInfo>
+inline bool DrawCharacter < VerticeInfo, EdgeInfo, FantomInfo>
 ::draw(const GCharacter<VerticeInfo, EdgeInfo, FantomInfo>* character) {
 	//animation
 	string str = character->info.direction == sf::Vector2<int>(0, 0) ? "standStill" : "walk";
@@ -139,8 +137,13 @@ bool DrawCharacter < VerticeInfo, EdgeInfo, FantomInfo>
 }
 
 template<class Vinfo, class Einfo, class Cinfo>
-void DrawCharacter<Vinfo, Einfo, Cinfo>::update() {
+inline void DrawCharacter<Vinfo, Einfo, Cinfo>::update() {
 	_animator->update();
+}
+
+template<class Vinfo, class Einfo, class Cinfo>
+inline void DrawCharacter<Vinfo, Einfo, Cinfo>::reset(){
+	_animator->reset();
 }
 
 #endif

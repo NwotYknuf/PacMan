@@ -1,9 +1,6 @@
 #pragma once
-#include <SFML\Graphics.hpp>
-#include "WorldToScreen.h"
-#include <SFML\Graphics.hpp>
-#include <SFML\Window.hpp>
-#include <SFML\System.hpp>
+
+#include"WorldToScreen.h"
 
 class Window {
 public :

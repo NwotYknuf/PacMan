@@ -1,10 +1,6 @@
 #ifndef PACMANBEHAVIOR_H
 #define PACMANBEHAVIOR_H
 
-#include <SFML\Graphics.hpp>
-#include "GCharacter.h"
-#include "Graph.h"
-
 template <class Vinfo, class Einfo, class Cinfo>
 class PacmanBehavior{
 private:
@@ -20,7 +16,6 @@ public:
 
 	void setLastInput(sf::Keyboard::Key input) { _lastInput = input; }
 	void update(GCharacter<Vinfo, Einfo, Cinfo> * pacman);
-
 };
 
 template<class Vinfo, class Einfo, class Cinfo>

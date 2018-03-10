@@ -18,6 +18,14 @@ void Animator::update() {
 	}
 }
 
+void Animator::reset(){
+
+	for (pair<string, Animation*> p : _animations) {
+		p.second->reset();
+	}
+
+}
+
 void Animator::playAnimation() {
 	
 	if (_currentAnimation) {

@@ -1,11 +1,11 @@
 #ifndef DRAWGRAPH_H
 #define DRAWGRAPH_H
 
-#include<SFML\Graphics.hpp>
-#include<SFML\Window.hpp>
-#include"EdgeInfo.h"
+#include "WorldToScreen.h"
+#include "Animator.h"
 #include "VerticeInfo.h"
-#include "Window.h"
+#include "EdgeInfo.h"
+#include "Edge.h"
 
 template<class P, class I>
 class DrawGraph : public Window{

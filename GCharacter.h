@@ -1,13 +1,13 @@
 #ifndef GCHARACTER_H
 #define GCHARACTER_H
 
-#include "Graph.h"
-#include "PElement.h"
 #include <utility>
+#include "Graph.h"
+#include "Vertice.h"
 #include "VerticeInfo.h"
-#include "EdgeInfo.h"
-#include "PacmanInfo.h"
 #include "FantomInfo.h"
+#include "PacmanInfo.h"
+#include "EdgeInfo.h"
 
 template<class Vinfo, class Einfo, class Cinfo>
 class GCharacter {
@@ -44,7 +44,7 @@ public:
 
 template <class Vinfo, class Einfo, class Cinfo>
 template< class WINDOW>
-bool GCharacter<Vinfo, Einfo, Cinfo>::drawCharacter(WINDOW & window) const {
+inline bool GCharacter<Vinfo, Einfo, Cinfo>::drawCharacter(WINDOW & window) const {
 
 	if (!window.draw(this))
 		return false;
@@ -54,12 +54,12 @@ bool GCharacter<Vinfo, Einfo, Cinfo>::drawCharacter(WINDOW & window) const {
 
 template <class Vinfo, class Einfo, class Cinfo>
 template< class BEHAVIOR>
-void GCharacter<Vinfo, Einfo, Cinfo>::update(BEHAVIOR & behavior){
+inline void GCharacter<Vinfo, Einfo, Cinfo>::update(BEHAVIOR & behavior){
 	behavior.update(this);
 }
 
 template<class Vinfo, class Einfo, class Cinfo>
-bool GCharacter<Vinfo, Einfo, Cinfo>
+inline bool GCharacter<Vinfo, Einfo, Cinfo>
 ::move(Vertice<Vinfo>* vertice) {
 
 	PElement<Vertice<Vinfo>> * neighbors = graph->neighbors(this->position);
@@ -77,7 +77,7 @@ bool GCharacter<Vinfo, Einfo, Cinfo>
 }
 
 template<>
-void GCharacter<VerticeInfo, EdgeInfo, FantomInfo>::updateInfos(Vertice<VerticeInfo>* vertice) {
+inline void GCharacter<VerticeInfo, EdgeInfo, FantomInfo>::updateInfos(Vertice<VerticeInfo>* vertice) {
 
 	//Update direction vector
 	this->info.direction = vertice->value.info.pos - this->position->value.info.pos;
@@ -88,7 +88,7 @@ void GCharacter<VerticeInfo, EdgeInfo, FantomInfo>::updateInfos(Vertice<VerticeI
 }
 
 template<>
-void GCharacter<VerticeInfo, EdgeInfo, PacmanInfo>::updateInfos(Vertice<VerticeInfo>* vertice){
+inline void GCharacter<VerticeInfo, EdgeInfo, PacmanInfo>::updateInfos(Vertice<VerticeInfo>* vertice){
 
 	//Update direction vector
 	this->info.direction = vertice->value.info.pos - this->position->value.info.pos;
@@ -119,7 +119,7 @@ void GCharacter<VerticeInfo, EdgeInfo, PacmanInfo>::updateInfos(Vertice<VerticeI
 }
 
 template<>
-void GCharacter<VerticeInfo, EdgeInfo, PacmanInfo>::updateInfosFailure() {
+inline void GCharacter<VerticeInfo, EdgeInfo, PacmanInfo>::updateInfosFailure() {
 
 	//Update direction vector
 	this->info.direction = sf::Vector2<int>(0,0);
@@ -127,7 +127,7 @@ void GCharacter<VerticeInfo, EdgeInfo, PacmanInfo>::updateInfosFailure() {
 }
 
 template<>
-void GCharacter<VerticeInfo, EdgeInfo, FantomInfo>::updateInfosFailure() {
+inline void GCharacter<VerticeInfo, EdgeInfo, FantomInfo>::updateInfosFailure() {
 
 	//Update direction vector
 	this->info.direction = sf::Vector2<int>(0, 0);
@@ -135,7 +135,7 @@ void GCharacter<VerticeInfo, EdgeInfo, FantomInfo>::updateInfosFailure() {
 }
 
 template<class Vinfo, class Einfo, class Cinfo>
-void GCharacter<Vinfo, Einfo, Cinfo>::reset(){
+inline void GCharacter<Vinfo, Einfo, Cinfo>::reset(){
 	info.reset();
 	position = _initialPosition;
 }

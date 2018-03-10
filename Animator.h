@@ -22,6 +22,8 @@ public:
 
 	void update();
 
+	void reset();
+
 	void playAnimation();
 
 	void setSprite(sf::Sprite* sprite) { _sprite = sprite; }

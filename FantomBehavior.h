@@ -1,15 +1,10 @@
 #ifndef FANTOMBEHAVIOR_H
 #define FANTOMBEHAVIOR_H
 
-#include <SFML\Graphics.hpp>
-#include <random>
 #include "GCharacter.h"
-#include "Graph.h"
-#include "VerticeInfo.h"
-#include "AStarTools.h"
 #include "AStar.h"
 #include "Random.h"
-#include <vector>
+#include "FantomInfo.h"
 
 template <class Vinfo, class Einfo, class Cinfo>
 class FantomBehavior {
@@ -28,6 +23,10 @@ public:
 
 	~FantomBehavior() { }
 
+	void setBehavior(Vertice<Vinfo>* (*nextMove)(GCharacter<Vinfo, Einfo, Cinfo> * fantom)) {
+		_nextMove = nextMove;
+	}
+
 	void update(GCharacter<Vinfo, Einfo, Cinfo> * fantom);
 
 	static Vertice<Vinfo> * aStar(GCharacter<Vinfo, Einfo, Cinfo> * fantom);
@@ -40,8 +39,11 @@ public:
 
 };
 
+template<class Vinfo, class Einfo, class Cinfo>
+const float FantomBehavior<Vinfo, Einfo, Cinfo>::UPDATE_RATE = 0.25f;
+
 template<>
-Vertice<VerticeInfo> * FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::aStar(	
+inline Vertice<VerticeInfo> * FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::aStar(	
 	GCharacter<VerticeInfo, EdgeInfo, FantomInfo> * fantom){
 
 	Vertice<VerticeInfo> * result = NULL;
@@ -53,15 +55,17 @@ Vertice<VerticeInfo> * FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::aStar(
 }
 
 template<>
-Vertice<VerticeInfo> * FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::random(
+inline Vertice<VerticeInfo> * FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::random(
 	GCharacter<VerticeInfo, EdgeInfo, FantomInfo> * fantom) {
 
 	PElement<Vertice<VerticeInfo>> * neighbors = fantom->graph->neighbors(fantom->position);
 	PElement<Vertice<VerticeInfo>> * temp = neighbors;
 	
 	int n = temp->size(temp);
-	
-	for (int i = 0; i < Random::getInstance()->getNextRandom(0, n-1); i++){
+	int rnd = Random::getInstance()->getNextRandom(0, n-1);
+
+	cout <<  n << ", " << rnd << endl;
+	for (int i = 0; i < rnd; i++){
 		temp = temp->next;
 	}
 
@@ -73,7 +77,7 @@ Vertice<VerticeInfo> * FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::random
 }
 
 template<>
-Vertice<VerticeInfo> * FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::sight(
+inline Vertice<VerticeInfo> * FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::sight(
 	GCharacter<VerticeInfo, EdgeInfo, FantomInfo> * fantom) {
 
 	PElement<Vertice<VerticeInfo>> * initialNeighbors = fantom->graph->neighbors(fantom->position);
@@ -129,7 +133,7 @@ Vertice<VerticeInfo> * FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::sight(
 }
 
 template<>
-Vertice<VerticeInfo> * FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::scent(
+inline Vertice<VerticeInfo> * FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::scent(
 	GCharacter<VerticeInfo, EdgeInfo, FantomInfo> * fantom) {
 	
 	PElement<Edge<EdgeInfo, VerticeInfo>>* neighbors = fantom->graph->adjacentEdges(fantom->position);
@@ -152,10 +156,7 @@ Vertice<VerticeInfo> * FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::scent(
 }
 
 template<class Vinfo, class Einfo, class Cinfo>
-const float FantomBehavior<Vinfo, Einfo, Cinfo>::UPDATE_RATE = 0.25f;
-
-template<class Vinfo, class Einfo, class Cinfo>
-void FantomBehavior<Vinfo, Einfo, Cinfo>::update(
+inline void FantomBehavior<Vinfo, Einfo, Cinfo>::update(
 	GCharacter<Vinfo, Einfo, Cinfo>* fantom) {
 
 	_timeElapsed += GameClock::getInstance()->getElapsedTime();
