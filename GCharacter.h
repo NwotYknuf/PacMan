@@ -62,17 +62,16 @@ template<class Vinfo, class Einfo, class Cinfo>
 bool GCharacter<Vinfo, Einfo, Cinfo>
 ::move(Vertice<Vinfo>* vertice) {
 
-	PElement<Vertice<Vinfo>> * voisin;
-	voisin = graph->neighbors(this->position);
+	PElement<Vertice<Vinfo>> * neighbors = graph->neighbors(this->position);
 
-	if (PElement < Vertice<Vinfo>>::inList(vertice, voisin)) {
+	if (PElement < Vertice<Vinfo>>::inList(vertice, neighbors)) {
 		this->updateInfos(vertice);
-		PElement < Vertice<Vinfo>>::erasePointer(voisin);
+		PElement < Vertice<Vinfo>>::erasePointer(neighbors);
 		return true;
 	}
 	else {
 		this->updateInfosFailure();
-		PElement < Vertice<Vinfo>>::erasePointer(voisin);
+		PElement < Vertice<Vinfo>>::erasePointer(neighbors);
 		return false;
 	}
 }
