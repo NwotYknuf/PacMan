@@ -3,8 +3,8 @@
 
 #include "GCharacter.h"
 #include "AStar.h"
-#include "Random.h"
 #include "FantomInfo.h"
+#include <time.h>
 
 template <class Vinfo, class Einfo, class Cinfo>
 class FantomBehavior {
@@ -19,10 +19,11 @@ public:
 
 	FantomBehavior(Vertice<Vinfo>* (*nextMove)(GCharacter<Vinfo, Einfo, Cinfo> * fantom)) {
 		_nextMove = nextMove;
+		srand(time(NULL));
 	}
 
 	~FantomBehavior() { }
-
+	
 	void setBehavior(Vertice<Vinfo>* (*nextMove)(GCharacter<Vinfo, Einfo, Cinfo> * fantom)) {
 		_nextMove = nextMove;
 	}
@@ -64,8 +65,8 @@ inline Vertice<VerticeInfo> * FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>:
 	PElement<Vertice<VerticeInfo>> * temp = neighbors;
 	
 	int n = temp->size(temp);
-	int rnd = Random::getInstance()->getNextRandom(0, n-1);
-
+	int rnd = rand() %n;
+	
 	for (int i = 0; i < rnd; i++){
 		temp = temp->next;
 	}

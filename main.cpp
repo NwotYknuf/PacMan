@@ -1,5 +1,3 @@
-#pragma once
-
 #include "World.h"
 
 using namespace std;
@@ -8,8 +6,8 @@ const float HEAT_DECAY = 0.001f;
 int main(){
 	try {
 		//initialisation
-		sf::RenderWindow  window(sf::VideoMode(1024,1024), "PacMan", sf::Style::Titlebar | sf::Style::Close);
-		WorldToScreen transform(sf::Vector2<float>(-1.0f, 15.0f), sf::Vector2<float>(13.0f, -1.0f), sf::Vector2<float>(0.0f, 0.0f), sf::Vector2<float>(1024.0f, 1024.0f));
+		sf::RenderWindow  window(sf::VideoMode(800,800), "PacMan", sf::Style::Titlebar | sf::Style::Close);
+		WorldToScreen transform(sf::Vector2<float>(-1.0f, 15.0f), sf::Vector2<float>(13.0f, -1.0f), sf::Vector2<float>(0.0f, 0.0f), sf::Vector2<float>(800.0f, 800.0f));
 		sf::Font font;
 		if (!font.loadFromFile("arial.ttf")) {
 			throw Error("Can't load arial.ttf");

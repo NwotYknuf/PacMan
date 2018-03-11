@@ -4,3 +4,7 @@
 *.filters
 debug/*.*
 *.user
+*.obj
+*.tlog
+*.log
+*.pdb
