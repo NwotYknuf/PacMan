@@ -110,11 +110,6 @@ inline void GCharacter<VerticeInfo, EdgeInfo, PacmanInfo>::updateInfos(Vertice<V
 		this->info.score++;
 	}
 
-	if (vertice->value.info.pacGom) {
-		vertice->value.info.pacGom = false;
-		this->info.score++;
-	}
-
 	//change the position
 	this->position = vertice;
 

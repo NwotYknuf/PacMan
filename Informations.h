@@ -13,24 +13,18 @@ public :
 
 	sf::Vector2<int> pos;
 	bool pacmanIsHere;
-	bool pacGom;
 	
-	Informations(const sf::Vector2<int> &v, bool p = true) : pos(v), pacGom(p) {
+	Informations(const sf::Vector2<int> &v, bool p = true) : pos(v) {
 		pacmanIsHere = false;
 	}
 
-	void reset() { pacmanIsHere = false; pacGom = true; }
+	void reset() { pacmanIsHere = false; }
 
 	friend ostream& operator <<(ostream &os, const Informations &info) {
 
 		os << "{ position : (" << info.pos.x << ", " << info.pos.y << ") Pacman is here :";
 
 		if (info.pacmanIsHere)
-			os << "yes";
-		else
-			os << "no";
-		os << ", is there a pacGom :";
-		if (info.pacGom)
 			os << "yes";
 		else
 			os << "no";

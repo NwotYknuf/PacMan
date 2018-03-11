@@ -38,12 +38,7 @@ bool DrawGraph<P,I>::draw(const Vertice<VerticeInfo> *vertice) {
 
 	_graphAnimator->setSprite(&sprite);
 
-	if (vertice->value.info.pacGom) {
-		_graphAnimator->setCurentAnimation("VerticePacgom");
-	}
-	else {
-		_graphAnimator->setCurentAnimation("VerticeNoPacgom");
-	}
+	_graphAnimator->setCurentAnimation("VerticeNoPacgom");
 
 	_graphAnimator->playAnimation();
 

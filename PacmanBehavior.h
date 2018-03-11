@@ -49,7 +49,7 @@ bool move(GCharacter<Vinfo, Einfo, Cinfo>* pacman, sf::Vector2<int> v) {
 }
 
 template<class Vinfo, class Einfo, class Cinfo>
-const float PacmanBehavior<Vinfo, Einfo, Cinfo>::UPDATE_RATE = 0.2f;
+const float PacmanBehavior<Vinfo, Einfo, Cinfo>::UPDATE_RATE = 0.4f;
 
 template<class Vinfo, class Einfo, class Cinfo>
 void PacmanBehavior<Vinfo, Einfo, Cinfo>::update(GCharacter<Vinfo, Einfo, Cinfo>* pacman) {

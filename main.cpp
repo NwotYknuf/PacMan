@@ -8,8 +8,8 @@ const float HEAT_DECAY = 0.001f;
 int main(){
 	try {
 		//initialisation
-		sf::RenderWindow  window(sf::VideoMode(768, 768), "PacMan");
-		WorldToScreen transform(sf::Vector2<float>(-1.0f, 15.0f), sf::Vector2<float>(13.0f, -1.0f), sf::Vector2<float>(0.0f, 0.0f), sf::Vector2<float>(768.0f, 768.0f));
+		sf::RenderWindow  window(sf::VideoMode(1024,1024), "PacMan", sf::Style::Titlebar | sf::Style::Close);
+		WorldToScreen transform(sf::Vector2<float>(-1.0f, 15.0f), sf::Vector2<float>(13.0f, -1.0f), sf::Vector2<float>(0.0f, 0.0f), sf::Vector2<float>(1024.0f, 1024.0f));
 		sf::Font font;
 		if (!font.loadFromFile("arial.ttf")) {
 			throw Error("Can't load arial.ttf");
@@ -471,10 +471,6 @@ int main(){
 		//Vertice
 		Animation verticeNoPacgom(0.5f);
 		verticeNoPacgom.addFrame(sf::IntRect(0, 0, 32, 32));
-
-		Animation VerticeWithPacgom(0.5f);
-		VerticeWithPacgom.addFrame(sf::IntRect(0, 32, 32, 32));
-		VerticeWithPacgom.addFrame(sf::IntRect(0, 64, 32, 32));
 		
 		//Edge
 		Animation edgeHorizontalNoPacgom(0.5f);
@@ -507,7 +503,6 @@ int main(){
 		
 		Animator graphAnimator(&graphSprite);
 		graphAnimator.addAnimation("VerticeNoPacgom", &verticeNoPacgom);
-		graphAnimator.addAnimation("VerticePacgom", &VerticeWithPacgom);
 		
 		graphAnimator.addAnimation("EdgeHorizontalNoPacgom", &edgeHorizontalNoPacgom);
 		graphAnimator.addAnimation("EdgeTopRightNoPacgom", &edgeTopRightNoPacgom);

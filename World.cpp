@@ -30,17 +30,11 @@ void World::addFantom(Actor<GCharacter<VerticeInfo, EdgeInfo, FantomInfo>, Fanto
 int World::nbrOfPacgoms() {
 	int total = 0;
 
-	PElement<Vertice<VerticeInfo>> * temp = _graph->lVertices;
-
+	PElement<Edge<EdgeInfo, VerticeInfo>> * temp = _graph->lEdges;
 	while (temp != NULL) {
-		total++;
+		if(temp->value->value.pacGom)
+			total++;
 		temp = temp->next;
-	}
-
-	PElement<Edge<EdgeInfo, VerticeInfo>> * temp1 = _graph->lEdges;
-	while (temp1 != NULL) {
-		total++;
-		temp1 = temp1->next;
 	}
 
 	return total;

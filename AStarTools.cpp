@@ -4,8 +4,8 @@ Vertice<VerticeInfo>* AStarTools::target = NULL;
 
 float AStarTools::squaredDistance(const Vertice<VerticeInfo>* v1, const Vertice<VerticeInfo>* v2){
 
-	int deltaX = v2->value.info.pos.x - v1->value.info.pos.x;
-	int deltaY = v2->value.info.pos.y - v1->value.info.pos.y;
+	float deltaX = v2->value.info.pos.x - v1->value.info.pos.x;
+	float deltaY = v2->value.info.pos.y - v1->value.info.pos.y;
 	
 	return deltaX*deltaX + deltaY*deltaY;
 }
