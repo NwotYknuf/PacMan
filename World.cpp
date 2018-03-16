@@ -276,15 +276,15 @@ void World::setDifficulty(int diff) {
 
 	Vertice<VerticeInfo>* (*behavior)(GCharacter<VerticeInfo, EdgeInfo, FantomInfo> * fantom) = NULL;
 
-	switch (diff) {
+	switch (diff%3) {
 	default:
-	case 1:
+	case 0:
 		behavior = FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::random;
 		break;
-	case 2:
+	case 1:
 		behavior = FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::sight;
 		break;
-	case 3:
+	case 2:
 		behavior = FantomBehavior<VerticeInfo, EdgeInfo, FantomInfo>::aStar;
 		break;
 	}

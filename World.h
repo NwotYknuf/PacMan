@@ -41,7 +41,7 @@ private:
 	static const float HEAT_DECAY;
 	sf::Event event;
 	bool end = false;
-	int difficulty = 1;
+	int difficulty = 0;
 	GameClock * clock;
 	float elapsedTime = 0.0f;
 	sf::Text gameOverText;
